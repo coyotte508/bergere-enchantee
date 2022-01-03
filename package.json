@@ -1,0 +1,7 @@
+{
+  "name": "bergere-enchantee",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.14.2",
+    "eslint": "^8.6.0"
+  }
+}
