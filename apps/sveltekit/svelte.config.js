@@ -2,6 +2,7 @@ import adapter from "@sveltejs/adapter-auto";
 import preprocess from "svelte-preprocess";
 import presetUno from "@unocss/preset-uno";
 import presetAttributify from "@unocss/preset-attributify";
+import presetIcons from "@unocss/preset-icons";
 import UnoCss from "unocss/vite";
 import { extractorSvelte } from "@unocss/core";
 
@@ -23,7 +24,8 @@ const config = {
           extractors: [extractorSvelte],
 					presets: [
 						presetUno(),
-						presetAttributify()
+						presetAttributify(),
+						presetIcons()
 					],
 					rules: [
 						[/^text-(.*)$/, ([, c], { theme }) => {

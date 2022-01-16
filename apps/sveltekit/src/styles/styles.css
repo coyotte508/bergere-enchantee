@@ -7,10 +7,20 @@ body, html {
 
 a {
   color: unset;
+  text-decoration: none;
 }
 
-h1 {
+h1, nav {
   font-family: "Aileron", serif;
+}
+
+ol {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style-type: none;
 }
 
 @font-face {
@@ -21,4 +31,10 @@ h1 {
 @font-face {
   font-family: "Raleway";
   src: url(/Raleway-VariableFont_wght.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-style: italic;
+  src: url(/Raleway-Italic-VariableFont_wght.ttf) format("truetype");
 }
