@@ -15,13 +15,20 @@
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
+    "@unocss/preset-attributify": "^0.22.3",
+    "@unocss/preset-uno": "^0.22.3",
     "eslint": "^7.32.0",
     "eslint-plugin-svelte3": "^3.2.1",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.3",
+    "unocss": "^0.22.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@unocss/core": "^0.22.3",
+    "@unocss/reset": "^0.22.3"
+  }
 }
