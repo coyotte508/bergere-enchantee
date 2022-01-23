@@ -6,17 +6,18 @@
 </script>
 
 
-<header bg-oxford py-2 px-2 style="font-family: Aileron">
+<header bg-oxford py-2 px-2 flex items-center style="font-family: Aileron">
   <h1 text-sunray >La bergère enchantée</h1>
+  <a href="/connexion" title="Connexion" text-sunray text-3xl ml-auto inline-block> <div class="i-ant-design-login-outlined"></div></a>
 </header>
 <nav bg-oxford text-xl font-bold flex justify-around items-center text-white>
   <a href="/" py-4 text-center flex-grow hover:text-sunray>L'atelier</a>
-  <a href="/restauration" py-4 text-center flex-grow hover:text-sunray>Réalisations</a>
+  <a href="/realisations" py-4 text-center flex-grow hover:text-sunray>Réalisations</a>
   <a href="/vente" py-4 text-center flex-grow hover:text-sunray>e-shop</a>
   <a href="/tissus" py-4 text-center flex-grow hover:text-sunray>Tissus / Finitions</a>
   <a href="/contact" py-4 text-center flex-grow hover:text-sunray>Contact</a>
 </nav>
-<main class="pa-3">
+<main pa-3 max-w-3xl mx-auto overflow-x-hidden>
 <slot>  </slot>
 </main>
 <!-- <footer flex justify-around items-center text-center text-sunray>
