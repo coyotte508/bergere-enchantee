@@ -1,23 +1,4 @@
-<script lang="ts">
-
-let form: HTMLFormElement;
-let error = "";
-
-async function submit() {
-  const res = await fetch("/api/connexion", {method: "POST", body: new FormData(form)});
-
-  if (!res.ok) {
-    error = res.headers.get("content-type") === "application/json" ? await res.json().then(r => r.message) : "Erreur";
-  }
-}
-
-</script>
-
-{#if error}
-  <div class="border border-red-500 bg-red-300 rounded-lg pa-2">Cet utilisateur n'existe pas</div>
-{/if}
-
-<form method="post" action="/api/connexion" on:submit|preventDefault={submit} bind:this={form}>
+<form method="post">
   <div my-4>
     <label for="email" text-sunray text-2xl block>Email</label>
     <input type="email" required name="email" id="email" placeholder="E-mail" block>

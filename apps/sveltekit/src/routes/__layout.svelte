@@ -2,7 +2,7 @@
   import "../styles/styles.css";
   import "@unocss/reset/normalize.css";
   import "uno.css";
-
+  import {page} from "$app/stores";
 </script>
 
 
@@ -18,6 +18,9 @@
   <a href="/contact" py-4 text-center flex-grow hover:text-sunray>Contact</a>
 </nav>
 <main pa-3 max-w-3xl mx-auto overflow-x-hidden>
+  {#if $page.url.searchParams.get("error")}
+    <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
+  {/if}
 <slot>  </slot>
 </main>
 <!-- <footer flex justify-around items-center text-center text-sunray>
