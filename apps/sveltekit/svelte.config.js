@@ -37,6 +37,9 @@ const config = {
 								return { "background-color": theme.colors[c] };
 						}]
 					],
+					shortcuts: {
+						input: "w-full max-w-50 text-lg pl-2 border border-solid border-2 rounded-lg"
+					},
           theme: {
 						colors: {
 							"oxford": "#0a274c",

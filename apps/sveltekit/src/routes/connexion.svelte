@@ -1,12 +1,12 @@
 <form method="post">
   <div my-4>
-    <label for="email" text-sunray text-2xl block>Email</label>
-    <input type="email" required name="email" id="email" placeholder="E-mail" block>
+    <label for="email" text-sunray text-xl block>Email</label>
+    <input type="email" input required name="email" id="email" placeholder="E-mail" block>
   </div>
   
   <div my-4>
-    <label for="password" text-sunray text-2xl block>Mot de passe</label>
-    <input type="password" required name="password" id="password" placeholder="Mot de passe">
+    <label for="password" text-sunray text-xl block>Mot de passe</label>
+    <input type="password" input required name="password" id="password" placeholder="Mot de passe">
   </div>
 
   <input type="submit" value="Connexion">

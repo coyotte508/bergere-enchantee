@@ -7,7 +7,7 @@
 
 
 <header bg-oxford py-2 px-2 flex items-center style="font-family: Aileron">
-  <h1 text-sunray >La bergère enchantée</h1>
+  <h1 text-sunray>La bergère enchantée</h1>
   <a href="/connexion" title="Connexion" text-sunray text-3xl ml-auto inline-block> <div class="i-ant-design-login-outlined"></div></a>
 </header>
 <nav bg-oxford text-xl font-bold flex justify-around items-center text-white>
