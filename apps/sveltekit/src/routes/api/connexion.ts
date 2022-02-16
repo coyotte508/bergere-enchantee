@@ -2,6 +2,7 @@ import type { EndpointOutput } from "@sveltejs/kit";
 import type { RequestEvent } from "@sveltejs/kit/types/hooks";
 import {users} from "$lib/db";
 import {compare} from "bcryptjs";
+import { nanoid } from "nanoid";
 
 export async function post({request}: RequestEvent): Promise<EndpointOutput> {
   const data = await request.formData();
@@ -30,10 +31,16 @@ export async function post({request}: RequestEvent): Promise<EndpointOutput> {
     };
   }
 
+  const token = nanoid();
+  await users.updateOne({_id: user._id}, {$set: {token}});
+
   return {
     status: 303,
     headers: {
-      location: "/"
+      location: "/",
+      "Set-Cookie": `bergereToken=${JSON.stringify(token)}; Max-Age=${
+        24 * 3600 * 365 * 3
+      }; Path=/; SameSite=Lax; Secure`
     }
   };
 }

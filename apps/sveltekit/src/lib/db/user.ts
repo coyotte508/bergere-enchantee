@@ -4,6 +4,7 @@ import type { Timestamps } from "./types";
 export interface User extends Timestamps {
   email: string;
   hash: string;
+  token?: string;
   authority?: "admin";
 }
 
