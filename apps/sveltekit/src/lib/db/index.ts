@@ -1,4 +1,7 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import {MongoClient} from "mongodb";
 import { createPageCollection } from "./page";
 import { createUserCollection } from "./user";

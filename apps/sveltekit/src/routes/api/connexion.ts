@@ -1,6 +1,7 @@
 import type { EndpointOutput } from "@sveltejs/kit";
 import type { RequestEvent } from "@sveltejs/kit/types/hooks";
 import {users} from "$lib/db";
+import {compare} from "bcryptjs";
 
 export async function post({request}: RequestEvent): Promise<EndpointOutput> {
   const data = await request.formData();
@@ -18,8 +19,19 @@ export async function post({request}: RequestEvent): Promise<EndpointOutput> {
     };
   }
 
+  const password = data.get("password");
+
+  if (!await compare(password as string, user.hash)) {
+    return {
+      status: 403,
+      body: {
+        message: "Mauvais mot de passe"
+      }
+    };
+  }
+
   return {
-    status: 300,
+    status: 303,
     headers: {
       location: "/"
     }
