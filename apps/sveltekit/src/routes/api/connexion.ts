@@ -1,7 +1,7 @@
 import type { EndpointOutput } from "@sveltejs/kit";
 import type { RequestEvent } from "@sveltejs/kit/types/hooks";
 import {users} from "$lib/db";
-import {compare} from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
 export async function post({request}: RequestEvent): Promise<EndpointOutput> {
@@ -22,7 +22,7 @@ export async function post({request}: RequestEvent): Promise<EndpointOutput> {
 
   const password = data.get("password");
 
-  if (!await compare(password as string, user.hash)) {
+  if (!await bcrypt.compare(password as string, user.hash)) {
     return {
       status: 403,
       body: {

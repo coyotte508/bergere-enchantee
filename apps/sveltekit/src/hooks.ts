@@ -1,7 +1,11 @@
+import { users } from "$lib/db";
+import { extractCookie } from "$lib/extractCookie";
 import type { Handle } from "@sveltejs/kit";
+import type { Session } from "./global";
 
 export const handle: Handle = async({ event, resolve }) => {
   const originalPathname = event.url.pathname;
+  
   if (event.request.method === "POST" && !event.url.pathname.startsWith("/api/")) {
     event.url.pathname = `/api${event.url.pathname}`;
     const result = await resolve(event);
@@ -22,3 +26,14 @@ export const handle: Handle = async({ event, resolve }) => {
 
   return await resolve(event);
 };
+
+export async function getSession(event: {request: Request}): Promise<Session> {
+  const bergereToken = extractCookie("bergereToken", event.request.headers.get("cookie") ?? "");
+
+  if (bergereToken) {
+    const user = await users.findOne({token: bergereToken}, {projection: {email: 1}});
+    return {user: JSON.parse(JSON.stringify(user))};
+  }
+
+  return {};
+}

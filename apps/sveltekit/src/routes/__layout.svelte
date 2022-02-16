@@ -2,13 +2,21 @@
   import "../styles/styles.css";
   import "@unocss/reset/normalize.css";
   import "uno.css";
-  import {page} from "$app/stores";
+  import {page, session} from "$app/stores";
 </script>
 
 
 <header bg-oxford py-2 px-2 flex items-center style="font-family: Aileron">
   <h1 text-sunray>La bergère enchantée</h1>
+  {#if $session.user}
+  <form action="/deconnexion" method="post" text-sunray text-3xl ml-auto inline-block cursor-pointer>
+    <label class="i-ant-design-logout-outlined">
+      <input type="submit" title="Déconnexion" opacity-0  cursor-pointer>
+    </label>
+  </form>
+  {:else}
   <a href="/connexion" title="Connexion" text-sunray text-3xl ml-auto inline-block> <div class="i-ant-design-login-outlined"></div></a>
+  {/if}
 </header>
 <nav bg-oxford text-xl font-bold flex justify-around items-center text-white>
   <a href="/" py-4 text-center flex-grow hover:text-sunray>L'atelier</a>
