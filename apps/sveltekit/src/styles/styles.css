@@ -2,7 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: "Raleway", sans-serif;
+  font-family: "Gotham", sans-serif;
 }
 
 a {
@@ -28,6 +28,7 @@ li {
   src: url(/Ailerons-Typeface.otf) format("opentype");
 }
 
+/*
 @font-face {
   font-family: "Raleway";
   src: url(/Raleway-VariableFont_wght.ttf) format("truetype");
@@ -37,4 +38,17 @@ li {
   font-family: "Raleway";
   font-style: italic;
   src: url(/Raleway-Italic-VariableFont_wght.ttf) format("truetype");
+}
+*/
+
+@font-face {
+  font-family: "Gotham";
+  font-weight: 400;
+  src: url(/GothamBook.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Gotham";
+  font-weight: 700;
+  src: url(/GothamBold.ttf) format("truetype");
 }
