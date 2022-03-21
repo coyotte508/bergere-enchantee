@@ -31,7 +31,7 @@ export async function getSession(event: {request: Request}): Promise<Session> {
   const bergereToken = extractCookie("bergereToken", event.request.headers.get("cookie") ?? "");
 
   if (bergereToken) {
-    const user = await users.findOne({token: bergereToken}, {projection: {email: 1}});
+    const user = await users.findOne({token: bergereToken}, {projection: {email: 1, authority: 1}});
     return {user: JSON.parse(JSON.stringify(user))};
   }
 

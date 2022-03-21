@@ -37,7 +37,7 @@ export async function post({request}: RequestEvent): Promise<EndpointOutput> {
   return {
     status: 303,
     headers: {
-      location: "/",
+      location: data.get("redirect") as string ?? "/",
       "Set-Cookie": `bergereToken=${JSON.stringify(token)}; Max-Age=${
         24 * 3600 * 365 * 3
       }; Path=/; SameSite=Lax; Secure`
