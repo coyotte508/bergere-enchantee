@@ -20,13 +20,14 @@
   import type { User } from "$lib/db/user";
 
   export let user: User;
+  export let admin: boolean;
 </script>
 
 <p>
 Bienvenue, {user.email}!
 </p>
 
-{#if admin === "admin"}
+{#if admin}
 <p><a href="/admin" link>Admin</a></p>
 {/if}
 
