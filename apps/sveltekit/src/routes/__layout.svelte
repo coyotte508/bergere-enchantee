@@ -6,25 +6,28 @@
 </script>
 
 
-<header bg-oxford py-2 px-2 flex items-center style="font-family: Aileron">
-  <h1 text-sunray>La bergère enchantée</h1>
-  {#if $session.user}
-  <form action="/deconnexion" method="post" text-sunray text-3xl ml-auto inline-block cursor-pointer>
-    <label class="i-ant-design-logout-outlined">
-      <input type="submit" title="Déconnexion" opacity-0  cursor-pointer>
-    </label>
-  </form>
-  {:else}
-  <a href="/connexion" title="Connexion" text-sunray text-3xl ml-auto inline-block> <div class="i-ant-design-login-outlined"></div></a>
-  {/if}
+<header bg-oxford py-2 flex items-center style="font-family: Aileron">
+  <nav bg-oxford text-xl font-bold flex grow text-center items-center text-white>
+    <a href="/" grow><img src="/logo.svg" alt="Logo" title="Accueil" width="126" height="120"></a>
+    <a href="/aterlier" py-4 text-center grow hover:text-sunray>L'atelier</a>
+    <a href="/realisations" py-4 text-center grow hover:text-sunray>Réalisations</a>
+    <a href="/vente" py-4 text-center grow hover:text-sunray>e-shop</a>
+    <a href="/tissus" py-4 text-center grow hover:text-sunray>Tissus / Finitions</a>
+    <a href="/contact" py-4 text-center grow hover:text-sunray>Contact</a>
+    {#if $session.user}
+    <form action="/deconnexion" method="post" text-sunray text-3xl inline-block cursor-pointer>
+      <label class="i-ant-design-logout-outlined">
+        <input type="submit" title="Déconnexion" opacity-0  cursor-pointer>
+      </label>
+    </form>
+    {:else}
+    <a href="/connexion" title="Connexion" text-center grow text-sunray text-3xl inline-block>
+      <div inline-block class="i-ant-design-login-outlined"></div>
+    </a>
+    {/if}
+  </nav>
 </header>
-<nav bg-oxford text-xl font-bold flex justify-around items-center text-white>
-  <a href="/" py-4 text-center flex-grow hover:text-sunray>L'atelier</a>
-  <a href="/realisations" py-4 text-center flex-grow hover:text-sunray>Réalisations</a>
-  <a href="/vente" py-4 text-center flex-grow hover:text-sunray>e-shop</a>
-  <a href="/tissus" py-4 text-center flex-grow hover:text-sunray>Tissus / Finitions</a>
-  <a href="/contact" py-4 text-center flex-grow hover:text-sunray>Contact</a>
-</nav>
+
 <main pa-3 max-w-3xl mx-auto overflow-x-hidden>
   {#if $page.url.searchParams.get("error")}
     <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
