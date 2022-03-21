@@ -1,6 +1,6 @@
 import { users } from "$lib/db";
 import { extractCookie } from "$lib/extractCookie";
-import type { Handle } from "@sveltejs/kit";
+import type { Handle, RequestEvent } from "@sveltejs/kit";
 import type { Session } from "./global";
 
 export const handle: Handle = async({ event, resolve }) => {
@@ -8,6 +8,7 @@ export const handle: Handle = async({ event, resolve }) => {
   
   if (event.request.method === "POST" && !event.url.pathname.startsWith("/api/")) {
     event.url.pathname = `/api${event.url.pathname}`;
+    await getSession(event); // fill in locals
     const result = await resolve(event);
 
     if (result.status >= 400) {
@@ -27,11 +28,14 @@ export const handle: Handle = async({ event, resolve }) => {
   return await resolve(event);
 };
 
-export async function getSession(event: {request: Request}): Promise<Session> {
+export async function getSession(event: RequestEvent): Promise<Session> {
   const bergereToken = extractCookie("bergereToken", event.request.headers.get("cookie") ?? "");
 
   if (bergereToken) {
     const user = await users.findOne({token: bergereToken}, {projection: {email: 1, authority: 1}});
+    event.locals.user = user;
+    event.locals.admin = user.authority === "admin";
+    console.log(event.locals);
     return {user: JSON.parse(JSON.stringify(user))};
   }
 

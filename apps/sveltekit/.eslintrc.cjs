@@ -14,8 +14,9 @@ module.exports = {
 	},
 	rules: {
 		semi: ["error", "always"],
-		"max-len": ["error", { "code": 120 }],
-		quotes: ["error", "double", { "avoidEscape": true }]
+		"max-len": "off",
+		// "max-len": ["error", { "code": 120 }],
+		quotes: ["error", "double", { "avoidEscape": true }],
 	},
 	env: {
 		browser: true,
