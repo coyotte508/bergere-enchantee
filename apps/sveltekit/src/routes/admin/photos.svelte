@@ -44,7 +44,7 @@
 {#each photos as photo }
   {@const format = photo.storage.slice(-1)[0]}
   <div flex flex-col text-center>
-    <img src="/api/photo/{format._id}" alt={photo.name} h-36 style="object-fit: scale-down;" >
+    <img src="/photo/raw/{format._id}" alt={photo.name} h-36 style="object-fit: scale-down;" >
     <span>{photo.name}</span>
   </div>
 {/each}
