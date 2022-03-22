@@ -1,5 +1,4 @@
-import type { EndpointOutput } from "@sveltejs/kit";
-import type { RequestEvent } from "@sveltejs/kit/types/hooks";
+import type { EndpointOutput, RequestEvent } from "@sveltejs/kit";
 import busboy from "busboy";
 import { pipeline } from "stream/promises";
 import { nanoid } from "nanoid";
@@ -25,8 +24,7 @@ import { client, pictures, picturesFs } from "$lib/db";
 }
 
 export async function post({request, locals, url}: RequestEvent): Promise<EndpointOutput> {
-  if (!locals.admin) {
-    console.log(locals);
+  if (!locals.admin || 1) {
     return {
       status: 403,
       body: {

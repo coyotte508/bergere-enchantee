@@ -1,5 +1,4 @@
-import type { EndpointOutput } from "@sveltejs/kit";
-import type { RequestEvent } from "@sveltejs/kit/types/hooks";
+import type { EndpointOutput, RequestEvent } from "@sveltejs/kit";
 import {users} from "$lib/db";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
