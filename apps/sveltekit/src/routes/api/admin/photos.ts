@@ -23,8 +23,8 @@ import { client, pictures, picturesFs } from "$lib/db";
   return Buffer.concat(chunks);
 }
 
-export async function post({request, locals, url}: RequestEvent): Promise<EndpointOutput> {
-  if (!locals.admin || 1) {
+export async function post({request, locals}: RequestEvent): Promise<EndpointOutput> {
+  if (!locals.admin) {
     return {
       status: 403,
       body: {
@@ -113,9 +113,6 @@ export async function post({request, locals, url}: RequestEvent): Promise<Endpoi
   });
 
   return {
-    status: 303,
-    headers: {
-      location: url.pathname.slice("/api".length),
-    }
+    status: 200,
   };
 }

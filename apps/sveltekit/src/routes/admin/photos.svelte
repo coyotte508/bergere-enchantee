@@ -27,7 +27,7 @@
 <form method="post" enctype="multipart/form-data">
   <label block my-4 leading-8>
     Nom de la photo
-    <input type="text" name="name" block placeholder="Pas de faute d'orthographes" required>
+    <input input type="text" name="name" block placeholder="Nom définitif" required>
   </label>
 
   <label block my-4 leading-8>
@@ -40,10 +40,10 @@
 
 <h1 text-sunray>Liste des photos</h1>
 
-<div flex flex-row gap-6>
+<div flex flex-row gap-6 mt-6>
 {#each photos as photo }
   {@const format = photo.storage.slice(-1)[0]}
-  <div flex flex-col>
+  <div flex flex-col text-center>
     <img src="/api/photo/{format._id}" alt={photo.name} h-36 style="object-fit: scale-down;" >
     <span>{photo.name}</span>
   </div>
