@@ -1,8 +1,7 @@
 <script lang="ts" context="module">
-  import type { LoadInput, LoadOutput } from "@sveltejs/kit";
+  import type { Load } from "@sveltejs/kit";
 
-  export async function load(input: LoadInput): Promise<LoadOutput> {
-    console.log("get photos")
+  export const load: Load = async (input) => {
     const photos = await input.fetch("/api/photos");
     if (!photos.ok) {
       throw new Error("Erreur en récupérant les photos: " + photos.status);

@@ -3,12 +3,14 @@ import type { Collection, Db } from "mongodb";
 import type { Timestamps } from "./types";
 export interface Page extends Timestamps {
   _id: string;
+  name: string;
   text: Record<string, string>;
   pictures: Record<string, string | null>;
 }
 
 export interface HomePage extends Page {
   _id: "/",
+  name: "Home"
   text: {
     "presentation": string,
     "eshop-description": string
@@ -23,6 +25,7 @@ export interface HomePage extends Page {
 export const defaultPages = {
   "/": {
     _id: "/",
+    name: "Home",
     text: {
       "presentation": `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
 

@@ -5,7 +5,6 @@
   export const load: Load = async (input) => {
     const pageId = input.url.pathname;
     const pageData: Page = await (await input.fetch(`/api/page/${encodeURIComponent(pageId)}`)).json();
-    console.log(pageData);
     let pictures: Picture[] = [];
     if (!isEmpty(pageData.pictures)) {
       pictures = await (await input.fetch(`/api/photos?ids=${Object.values(pageData.pictures).join(",")}`)).json();
