@@ -4,10 +4,15 @@
 
   export const load: Load = async (input) => {
     const pageId = input.url.pathname;
-    const pageData: Page = await (await input.fetch(`/page/${encodeURIComponent(pageId)}`)).json();
+    if (pageId.includes("page%25")) {
+      // infinite loop
+      return;
+    }
+    const pageFetch = await input.fetch(`/pages/${encodeURIComponent(pageId)}`);
+    const pageData: Page | null = pageFetch.ok ? await pageFetch.json() : null;
     let pictures: Picture[] = [];
-    if (Object.values(pageData.pictures ?? {}).filter(Boolean).length !== 0) {
-      pictures = await (await input.fetch(`/api/photos?ids=${Object.values(pageData.pictures).filter(Boolean).join(",")}`)).json();
+    if (pageData && Object.values(pageData.pictures ?? {}).filter(Boolean).length !== 0) {
+      pictures = await (await input.fetch(`/photos?ids=${Object.values(pageData.pictures).filter(Boolean).join(",")}`, {headers: {accept: "application/json"}})).json();
     }
 
     return {

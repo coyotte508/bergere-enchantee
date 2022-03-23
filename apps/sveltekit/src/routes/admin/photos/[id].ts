@@ -13,6 +13,14 @@ export const get: RequestHandler = async ({params}) => {
   };
 };
 
+export const post: RequestHandler = async({params, request}) => {
+  await pictures.updateOne({_id: params.id}, {$set: {name: String((await request.formData()).get("name"))}});
+
+  return {
+    status: 200
+  };
+};
+
 export const del: RequestHandler = async ({params}) => {
   await client.withSession(async (session) => {
     await pictures.deleteOne({_id: params.id}, {session});
@@ -20,5 +28,6 @@ export const del: RequestHandler = async ({params}) => {
   });
   
   return {
+    status: 200
   };
 };

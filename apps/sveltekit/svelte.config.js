@@ -39,7 +39,7 @@ const config = {
 						}]
 					],
 					shortcuts: {
-						input: "w-full max-w-50 text-lg pl-2 border border-solid border-2 rounded-lg",
+						input: "w-full max-w-80 text-lg pl-2 border border-solid border-2 rounded-lg",
 						link: "underline text-brunswick"
 					},
           theme: {

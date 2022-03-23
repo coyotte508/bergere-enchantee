@@ -1,9 +1,7 @@
 <script context="module" lang="ts">
-  import type { LoadInput, LoadOutput } from "@sveltejs/kit";
-  import type { StringDict } from "src/global";
-  import type { Stuff } from "../__layout.svelte";
+  import type { Load } from "@sveltejs/kit";
 
-  export function load(input: LoadInput<StringDict, Stuff>): LoadOutput {
+  export const load: Load = async(input) => {
     if (!input.stuff.user) {
       return { status: 303, redirect: `/connexion?suivant=${encodeURIComponent(input.url.toString())}` };
     }
@@ -13,13 +11,20 @@
     }
 
     return {
+      props: {
+        url: input.url
+      }
     };
-  }
+  };
+</script>
+
+<script lang="ts">
+  export let url: URL;
 </script>
 
 <div flex justify-evenly mb-10>
-  <a href="/admin/pages" link>Pages</a>
-  <a href="/admin/photos" link>Photos</a>
+  <a href="/admin/pages" pa-2 link class:text-sunray="{url.pathname.startsWith('/admin/pages')}">Pages</a>
+  <a href="/admin/photos" pa-2 link class:text-sunray="{url.pathname.startsWith('/admin/photos')}">Photos</a>
 </div>
 
 <slot/>

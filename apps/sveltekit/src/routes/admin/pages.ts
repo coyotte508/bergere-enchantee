@@ -1,3 +1,4 @@
+import { pictures } from "$lib/db";
 import { pages } from "$lib/db/page";
 import type { RequestHandler } from "@sveltejs/kit";
 
@@ -12,6 +13,9 @@ export const get: RequestHandler = async ({locals}) => {
   }
 
   return {
-    body: JSON.stringify(Object.values(pages))
+    body: {
+      pages: Object.values(pages),
+      photos: await pictures.find({}).toArray(),
+    }
   };
 };

@@ -1,25 +1,18 @@
-<script lang="ts" context="module">
-  import type { Load } from "@sveltejs/kit";
-
-  export const load: Load = async (input) => {
-    const pages = await (await input.fetch("/pages", {headers: {accept: "application/json"}})).json();
-    const photos = await (await input.fetch("/photos", {headers: {accept: "application/json"}})).json();
-
-    return { 
-      props: {
-        pages,
-        photos
-      }
-    };
-  };
-</script>
-
 <script lang="ts">
   import type { Page } from "$lib/db/page";
   import type { Picture } from "$lib/db/picture";
 
   export let pages: Page[];
   export let photos: Picture[];
+
+  function updatePicture(page: Page, key: string, value: string) {
+    console.log("update picture", key, value);
+    fetch("/admin/pages/" + encodeURIComponent(page._id), {
+      method: "POST", 
+      headers: {"content-type": "application/json"}, 
+      body: JSON.stringify({type: "picture", key, value})
+    });
+  }
 </script>
 
 {#each pages as page}
@@ -39,7 +32,7 @@
   {#each Object.keys(page.pictures) as key}
     <label block w-full mt-4>
       <h3>{key}</h3>
-      <select name="{page._id}_picture_{key}" bind:value={page.pictures[key]}>
+      <select name="{page._id}_picture_{key}" value={page.pictures[key]} on:change={(event) => updatePicture(page, key, event.target.value)}>
         {#each photos as photo}
           <option value={photo._id}>{photo.name}</option>
         {/each}

@@ -2,7 +2,7 @@ import type { RequestHandler } from "@sveltejs/kit";
 import busboy from "busboy";
 import { pipeline } from "stream/promises";
 import { nanoid } from "nanoid";
-import { kebabCase } from "lodash";
+import _ from "lodash";
 import sharp from "sharp";
 import type { Readable } from "stream";
 import { client, pictures, picturesFs } from "$lib/db";
@@ -87,7 +87,7 @@ export const post: RequestHandler = async ({request, locals}) => {
     }
   }
 
-  const _id = kebabCase(name.replace(/&/g,"-and-")) + "-" + nanoid(6);
+  const _id = _.kebabCase(name.replace(/&/g,"-and-")) + "-" + nanoid(6);
 
   await client.withSession(async (session) => {
     await pictures.insertOne({
@@ -118,10 +118,8 @@ export const post: RequestHandler = async ({request, locals}) => {
   };
 };
 
-export const get: RequestHandler = async ({locals, url}) => {
-  const ids = url.searchParams.get("ids") as string;
-
-  if (!locals.admin && !ids) {
+export const get: RequestHandler = async ({locals}) => {
+  if (!locals.admin) {
     return {
       status: 403,
       body: {
@@ -131,6 +129,8 @@ export const get: RequestHandler = async ({locals, url}) => {
   }
 
   return {
-    body: await pictures.find(ids ? {_id: {$in: ids.split(",")}}: {}).toArray()
+    body: {
+      photos: await pictures.find({}).toArray()
+    }
   };
 };
