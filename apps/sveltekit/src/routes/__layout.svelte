@@ -37,6 +37,7 @@
   import {page} from "$app/stores";
   import type { Page } from "$lib/db/page";
   import type { Picture } from "$lib/db/picture";
+import Container from "$lib/components/Container.svelte";
 
   export let user: User;
   export let pageData: Page;
@@ -70,12 +71,13 @@
   </nav>
 </header>
 
-<main pa-3 max-w-6xl w-full mx-auto overflow-x-hidden box-border>
-  {#if $page.url.searchParams.get("error")}
-    <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
-  {/if}
+{#if $page.url.searchParams.get("error")}
+<Container>
+  <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
+</Container>
+{/if}
+
 <slot>  </slot>
-</main>
 <!-- <footer flex justify-around items-center text-center text-sunray>
   <a py-2 flex-grow href="mailto:contact@bergerenchantee.fr" bg-oxford opacity-40 hover:opacity-100 hover:transition-all>Contact</a>
   <a py-2 flex-grow href="https://coyo.dev" bg-oxford opacity-40 hover:opacity-100 hover:transition-all>Créateur</a>

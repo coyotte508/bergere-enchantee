@@ -19,6 +19,8 @@
 </script>
 
 <script lang="ts">
+import Container from "$lib/components/Container.svelte";
+
   export let url: URL;
 </script>
 
@@ -27,4 +29,6 @@
   <a href="/admin/photos" pa-2 link class:text-sunray="{url.pathname.startsWith('/admin/photos')}">Photos</a>
 </div>
 
-<slot/>
+<Container>  
+  <slot/>
+</Container>

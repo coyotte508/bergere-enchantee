@@ -18,19 +18,22 @@
 </script>
 <script lang="ts">
   import type { User } from "$lib/db/user";
+  import Container from "$lib/components/Container.svelte";
 
   export let user: User;
   export let admin: boolean;
 </script>
 
-<p>
-Bienvenue, {user.email}!
-</p>
-
-{#if admin}
-<p><a href="/admin" link>Admin</a></p>
-{/if}
-
-<form action="/deconnexion" method="post" text-sunray text-3xl inline-block cursor-pointer>
-  <input type="submit" value="Déconnexion"  cursor-pointer>
-</form>
+<Container>
+  <p>
+  Bienvenue, {user.email}!
+  </p>
+  
+  {#if admin}
+  <p><a href="/admin" link>Admin</a></p>
+  {/if}
+  
+  <form action="/deconnexion" method="post" text-sunray text-3xl inline-block cursor-pointer>
+    <input type="submit" value="Déconnexion"  cursor-pointer>
+  </form>
+</Container>
