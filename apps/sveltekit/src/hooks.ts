@@ -1,9 +1,8 @@
 import { users } from "$lib/db";
 import { extractCookie } from "$lib/extractCookie";
-import type { Handle, RequestEvent } from "@sveltejs/kit";
+import type { GetSession, Handle, RequestEvent } from "@sveltejs/kit";
 import type { Session } from "./global";
 
-// We redirect POST requests not to /api, to /api. Then we redirect them back to not /api (with the error message as query parameter if present)
 export const handle: Handle = async({ event, resolve }) => {
   await getSession(event); // fill in locals
 
@@ -25,7 +24,7 @@ export const handle: Handle = async({ event, resolve }) => {
   return result;
 };
 
-export async function getSession(event: RequestEvent): Promise<Session> {
+export const getSession: GetSession = async (event) => {
   const bergereToken = extractCookie("bergereToken", event.request.headers.get("cookie") ?? "");
 
   if (bergereToken) {
@@ -36,4 +35,4 @@ export async function getSession(event: RequestEvent): Promise<Session> {
   }
 
   return {};
-}
+};

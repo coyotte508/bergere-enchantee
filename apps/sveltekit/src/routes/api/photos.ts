@@ -1,8 +1,10 @@
 import { pictures } from "$lib/db";
 import type { EndpointOutput, RequestEvent } from "@sveltejs/kit";
 
-export async function get({locals}: RequestEvent): Promise<EndpointOutput> {
-  if (!locals.admin) {
+export async function get({locals, url}: RequestEvent): Promise<EndpointOutput> {
+  const ids = url.searchParams.get("ids") as string;
+
+  if (!locals.admin && !ids) {
     return {
       status: 403,
       body: {
@@ -12,6 +14,6 @@ export async function get({locals}: RequestEvent): Promise<EndpointOutput> {
   }
 
   return {
-    body: JSON.stringify(await pictures.find({}).toArray())
+    body: JSON.stringify(await pictures.find(ids ? {_id: {$in: ids.split(",")}}: {}).toArray())
   };
 }

@@ -1,23 +1,28 @@
 <script context="module" lang="ts">
-  import type { LoadInput, LoadOutput } from "@sveltejs/kit";
+  import type { Load } from "@sveltejs/kit";
   import type { User } from "$lib/db/user";
 
-  export interface Stuff {
-    user: User;
-    admin: boolean;
-  }
+  export const load: Load = async (input) => {
+    const pageId = input.url.pathname;
+    const pageData: Page = await (await input.fetch(`/api/page/${encodeURIComponent(pageId)}`)).json();
+    console.log(pageData);
+    let pictures: Picture[] = [];
+    if (!isEmpty(pageData.pictures)) {
+      pictures = await (await input.fetch(`/api/photos?ids=${Object.values(pageData.pictures).join(",")}`)).json();
+    }
 
-  export function load (input: LoadInput): LoadOutput {
     return {
       stuff: {
         user: input.session.user,
-        admin: input.session.user?.authority === "admin"
+        admin: input.session.user?.authority === "admin",
+        pageData,
+        pictures
       },
       props: {
         user: input.session.user
       }
     };  
-  }
+  };
 </script>
 
 <script lang="ts">
@@ -25,6 +30,9 @@
   import "@unocss/reset/normalize.css";
   import "uno.css";
   import {page} from "$app/stores";
+  import type { Page } from "$lib/db/page";
+  import type { Picture } from "$lib/db/picture";
+  import { isEmpty } from "lodash";
 
   export let user: User;
 
