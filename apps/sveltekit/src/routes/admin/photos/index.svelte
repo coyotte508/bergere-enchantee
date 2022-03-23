@@ -23,10 +23,10 @@
 
 <h1 text-sunray>Liste des photos</h1>
 
-<div flex flex-row gap-6 mt-6>
+<div flex flex-row flex-wrap gap-6 mt-6>
 {#each photos as photo}
   <div flex flex-col text-center>
-    <a href="/admin/photos/{photo._id}">
+    <a href="/admin/photos/{photo._id}" flex flex-col items-center>
       <PictureComponent picture={photo} class="h-36 block" style="object-fit: scale-down;"/>
       <span>{photo.name}</span>
     </a>

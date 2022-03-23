@@ -18,7 +18,12 @@ export interface HomePage extends Page {
   pictures: {
     discover: string | null,
     move: string | null,
-    "e-shop": string | null
+    "e-shop": string | null,
+    "realisation-1": string | null,
+    "realisation-2": string | null,
+    "realisation-3": string | null,
+    "realisation-4": string | null,
+    "realisation-5": string | null,
   }
 }
 
@@ -54,6 +59,11 @@ Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, 
       discover: null,
       move: null,
       "e-shop": null,
+      "realisation-1": null,
+      "realisation-2": null,
+      "realisation-3": null,
+      "realisation-4": null,
+      "realisation-5": null,
     }
   } as HomePage,
   "/contact": {
