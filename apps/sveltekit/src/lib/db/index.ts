@@ -9,13 +9,13 @@ import { createUserCollection } from "./user";
 
 const client = new MongoClient(process.env.MONGODB_URL ?? "mongodb://localhost:27017");
 
-await client.connect();
+export const connectPromise = client.connect().catch(console.error);
 
 const db = client.db("bergere");
 
-const pages = await createPageCollection(db);
-const users = await createUserCollection(db);
-const {pictures, picturesFs} = await createPictureCollections(db);
+const pages = createPageCollection(db, client);
+const users = createUserCollection(db, client);
+const {pictures, picturesFs} = createPictureCollections(db, client);
 
 export {
   client,

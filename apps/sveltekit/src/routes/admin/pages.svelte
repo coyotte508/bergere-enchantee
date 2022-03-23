@@ -2,11 +2,13 @@
   import type { Load } from "@sveltejs/kit";
 
   export const load: Load = async (input) => {
-    const pages = await (await input.fetch("/api/pages")).json();
+    const pages = await (await input.fetch("/pages", {headers: {accept: "application/json"}})).json();
+    const photos = await (await input.fetch("/photos", {headers: {accept: "application/json"}})).json();
 
     return { 
       props: {
-        pages
+        pages,
+        photos
       }
     };
   };
@@ -14,8 +16,10 @@
 
 <script lang="ts">
   import type { Page } from "$lib/db/page";
+  import type { Picture } from "$lib/db/picture";
 
   export let pages: Page[];
+  export let photos: Picture[];
 </script>
 
 {#each pages as page}
@@ -35,7 +39,11 @@
   {#each Object.keys(page.pictures) as key}
     <label block w-full mt-4>
       <h3>{key}</h3>
-      
+      <select name="{page._id}_picture_{key}" bind:value={page.pictures[key]}>
+        {#each photos as photo}
+          <option value={photo._id}>{photo.name}</option>
+        {/each}
+      </select>
     </label>
   {/each}
 {/each}

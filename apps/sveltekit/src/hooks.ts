@@ -1,14 +1,17 @@
-import { users } from "$lib/db";
+import { connectPromise, users } from "$lib/db";
 import { extractCookie } from "$lib/extractCookie";
-import type { GetSession, Handle, RequestEvent } from "@sveltejs/kit";
-import type { Session } from "./global";
+import type { GetSession, Handle } from "@sveltejs/kit";
 
 export const handle: Handle = async({ event, resolve }) => {
+  console.log(event.request.method, event.url.href);
+  await connectPromise;
+
   await getSession(event); // fill in locals
 
   const result = await resolve(event);
 
-  if (event.request.headers.get("X-Requested-With") !== "XMLHttpRequest" && event.request.method === "POST") {
+  const isXhr = event.request.headers.get("accept") === "application/json" || event.request.headers.get("X-Requested-With") !== "XMLHttpRequest";
+  if (isXhr && (event.request.method === "POST" || event.request.method === "DELETE")) {
     // This is a normal POST, not a programmatic one
 
     if (!result.ok) {

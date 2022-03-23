@@ -1,5 +1,5 @@
-import { keyBy, merge } from "lodash";
-import type { Collection, Db } from "mongodb";
+import _ from "lodash";
+import type { Collection, Db, MongoClient } from "mongodb";
 import type { Timestamps } from "./types";
 export interface Page extends Timestamps {
   _id: string;
@@ -10,7 +10,7 @@ export interface Page extends Timestamps {
 
 export interface HomePage extends Page {
   _id: "/",
-  name: "Home"
+  name: "Accueil"
   text: {
     "presentation": string,
     "eshop-description": string
@@ -25,7 +25,7 @@ export interface HomePage extends Page {
 export const defaultPages = {
   "/": {
     _id: "/",
-    name: "Home",
+    name: "Accueil",
     text: {
       "presentation": `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
 
@@ -52,19 +52,21 @@ Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, 
 
 export let pages = defaultPages;
 
-export async function createPageCollection(db: Db): Promise<Collection<Page>> {
+async function refreshPages(coll: Collection<Page>) {
+  const dbPages = _.keyBy(await coll.find({}).toArray(), "_id");
+  pages = _.merge({}, defaultPages, dbPages);
+}
+
+export function createPageCollection(db: Db, client: MongoClient): Collection<Page> {
   const coll = db.collection<Page>("pages");
   
-  const dbPages = keyBy(await coll.find({}).toArray(), "_id");
-  pages = merge({}, defaultPages, dbPages);
+  client.on("open", () => {
+    refreshPages(coll).catch(console.error);
 
-  coll.watch().on("change", async () => {
-    try {
-      const dbPages = keyBy(await coll.find({}).toArray(), "_id");
-      pages = merge({}, defaultPages, dbPages);
-    } catch(err) {
-      console.error(err);
-    }
+    coll.watch().on("change", () => {
+      refreshPages(coll).catch(console.error);
+    });
   });
+  
   return coll;
 }

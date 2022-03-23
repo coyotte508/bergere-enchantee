@@ -43,8 +43,10 @@
 {#each photos as photo }
   {@const format = photo.storage.slice(-1)[0]}
   <div flex flex-col text-center>
-    <img src="/photo/raw/{format._id}" alt={photo.name} h-36 style="object-fit: scale-down;" >
-    <span>{photo.name}</span>
+    <a href="/admin/photo/{photo._id}">
+      <img src="/photo/raw/{format._id}" alt={photo.name} h-36 style="object-fit: scale-down;" >
+      <span>{photo.name}</span>
+    </a>
   </div>
 {/each}
 </div>

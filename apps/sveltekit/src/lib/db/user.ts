@@ -1,4 +1,4 @@
-import type { Collection, Db } from "mongodb";
+import type { Collection, Db, MongoClient } from "mongodb";
 import type { Timestamps } from "./types";
 
 export interface User extends Timestamps {
@@ -8,16 +8,18 @@ export interface User extends Timestamps {
   authority?: "admin";
 }
 
-export async function createUserCollection(db: Db): Promise<Collection<User>> {
+export function createUserCollection(db: Db, client: MongoClient): Collection<User> {
   const coll = db.collection<User>("users");
 
-  await coll.createIndex({
-    email: 1
-  }, {
-    collation: {
-      locale: "en",
-      strength: 1
-    }
+  client.on("open", () => {
+    coll.createIndex({
+      email: 1
+    }, {
+      collation: {
+        locale: "en",
+        strength: 1
+      }
+    }).catch(console.error);
   });
 
   return coll;

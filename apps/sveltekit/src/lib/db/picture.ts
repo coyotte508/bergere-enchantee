@@ -1,4 +1,4 @@
-import type { Collection, Db } from "mongodb";
+import type { Collection, Db, MongoClient } from "mongodb";
 import type { Timestamps } from "./types";
 
 export interface Picture extends Timestamps {
@@ -18,9 +18,10 @@ export interface PictureFs extends Timestamps {
   _id: string;
   data: Buffer;
   size: number;
+  picture: string;
 }
 
-export async function createPictureCollections(db: Db): Promise<{pictures: Collection<Picture>, picturesFs: Collection<PictureFs>}> {
+export function createPictureCollections(db: Db, client: MongoClient): {pictures: Collection<Picture>, picturesFs: Collection<PictureFs>} {
   const coll = db.collection<Picture>("pictures");
   const fs = db.collection<PictureFs>("pictures.fs");
 

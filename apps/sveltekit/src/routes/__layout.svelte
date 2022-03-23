@@ -4,10 +4,10 @@
 
   export const load: Load = async (input) => {
     const pageId = input.url.pathname;
-    const pageData: Page = await (await input.fetch(`/api/page/${encodeURIComponent(pageId)}`)).json();
+    const pageData: Page = await (await input.fetch(`/page/${encodeURIComponent(pageId)}`)).json();
     let pictures: Picture[] = [];
-    if (!isEmpty(pageData.pictures)) {
-      pictures = await (await input.fetch(`/api/photos?ids=${Object.values(pageData.pictures).join(",")}`)).json();
+    if (Object.values(pageData.pictures ?? {}).filter(Boolean).length !== 0) {
+      pictures = await (await input.fetch(`/api/photos?ids=${Object.values(pageData.pictures).filter(Boolean).join(",")}`)).json();
     }
 
     return {
@@ -18,7 +18,8 @@
         pictures
       },
       props: {
-        user: input.session.user
+        user: input.session.user,
+        pageData
       }
     };  
   };
@@ -31,13 +32,18 @@
   import {page} from "$app/stores";
   import type { Page } from "$lib/db/page";
   import type { Picture } from "$lib/db/picture";
-  import { isEmpty } from "lodash";
 
   export let user: User;
+  export let pageData: Page;
 
   $: path = $page.url.pathname;
 </script>
 
+<svelte:head>
+  {#if pageData}
+    <title>{pageData.name}</title>
+  {/if}
+</svelte:head>
 
 <header bg-oxford py-2 flex items-center style="font-family: Aileron">
   <nav bg-oxford text-xl font-bold flex grow text-center items-center text-white>

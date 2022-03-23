@@ -1,4 +1,4 @@
-import type { EndpointOutput, RequestEvent } from "@sveltejs/kit";
+import type { RequestHandler } from "@sveltejs/kit";
 import busboy from "busboy";
 import { pipeline } from "stream/promises";
 import { nanoid } from "nanoid";
@@ -23,7 +23,7 @@ import { client, pictures, picturesFs } from "$lib/db";
   return Buffer.concat(chunks);
 }
 
-export async function post({request, locals}: RequestEvent): Promise<EndpointOutput> {
+export const post: RequestHandler = async ({request, locals}) => {
   if (!locals.admin) {
     return {
       status: 403,
@@ -108,11 +108,29 @@ export async function post({request, locals}: RequestEvent): Promise<EndpointOut
       createdAt: new Date(),
       updatedAt: new Date(),
       size: format.data.length,
-      data: format.data
+      data: format.data,
+      picture: _id
     }), {session}));
   });
 
   return {
     status: 200,
   };
-}
+};
+
+export const get: RequestHandler = async ({locals, url}) => {
+  const ids = url.searchParams.get("ids") as string;
+
+  if (!locals.admin && !ids) {
+    return {
+      status: 403,
+      body: {
+        message: "Vous devez être admin"
+      }
+    };
+  }
+
+  return {
+    body: await pictures.find(ids ? {_id: {$in: ids.split(",")}}: {}).toArray()
+  };
+};
