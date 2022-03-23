@@ -6,11 +6,18 @@
   export let photos: Picture[];
 
   function updatePicture(page: Page, key: string, value: string) {
-    console.log("update picture", key, value);
     fetch("/admin/pages/" + encodeURIComponent(page._id), {
       method: "POST", 
       headers: {"content-type": "application/json"}, 
       body: JSON.stringify({type: "picture", key, value})
+    });
+  }
+
+  function updateText(page: Page, key: string, value: string) {
+    fetch("/admin/pages/" + encodeURIComponent(page._id), {
+      method: "POST", 
+      headers: {"content-type": "application/json"}, 
+      body: JSON.stringify({type: "text", key, value})
     });
   }
 </script>
@@ -23,7 +30,7 @@
   {#each Object.keys(page.text) as key}
     <label block w-full mt-4>
        <h3>{key}</h3>
-      <textarea name="{page._id}_text_{key}" cols="30" rows="10" block w-full bind:value={page.text[key]}></textarea>
+      <textarea name="{page._id}_text_{key}" cols="30" rows="10" block w-full value={page.text[key]} on:blur={(event) => updateText(page, key, event.target.value)}></textarea>
     </label>
   {/each}
 

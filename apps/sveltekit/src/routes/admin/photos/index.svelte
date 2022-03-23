@@ -25,7 +25,6 @@
 
 <div flex flex-row gap-6 mt-6>
 {#each photos as photo}
-  {@const format = photo.storage.slice(-1)[0]}
   <div flex flex-col text-center>
     <a href="/admin/photos/{photo._id}">
       <PictureComponent picture={photo} class="h-36 block" style="object-fit: scale-down;"/>

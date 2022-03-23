@@ -22,6 +22,14 @@ export interface HomePage extends Page {
   }
 }
 
+export interface ContactPage extends Page {
+  _id: "/contact",
+  name: "Contact",
+  text: {
+    description: string
+  }
+}
+
 export const defaultPages = {
   "/": {
     _id: "/",
@@ -47,7 +55,13 @@ Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, 
       move: null,
       "e-shop": null,
     }
-  } as HomePage
+  } as HomePage,
+  "/contact": {
+    _id: "/contact",
+    name: "Contact",
+    text: {"description": "Je me déplace à votre domicile dans le Finistère sur rendez-vous."},
+    pictures: {}
+  } as ContactPage
 };
 
 export let pages = defaultPages;

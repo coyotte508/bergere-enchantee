@@ -70,7 +70,7 @@
   </nav>
 </header>
 
-<main pa-3 max-w-6xl w-full mx-auto overflow-x-hidden>
+<main pa-3 max-w-6xl w-full mx-auto overflow-x-hidden box-border>
   {#if $page.url.searchParams.get("error")}
     <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
   {/if}
