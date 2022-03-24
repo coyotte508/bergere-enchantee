@@ -42,13 +42,20 @@
   export let user: User;
   export let pageData: Page;
 
+  $: title = pageData?.name;
+  $: google = pageData?.text["google"];
   $: path = $page.url.pathname;
 </script>
 
 <svelte:head>
-  {#if pageData}
-    <title>{pageData.name}</title>
-  {/if}
+  {#key title}
+    {#if title}
+      <title>{title}</title>
+    {/if}
+    {#if google}
+      <meta name="description" content={google} >
+    {/if}
+  {/key}
 </svelte:head>
 
 <header bg-oxford py-2 flex items-center style="font-family: Aileron">
