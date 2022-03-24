@@ -37,7 +37,7 @@
   import {page} from "$app/stores";
   import type { Page } from "$lib/db/page";
   import type { Picture } from "$lib/db/picture";
-import Container from "$lib/components/Container.svelte";
+  import Container from "$lib/components/Container.svelte";
 
   export let user: User;
   export let pageData: Page;
@@ -79,7 +79,7 @@ import Container from "$lib/components/Container.svelte";
 
 <slot>  </slot>
 
-
+{#if !path.startsWith("/admin/")}
 <footer bg-oxford w-full h-sm relative overflow-x-hidden flex items-center justify-center>
   <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none left-0 top-0 bottom-0 style="transform: translate(-50%, 0);">
   <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none top-0 bottom-0 right-0 style="transform: translate(50%, 0);">
@@ -109,10 +109,7 @@ import Container from "$lib/components/Container.svelte";
     </div>
   </div>
 </footer>
-<!-- <footer flex justify-around items-center text-center text-sunray>
-  <a py-2 flex-grow href="mailto:contact@bergerenchantee.fr" bg-oxford opacity-40 hover:opacity-100 hover:transition-all>Contact</a>
-  <a py-2 flex-grow href="https://coyo.dev" bg-oxford opacity-40 hover:opacity-100 hover:transition-all>Créateur</a>
-</footer> -->
+{/if}
 
 <style global>
   body {

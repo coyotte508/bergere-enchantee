@@ -13,7 +13,8 @@ export interface HomePage extends Page {
   name: "Accueil"
   text: {
     "presentation": string,
-    "eshop-description": string
+    "eshop-description": string,
+    google: string
   },
   pictures: {
     discover: string | null,
@@ -36,7 +37,23 @@ export interface ContactPage extends Page {
   _id: "/contact",
   name: "Contact",
   text: {
-    description: string
+    description: string,
+    google: string
+  }
+}
+
+export interface WorkshopPage extends Page {
+  _id: "/atelier",
+  name: "L'Atelier"
+  text: {
+    google: string,
+    "texte-1": string,
+    "texte-2": string,
+  },
+  pictures: {
+    "photo-1": string | null,
+    "photo-2": string | null,
+    "photo-3": string | null,
   }
 }
 
@@ -58,7 +75,10 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 Des tissus rigoureusement sélectionnés vous seront proposés pour habiller vos sièges/coussins. Mais vous êtes libre de commander du tissus pour vos projets personnels également. n'hésitez pas à regarder notre onglet tissus. 
 
 Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, par téléphone ou par mail pour toute demande.`,
-      "eshop-description": "description de l'eshop"
+      "eshop-description": "description de l'eshop",
+      google: `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
+
+Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs.`
     },
     pictures: {
       discover: null,
@@ -79,9 +99,29 @@ Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, 
   "/contact": {
     _id: "/contact",
     name: "Contact",
-    text: {"description": "Je me déplace à votre domicile dans le Finistère sur rendez-vous."},
+    text: {"description": "Je me déplace à votre domicile dans le Finistère sur rendez-vous.", google: "Je me déplace à votre domicile dans le Finistère sur rendez-vous."},
     pictures: {}
-  } as ContactPage
+  } as ContactPage,
+  "/atelier": {
+    _id: "/atelier",
+    name: "L'Atelier",
+    text: {
+      "texte-1": `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
+
+Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs. 
+
+À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins.`,
+      "texte-2": `Nous vous proposons un service en ligne afin de concevoir à distance des coussins, et de vous les livrer n'importe où en France. 
+
+Nous proposons à la vente également des assises déjà refectionnées dans la partie E-shop.`,
+      google: "À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins."
+    },
+    pictures: {
+      "photo-1": null,
+      "photo-2": null,
+      "photo-3": null,
+    }
+  }
 };
 
 export let pages = defaultPages;

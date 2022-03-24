@@ -40,8 +40,8 @@
     <div grow basis-0 h-full>
       <div pr-12 h-full>
         <div w-full h-full relative>
-          <div rounded-3xl w-full h-full cover bg-sunray absolute left-4 top-4 style="z-index: -1"></div>
-          <PictureComponent picture={pictures.find(p => p._id === pageData.pictures.move)} sizes="(max-width: 1024px) 50vw, 512px" class="rounded-3xl w-full h-full cover" />
+          <div rounded-3xl w-full h-full bg-sunray absolute left-4 top-4 style="z-index: -1"></div>
+          <PictureComponent picture={pictures.find(p => p._id === pageData.pictures.move)} sizes="(max-width: 1024px) 50vw, 512px" class="rounded-3xl w-full h-full object-cover" />
         </div>
       </div>
     </div>
@@ -62,7 +62,7 @@
   <Carousel class="w-full mt-12 h-2xl">
     {#each showcasePics as pic}
       <div w-full h-full flex items-center justify-around>
-        <PictureComponent picture={pic} class="rounded-3xl" style="object-fit: contain; max-width: 100%; max-height: 100%" />
+        <PictureComponent picture={pic} class="rounded-3xl object-contain" style="max-width: 100%; max-height: 100%" />
       </div>
     {/each}
   </Carousel>
@@ -70,7 +70,7 @@
 
 <Container>
   <section h-xl rounded-3xl bg-oxford overflow-hidden flex mb-12>
-    <PictureComponent class="w-2/6 h-full cover" picture={pictures.find(p => p._id === pageData.pictures["e-shop"])} />
+    <PictureComponent class="w-2/6 h-full object-cover" picture={pictures.find(p => p._id === pageData.pictures["e-shop"])} />
     <div class="w-4/6 h-full" px-6 py-12 text-white flex flex-col box-border>
       <h2 text-4xl mb-10>Notre <span text-sunray>e-shop</span> n'attend plus que vous</h2>
       {@html marked(pageData.text["eshop-description"])}
