@@ -14,7 +14,21 @@
       carouselContent.children.item(i).addEventListener("click", item => currentIndex = i);
     }
 
+    // So the dots have time to populate
     setTimeout(() => trigger++);
+
+    window.addEventListener("keydown", key => {
+      switch (key.code) {
+        case "ArrowRight":
+          currentIndex = (currentIndex + 1) % dots;
+          key.stopPropagation();
+          break;
+        case "ArrowLeft":
+          currentIndex = (currentIndex + dots - 1) % dots;
+          key.stopPropagation();
+          break;
+      }
+    });
   });
 
   $: if (carouselContent && dots && trigger) {
@@ -45,9 +59,6 @@
 </div>
 
 <style>
-  .carousel, .carousel-content {
-    
-  }
 
   .carousel-content {
     margin-left: -25%;

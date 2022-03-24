@@ -36,7 +36,7 @@
     <a href="/realisations" text-white bg-oxford px-4 py-2 rounded-3xl font-bold absolute style="left: 25%; top: 75%; transform: translate(-50%, -50%)">cliquez ici</a>
   </section>
   
-  <section class="h-sm" mt-16 flex mb-12>
+  <section class="h-sm" mt-16 flex mb-16>
     <div grow basis-0 h-full>
       <div pr-12 h-full>
         <div w-full h-full relative>
@@ -59,7 +59,7 @@
 <section bg-oxford my-12 py-12 w-full text-center flex flex-col items-center>
   <h2 text-4xl text-white>Mes <span text-sunray>réalisations</span></h2>
   <a href="/realisations" text-white bg-sunray px-4 py-2 rounded-3xl font-bold mt-4 >voir plus</a>
-  <Carousel class="w-full mt-12 h-lg">
+  <Carousel class="w-full mt-12 h-2xl">
     {#each showcasePics as pic}
       <div w-full h-full flex items-center justify-around>
         <PictureComponent picture={pic} class="rounded-3xl" style="object-fit: contain; max-width: 100%; max-height: 100%" />
