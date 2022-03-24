@@ -69,7 +69,14 @@
 </section>
 
 <Container>
-  <section h-xl rounded-3xl bg-oxford>
-
+  <section h-xl rounded-3xl bg-oxford overflow-hidden flex mb-12>
+    <PictureComponent class="w-2/6 h-full cover" picture={pictures.find(p => p._id === pageData.pictures["e-shop"])} />
+    <div class="w-4/6 h-full" px-6 py-12 text-white flex flex-col box-border>
+      <h2 text-4xl mb-10>Notre <span text-sunray>e-shop</span> n'attend plus que vous</h2>
+      {@html marked(pageData.text["eshop-description"])}
+      <div mt-auto text-center> 
+        <a href="/e-shop" text-white bg-sunray px-4 py-2 rounded-3xl font-bold>e-shop</a>
+      </div>
+    </div>
   </section>
 </Container>
