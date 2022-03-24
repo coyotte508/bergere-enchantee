@@ -24,6 +24,11 @@ export interface HomePage extends Page {
     "realisation-3": string | null,
     "realisation-4": string | null,
     "realisation-5": string | null,
+    "realisation-6": string | null,
+    "realisation-7": string | null,
+    "realisation-8": string | null,
+    "realisation-9": string | null,
+    "realisation-10": string | null,
   }
 }
 
@@ -64,6 +69,11 @@ Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, 
       "realisation-3": null,
       "realisation-4": null,
       "realisation-5": null,
+      "realisation-6": null,
+      "realisation-7": null,
+      "realisation-8": null,
+      "realisation-9": null,
+      "realisation-10": null,
     }
   } as HomePage,
   "/contact": {

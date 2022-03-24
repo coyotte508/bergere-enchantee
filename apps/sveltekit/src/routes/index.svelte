@@ -16,10 +16,16 @@
   import { marked } from "marked";
   import type { Picture } from "$lib/db/picture";
   import Container from "$lib/components/Container.svelte";
-import Carousel from "$lib/components/Carousel.svelte";
+  import Carousel from "$lib/components/Carousel.svelte";
 
   export let pageData: HomePage;
   export let pictures: Picture[];
+
+  const showcasePics = Object.keys(pageData.pictures)
+    .filter(key => key.startsWith("realisation-") && pageData.pictures[key])
+    .map(key => pictures.find(pic => pic._id === pageData.pictures[key]))
+    .filter(Boolean)
+    .sort(() => Math.random() - 0.5);
 </script>
 
 <Container>  
@@ -53,10 +59,12 @@ import Carousel from "$lib/components/Carousel.svelte";
 <section bg-oxford my-12 py-12 w-full text-center flex flex-col items-center>
   <h2 text-4xl text-white>Mes <span text-sunray>réalisations</span></h2>
   <a href="/realisations" text-white bg-sunray px-4 py-2 rounded-3xl font-bold mt-4 >voir plus</a>
-  <Carousel class="w-full mt-12">
-    <div>!</div>
-    <div>@</div>
-    <div>#</div>
+  <Carousel class="w-full mt-12 h-lg">
+    {#each showcasePics as pic}
+      <div w-full h-full flex items-center justify-around>
+        <PictureComponent picture={pic} class="rounded-3xl" style="object-fit: contain; max-width: 100%; max-height: 100%" />
+      </div>
+    {/each}
   </Carousel>
 </section>
 
