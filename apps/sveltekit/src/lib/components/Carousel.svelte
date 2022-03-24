@@ -53,7 +53,7 @@
 
   <div style="height: 1rem; margin-top: 2rem" flex justify-center class="carousel-dots" bind:this={carouselDots}>
     {#each Array(dots) as dot, i}
-      <div style="border-radius: 50%; width: 1rem; height: 1rem" mx-1 bg-sunray on:click={() => currentIndex = i}></div>
+      <div style="width: 1rem; height: 1rem" rounded-full mx-1 bg-sunray on:click={() => currentIndex = i}></div>
     {/each}
   </div>
 </div>

@@ -78,6 +78,37 @@ import Container from "$lib/components/Container.svelte";
 {/if}
 
 <slot>  </slot>
+
+
+<footer bg-oxford w-full h-sm relative overflow-x-hidden flex items-center justify-center>
+  <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none left-0 top-0 bottom-0 style="transform: translate(-50%, 0);">
+  <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none top-0 bottom-0 right-0 style="transform: translate(50%, 0);">
+
+  <div text-white z-1 inline-block>
+    <div flex justify-center>
+      <a href="https://facebook.com/bergere.enchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
+        <div class="i-il-facebook" inline-block text-oxford w-full h-full></div>
+      </a>
+      <a href="https://instagram.com/bergere.enchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
+        <div class="i-il-instagram" inline-block text-oxford w-full h-full>bergere.enchantee</div>
+      </a>
+      <a href="https://pinterest.com/bergere.enchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
+        <div class="i-il-pin" inline-block text-oxford w-full h-full>bergere.enchantee</div>
+      </a>
+    </div>
+    <div my-14>
+      <a href="/" class:text-sunray="{path === '/'}" hover:text-sunray>Acceuil</a> | 
+      <a href="/atelier" class:text-sunray="{path === '/atelier'}" hover:text-sunray>L'atelier</a> | 
+      <a href="/realisations" class:text-sunray="{path === '/realisations'}" hover:text-sunray>Réalisations</a> | 
+      <a href="/vente" class:text-sunray="{path === '/vente'}" hover:text-sunray>E-shop</a> | 
+      <a href="/tissus" class:text-sunray="{path === '/tissus'}" hover:text-sunray>Tissus / Finitions</a> | 
+      <a href="/contact" class:text-sunray="{path === '/contact'}" hover:text-sunray>Contact</a>
+    </div>
+    <div text-center>
+      <a rel="external" href="https://www.sentinellesduweb.com" hover:underline>Les Sentinelles du Web</a> / <a rel="external" href="https://coyo.dev" hover:underline>Coyotech</a> © 2022 - Tous droits réservés
+    </div>
+  </div>
+</footer>
 <!-- <footer flex justify-around items-center text-center text-sunray>
   <a py-2 flex-grow href="mailto:contact@bergerenchantee.fr" bg-oxford opacity-40 hover:opacity-100 hover:transition-all>Contact</a>
   <a py-2 flex-grow href="https://coyo.dev" bg-oxford opacity-40 hover:opacity-100 hover:transition-all>Créateur</a>
