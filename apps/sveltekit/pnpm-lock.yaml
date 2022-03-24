@@ -27,6 +27,7 @@ specifiers:
   marked: ^4.0.10
   mongodb: ^4.3.1
   nanoid: ^3.3.0
+  nprogress: ^0.2.0
   prettier: ^2.5.1
   sharp: ^0.30.3
   svelte: ^3.46.4
@@ -46,6 +47,7 @@ dependencies:
   marked: 4.0.10
   mongodb: 4.3.1
   nanoid: 3.3.0
+  nprogress: 0.2.0
   sharp: 0.30.3
 
 devDependencies:
@@ -1869,6 +1871,10 @@ packages:
       console-control-strings: 1.1.0
       gauge: 2.7.4
       set-blocking: 2.0.0
+    dev: false
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha1-y480xTIT2JVyP8urkH6UIq28r7E=}
     dev: false
 
   /number-is-nan/1.0.1:

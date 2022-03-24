@@ -38,9 +38,12 @@
   import type { Page } from "$lib/db/page";
   import type { Picture } from "$lib/db/picture";
   import Container from "$lib/components/Container.svelte";
+  import { useNProgress } from "$lib/nprogress";
 
   export let user: User;
   export let pageData: Page;
+
+  useNProgress();
 
   $: title = pageData?.name;
   $: google = pageData?.text["google"];
