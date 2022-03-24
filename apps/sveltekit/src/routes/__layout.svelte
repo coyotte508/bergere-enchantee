@@ -78,13 +78,15 @@
   </nav>
 </header>
 
-{#if $page.url.searchParams.get("error")}
-<Container>
-  <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
-</Container>
-{/if}
+<section>
+  {#if $page.url.searchParams.get("error")}
+  <Container>
+    <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
+  </Container>
+  {/if}
 
-<slot>  </slot>
+  <slot>  </slot>
+</section>
 
 {#if !path.startsWith("/admin/")}
 <footer bg-oxford w-full h-sm relative overflow-x-hidden flex items-center justify-center>
@@ -121,6 +123,6 @@
 <style global>
   body {
     display: grid;
-    grid-template-rows: min-content min-content 1fr min-content;
+    grid-template-rows: min-content 1fr min-content;
   }
 </style>

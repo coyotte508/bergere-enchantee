@@ -75,7 +75,7 @@
       <h2 text-4xl mb-10>Notre <span text-sunray>e-shop</span> n'attend plus que vous</h2>
       {@html marked(pageData.text["eshop-description"])}
       <div mt-auto text-center> 
-        <a href="/e-shop" text-white bg-sunray px-4 py-2 rounded-3xl font-bold>e-shop</a>
+        <a href="/vente" text-white bg-sunray px-4 py-2 rounded-3xl font-bold>e-shop</a>
       </div>
     </div>
   </section>
