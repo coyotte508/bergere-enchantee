@@ -1,4 +1,4 @@
-import adapter from "@sveltejs/adapter-auto";
+import adapter from "@sveltejs/adapter-node";
 import preprocess from "svelte-preprocess";
 import presetUno from "@unocss/preset-uno";
 import presetAttributify from "@unocss/preset-attributify";
