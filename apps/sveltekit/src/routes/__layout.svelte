@@ -105,12 +105,12 @@
       <a href="/tissus" class:text-sunray="{path === '/tissus'}" my-2 hover:text-sunray>Tissus / Finitions</a>
       <a href="/contact" class:text-sunray="{path === '/contact'}" my-2 hover:text-sunray>Contact</a>
       {#if user}
-        <a href="/compte" title="Espace client" my-2 hover:text-sunray>
-          Espace client <div inline-block class="i-ant-design-user-outlined"></div>
+        <a href="/compte" title="Espace client" my-2 hover:text-sunray flex items-center justify-center>
+          <div inline-block mr-2 class="i-ant-design-user-outlined"></div> Espace client 
         </a>
       {:else}
-        <a href="/connexion" title="Connexion" my-2 hover:text-sunray flex items-center justify-center inline-block>
-          <div inline-block class="i-ant-design-login-outlined"></div> Connexion
+        <a href="/connexion" title="Connexion" my-2 hover:text-sunray flex items-center justify-center>
+          <div inline-block mr-2 class="i-ant-design-login-outlined"></div> Connexion
         </a>
       {/if}
     </nav>
