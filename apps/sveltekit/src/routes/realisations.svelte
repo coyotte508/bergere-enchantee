@@ -36,8 +36,7 @@
   const showcasePics = Object.keys(pageData.pictures)
     .filter(key => key.startsWith("realisation-") && pageData.pictures[key])
     .map(key => pictures.find(pic => pic._id === pageData.pictures[key]))
-    .filter(Boolean)
-    .sort(() => Math.random() - 0.5);
+    .filter(Boolean);
 </script>
 
 <Container>
