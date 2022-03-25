@@ -34,7 +34,7 @@
   import "../styles/styles.css";
   import "@unocss/reset/normalize.css";
   import "uno.css";
-  import {page} from "$app/stores";
+  import {page, navigating} from "$app/stores";
   import type { Page } from "$lib/db/page";
   import type { Picture } from "$lib/db/picture";
   import Container from "$lib/components/Container.svelte";
@@ -58,6 +58,9 @@
   $: path = $page.url.pathname;
   $: title = pageData?.name ?? upperFirst(path?.split("/")?.[1]);
   $: google = pageData?.text["google"];
+  $: if (navigating) {
+    menuOpen = false;
+  }
 </script>
 
 <svelte:head>
