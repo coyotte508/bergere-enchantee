@@ -67,3 +67,7 @@ li {
   font-weight: 700;
   src: url(/GothamBold.ttf) format("truetype");
 }
+
+.drop-white {
+  filter: drop-shadow(2px 2px 2px white)
+}

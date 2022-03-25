@@ -37,7 +37,6 @@ const config = {
 							if (theme.colors[c])
 								return { "background-color": theme.colors[c] };
 						}],
-						["drop-white", {filter: "drop-shadow(2px 2px 2px white)"}]
 					],
 					shortcuts: {
 						input: "w-full max-w-80 text-lg pl-2 border border-solid border-2 rounded-lg",
