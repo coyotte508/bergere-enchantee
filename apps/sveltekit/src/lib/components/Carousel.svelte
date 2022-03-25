@@ -32,7 +32,12 @@
   });
 
   $: if (carouselContent && dots && trigger) {
-    carouselContent.style.marginLeft = `${(25 - currentIndex * 50)}%`;
+    if (window.innerWidth >= 640) {
+      carouselContent.style.marginLeft = `${(25 - currentIndex * 50)}%`;
+    } else {
+      carouselContent.style.marginLeft = `${(5 - currentIndex * 90)}%`;
+    }
+
     for (let i = 0; i < dots; i++) {
       if (i === currentIndex) {
         carouselDots.children.item(i)?.classList.add("carousel-dot-active");
@@ -72,6 +77,16 @@
     max-height: 100%;
     transition-property: transform, opacity;
     transition-duration: 400ms;
+  }
+
+  @media (max-width: 639.9px) { 
+    :global(.carousel-content > *) {
+      width: 90%;
+      min-width: 90%;
+      max-height: 100%;
+      transition-property: transform, opacity;
+      transition-duration: 400ms;
+    }
   }
 
   :global(.carousel-content > :not(.carousel-item-active)) {
