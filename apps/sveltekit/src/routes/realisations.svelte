@@ -43,7 +43,7 @@
   <h1 text-4xl text-oxford>🚧 Cette page est en cours de construction</h1>
 </Container>
 
-<Carousel class="w-full my-12 h-2xl">
+<Carousel class="w-full my-12 h-xl sm:h-2xl">
   {#each showcasePics as pic}
     <div w-full h-full flex items-center justify-around>
       <PictureComponent picture={pic} class="rounded-3xl object-contain" style="max-width: 100%; max-height: 100%" />

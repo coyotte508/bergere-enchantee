@@ -58,7 +58,7 @@
 <section bg-oxford my-12 py-12 w-full text-center flex flex-col items-center>
   <h2 text-4xl text-white>Mes <span text-sunray>réalisations</span></h2>
   <a href="/realisations" text-white bg-sunray px-4 py-2 rounded-3xl font-bold mt-4 >voir plus</a>
-  <Carousel class="w-full mt-12 h-2xl">
+  <Carousel class="w-full mt-12 h-xl sm:h-2xl">
     {#each showcasePics as pic}
       <div w-full h-full flex items-center justify-around>
         <PictureComponent picture={pic} class="rounded-3xl object-contain" style="max-width: 100%; max-height: 100%" />
