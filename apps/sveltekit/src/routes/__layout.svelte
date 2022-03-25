@@ -45,9 +45,16 @@
 
   useNProgress();
 
-  $: title = pageData?.name;
-  $: google = pageData?.text["google"];
+  function upperFirst(s: string | undefined) {
+    if (!s) {
+      return undefined;
+    }
+    return s[0].toLocaleUpperCase() + s.slice(1);
+  }
+
   $: path = $page.url.pathname;
+  $: title = pageData?.name ?? upperFirst(path?.split("/")?.[1]);
+  $: google = pageData?.text["google"];
 </script>
 
 <svelte:head>

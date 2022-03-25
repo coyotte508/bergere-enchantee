@@ -42,9 +42,12 @@ export const getSession: GetSession = async (event) => {
 
   if (bergereToken) {
     const user = await users.findOne({token: bergereToken}, {projection: {email: 1, authority: 1}});
-    event.locals.user = user;
-    event.locals.admin = user.authority === "admin";
-    return {user: JSON.parse(JSON.stringify(user))};
+
+    if (user) {
+      event.locals.user = user;
+      event.locals.admin = user.authority === "admin";
+      return {user: JSON.parse(JSON.stringify(user))};
+    }
   }
 
   return {};
