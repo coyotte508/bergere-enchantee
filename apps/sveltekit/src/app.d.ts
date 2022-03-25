@@ -15,7 +15,8 @@ declare namespace App {
   interface Platform {}
 
   interface Session {
-    user?: User
+    user?: User;
+    origin: string;
   }
 
   interface Stuff {

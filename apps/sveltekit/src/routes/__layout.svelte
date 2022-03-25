@@ -25,7 +25,8 @@
       props: {
         user: input.session.user,
         pageData,
-        pictures
+        pictures,
+        origin: input.session.origin
       }
     };  
   };
@@ -45,6 +46,7 @@
   export let user: User;
   export let pageData: Page;
   export let pictures: Picture[];
+  export let origin: string;
 
   let menuOpen = false;
 
@@ -78,10 +80,10 @@
     {/if}
     <meta property="og:type" content="website" />
     {#if pictures.length > 0}
-      <meta property="og:image" content="{$page.url.origin}/photos/raw/{pictures[0].storage.slice(-2)[0]._id}">
-      <meta name="twitter:card" content="{$page.url.origin}/photos/raw/{pictures[0].storage[0]._id}">
+      <meta property="og:image" content="{origin}/photos/raw/{pictures[0].storage.slice(-2)[0]._id}">
+      <meta name="twitter:card" content="{origin}/photos/raw/{pictures[0].storage[0]._id}">
     {/if}
-    <meta property="og:url" content={$page.url.href}>
+    <meta property="og:url" content="{origin}{path}">
   {/key}
 </svelte:head>
 

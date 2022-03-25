@@ -40,15 +40,20 @@ export const handle: Handle = async({ event, resolve }) => {
 export const getSession: GetSession = async (event) => {
   const bergereToken = extractCookie("bergereToken", event.request.headers.get("cookie") ?? "");
 
+  const origin = `http://${event.request.headers.get("Host")}`;
+
   if (bergereToken) {
     const user = await users.findOne({token: bergereToken}, {projection: {email: 1, authority: 1}});
 
     if (user) {
       event.locals.user = user;
       event.locals.admin = user.authority === "admin";
-      return {user: JSON.parse(JSON.stringify(user))};
+      return {
+        user: JSON.parse(JSON.stringify(user)), 
+        origin
+      };
     }
   }
 
-  return {};
+  return { origin };
 };
