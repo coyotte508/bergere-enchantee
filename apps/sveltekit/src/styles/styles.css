@@ -12,8 +12,13 @@ a {
   text-decoration: none;
 }
 
-h1, h2, h3, nav {
-  font-family: "Aileron", serif;
+h1, h2, h3{
+  font-family: "RiotSquad", serif;
+  margin: 0
+}
+
+nav {
+  font-family: "Aileron", sans-serif;
   margin: 0
 }
 
@@ -25,10 +30,17 @@ ol, ul {
 li {
   list-style-type: none;
 }
-
+ 
 @font-face {
   font-family: "Aileron";
   src: url(/Ailerons-Typeface.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "RiotSquad";
+  src: url("RIOTSQUA.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 /*

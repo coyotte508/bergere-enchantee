@@ -7,7 +7,7 @@ import { createPageCollection } from "./page";
 import { createPictureCollections } from "./picture";
 import { createUserCollection } from "./user";
 
-const client = new MongoClient(process.env.MONGODB_URL ?? "mongodb://localhost:27017");
+const client = new MongoClient(process.env.MONGODB_URL ?? "mongodb://localhost:27017", {directConnection: true});
 
 export const connectPromise = client.connect().catch(console.error);
 
