@@ -39,9 +39,12 @@
   import type { Picture } from "$lib/db/picture";
   import Container from "$lib/components/Container.svelte";
   import { useNProgress } from "$lib/nprogress";
+  import { slide } from "svelte/transition";
 
   export let user: User;
   export let pageData: Page;
+
+  let menuOpen = false;
 
   useNProgress();
 
@@ -69,26 +72,50 @@
 </svelte:head>
 
 <header bg-oxford py-2 flex items-center style="font-family: Aileron">
-  <nav bg-oxford text-xl font-bold flex grow text-center items-center text-white>
-    <a href="/" grow><img src="/logo.svg" alt="Logo" title="Accueil" width="126" height="120"></a>
-    <a href="/atelier" class:text-sunray="{path === '/atelier'}" py-4 text-center grow hover:text-sunray>L'atelier</a>
-    <a href="/realisations" class:text-sunray="{path === '/realisations'}" py-4 text-center grow hover:text-sunray>Réalisations</a>
-    <a href="/vente" class:text-sunray="{path === '/vente'}" py-4 text-center grow hover:text-sunray>e-shop</a>
-    <a href="/tissus" class:text-sunray="{path === '/tissus'}" py-4 text-center grow hover:text-sunray>Tissus / Finitions</a>
-    <a href="/contact" class:text-sunray="{path === '/contact'}" py-4 text-center grow hover:text-sunray>Contact</a>
+  <nav bg-oxford text-xl font-bold flex grow px-2 sm:px-0 sm:text-center items-center text-white>
+    <a href="/" grow><img src="/logo.svg" alt="Logo" title="Accueil" w-14 sm:w-18 md:w-24 lg:w-32></a>
+    <a href="/atelier" class:text-sunray="{path === '/atelier'}" hidden sm:inline py-4 grow hover:text-sunray>L'atelier</a>
+    <a href="/realisations" class:text-sunray="{path === '/realisations'}" hidden sm:inline py-4 grow hover:text-sunray>Réalisations</a>
+    <a href="/vente" class:text-sunray="{path === '/vente'}" hidden sm:inline py-4 grow hover:text-sunray>e-shop</a>
+    <a href="/tissus" class:text-sunray="{path === '/tissus'}" hidden sm:inline py-4 grow hover:text-sunray>Tissus / Finitions</a>
+    <a href="/contact" class:text-sunray="{path === '/contact'}" hidden sm:inline py-4 grow hover:text-sunray>Contact</a>
     {#if user}
-      <a href="/compte" title="Compte" text-center grow text-sunray text-3xl>
+      <a href="/compte" title="Espace client" hidden sm:inline grow text-sunray text-3xl>
         <div inline-block class="i-ant-design-user-outlined"></div>
       </a>
     {:else}
-      <a href="/connexion" title="Connexion" text-center grow text-sunray text-3xl inline-block>
+      <a href="/connexion" title="Connexion" hidden sm:inline grow text-sunray text-3xl inline-block>
         <div inline-block class="i-ant-design-login-outlined"></div>
       </a>
     {/if}
+    <div inline-flex flex-col justify-center sm:hidden class:text-white={!menuOpen} class:text-sunray={menuOpen} 
+      cursor-pointer text-4xl class:rotate-90={menuOpen} transition on:click={() => menuOpen = !menuOpen}>
+      <div inline-block class="i-ant-design-holder-outlined"></div>
+    </div>
   </nav>
 </header>
 
-<section>
+<div>
+  {#if menuOpen}
+    <nav bg-oxford flex flex-col transition:slide sm:hidden text-xl border-x-0 border-b-0 border-opacity-25 border-t-1 border-white font-bold items-center text-white>
+      <a href="/" class:text-sunray="{path === '/'}" my-2 hover:text-sunray>Acceuil</a>
+      <a href="/atelier" class:text-sunray="{path === '/atelier'}" my-2 hover:text-sunray>L'atelier</a>
+      <a href="/realisations" class:text-sunray="{path === '/realisations'}" my-2 hover:text-sunray>Réalisations</a>
+      <a href="/vente" class:text-sunray="{path === '/vente'}" my-2 hover:text-sunray>e-shop</a>
+      <a href="/tissus" class:text-sunray="{path === '/tissus'}" my-2 hover:text-sunray>Tissus / Finitions</a>
+      <a href="/contact" class:text-sunray="{path === '/contact'}" my-2 hover:text-sunray>Contact</a>
+      {#if user}
+        <a href="/compte" title="Espace client" my-2 hover:text-sunray>
+          Espace client <div inline-block class="i-ant-design-user-outlined"></div>
+        </a>
+      {:else}
+        <a href="/connexion" title="Connexion" my-2 hover:text-sunray flex items-center justify-center inline-block>
+          <div inline-block class="i-ant-design-login-outlined"></div> Connexion
+        </a>
+      {/if}
+    </nav>
+  {/if}
+
   {#if $page.url.searchParams.get("error")}
   <Container>
     <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
@@ -96,7 +123,7 @@
   {/if}
 
   <slot>  </slot>
-</section>
+</div>
 
 {#if !path.startsWith("/admin/")}
 <footer bg-oxford w-full h-sm relative overflow-x-hidden flex items-center justify-center>
