@@ -38,7 +38,7 @@ li {
 
 @font-face {
   font-family: "RiotSquad";
-  src: url("RIOTSQUA.ttf") format("truetype");
+  src: url("/RIOTSQUA.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
