@@ -146,14 +146,14 @@
 
   <div text-white z-1 inline-block>
     <div flex justify-center>
-      <a href="https://facebook.com/bergere.enchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
-        <div class="i-il-facebook" inline-block text-oxford w-full h-full></div>
+      <a href="https://facebook.com/bergereenchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
+        <div class="i-il-facebook" inline-block text-oxford w-full h-full>bergereenchantee</div>
       </a>
-      <a href="https://instagram.com/bergere.enchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
-        <div class="i-il-instagram" inline-block text-oxford w-full h-full>bergere.enchantee</div>
+      <a href="https://instagram.com/bergereenchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
+        <div class="i-il-instagram" inline-block text-oxford w-full h-full>bergereenchantee</div>
       </a>
-      <a href="https://pinterest.com/bergere.enchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
-        <div class="i-il-pin" inline-block text-oxford w-full h-full>bergere.enchantee</div>
+      <a href="https://pinterest.com/bergereenchantee" opacity-80 hover:opacity-100 style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem" bg-sunray rounded-full inline-block box-border mx-10>
+        <div class="i-il-pin" inline-block text-oxford w-full h-full>bergereenchantee</div>
       </a>
     </div>
     <div my-14>

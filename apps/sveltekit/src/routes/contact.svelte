@@ -30,7 +30,7 @@
       <li py-1>📍 <address inline>39 route de l'Argoat, 29460 Logonna Daoulas <i>(dépôt et retrait uniquement)</i></address></li>
       <li py-1>📱 <a rel="external" href="tel:+33774521115">07 74 52 11 15</a></li>
       <li py-1>📧 <a rel="external" href="mailto:contact@bergereenchantee.fr">contact@bergereenchantee.fr</a></li>
-      <li py-1 flex items-center gap-1><div class="i-il-instagram" inline-block />  <a rel="external" href="https://instagram.com/bergere.enchantee">bergere.enchantee</a></li>
+      <li py-1 flex items-center gap-1><div class="i-il-instagram" inline-block />  <a rel="external" href="https://instagram.com/bergere.enchantee">bergereenchantee</a></li>
     </ol>
   </div>
 </Container>
