@@ -59,6 +59,7 @@
     return s[0].toLocaleUpperCase() + s.slice(1);
   }
 
+  $: shownPicture = pictures.find(p => p.storage[0].width >= p.storage[0].height) ?? pictures[0];
   $: path = $page.url.pathname;
   $: title = pageData?.name ?? upperFirst(path?.split("/")?.[1]);
   $: google = pageData?.text["google"];
@@ -80,8 +81,8 @@
     {/if}
     <meta property="og:type" content="website" />
     {#if pictures.length > 0}
-      <meta property="og:image" content="{origin}/photos/raw/{pictures[0].storage.slice(-2)[0]._id}">
-      <meta name="twitter:card" content="{origin}/photos/raw/{pictures[0].storage[0]._id}">
+      <meta property="og:image" content="{origin}/photos/raw/{shownPicture.storage.slice(-2)[0]._id}">
+      <meta name="twitter:card" content="{origin}/photos/raw/{shownPicture.storage[0]._id}">
     {/if}
     <meta property="og:url" content="{origin}{path}">
   {/key}
