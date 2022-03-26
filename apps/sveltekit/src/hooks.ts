@@ -2,6 +2,12 @@ import { connectPromise, users } from "$lib/db";
 import { extractCookie } from "$lib/extractCookie";
 import type { GetSession, Handle } from "@sveltejs/kit";
 
+function transformHtml(html: string): string {
+  return html
+    .replace(/<meta property="og:description" content="[^"]+"/, str => str.replace(/\\n/g, "\n"))
+    .replace(/<meta name="description" content="[^"]+"/, str => str.replace(/\\n/g, "\n"));
+}
+
 export const handle: Handle = async({ event, resolve }) => {
   console.log(event.request.method, event.url.href);
   await connectPromise;
@@ -9,7 +15,7 @@ export const handle: Handle = async({ event, resolve }) => {
   await getSession(event); // fill in locals
 
   // The replace is for meta:description tag not handled properly by sveltekit
-  const result = await resolve(event, {transformPage: ({html}) => html.replace(/\\n/g, "\n")});
+  const result = await resolve(event, {transformPage: ({html}) => transformHtml(html)});
   event.url.searchParams.delete("_method");
 
   const isXhr = event.request.headers.get("accept") === "application/json" 
