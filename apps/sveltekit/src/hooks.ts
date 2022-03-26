@@ -8,7 +8,8 @@ export const handle: Handle = async({ event, resolve }) => {
 
   await getSession(event); // fill in locals
 
-  const result = await resolve(event);
+  // The replace is for meta:description tag not handled properly by sveltekit
+  const result = await resolve(event, {transformPage: ({html}) => html.replace(/\\n/g, "\n")});
   event.url.searchParams.delete("_method");
 
   const isXhr = event.request.headers.get("accept") === "application/json" 
