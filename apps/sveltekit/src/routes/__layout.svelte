@@ -115,7 +115,7 @@
 <div>
   {#if menuOpen}
     <nav bg-oxford flex flex-col transition:slide sm:hidden text-xl border-x-0 border-b-0 border-opacity-25 border-t-1 border-white font-bold items-center text-white>
-      <a href="/" class:text-sunray="{path === '/'}" my-2 hover:text-sunray>Acceuil</a>
+      <a href="/" class:text-sunray="{path === '/'}" my-2 hover:text-sunray>Accueil</a>
       <a href="/atelier" class:text-sunray="{path === '/atelier'}" my-2 hover:text-sunray>L'atelier</a>
       <a href="/realisations" class:text-sunray="{path === '/realisations'}" my-2 hover:text-sunray>Réalisations</a>
       <a href="/vente" class:text-sunray="{path === '/vente'}" my-2 hover:text-sunray>e-shop</a>
