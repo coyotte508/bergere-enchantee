@@ -144,8 +144,8 @@
 
 {#if !path.startsWith("/admin/")}
 <footer bg-oxford w-full h-sm relative overflow-x-hidden flex items-center justify-center>
-  <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none left-0 top-0 bottom-0 style="transform: translate(-50%, 0);">
-  <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none top-0 bottom-0 right-0 style="transform: translate(50%, 0);">
+  <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none opacity-50 md:opacity-100 left-0 top-0 bottom-0 style="transform: translate(-50%, 0);">
+  <img src="/logo-no-chair.svg" alt="Logo sans fauteuil" pointer-events-none absolute select-none opacity-50 md:opacity-100 top-0 bottom-0 right-0 style="transform: translate(50%, 0);">
 
   <div text-white z-1 inline-block>
     <div flex justify-center>
