@@ -34,18 +34,15 @@
   <h1 text-4xl text-oxford mt-4>Nos réalisations</h1>
 
   {#each picKeys as picKey, i }
-    <article class="{ (i%2) ? 'bg-oxford' : 'bg-sunray'}" md:bg-transparent text-white md:text-black md:h-md mt-16 flex mb-16 flex-wrap md:flex-no-wrap rounded-3xl overflow-hidden md:overflow-visible>
-      <div grow h-full class:md:order-last={i % 2} w-full md:w-auto basis-auto md:basis-0>
-        <div md:pr-12 md:h-full h-md>
-          <div w-full h-full relative>
-            <div hidden md:block absolute rounded-3xl w-full h-full class="{ (i%2) ? 'bg-brunswick' : 'bg-sunray'}" left-4 top-4 style="z-index: -1"></div>
-            <PictureComponent picture={pictures.find(p => p._id === pageData.pictures[picKey])} sizes="(max-width: 1024px) 50vw, 512px" class="md:rounded-3xl w-full h-full object-cover" />
-          </div>
-        </div>
+    <article class="{ (i%2) ? 'bg-oxford' : 'bg-sunray'}" text-white text-lg md:h-xl mt-16 flex mb-16 flex-wrap md:flex-no-wrap rounded-3xl overflow-hidden>
+      <div grow h-full class:md:order-last={i % 2} w-full class="md:w-3/6" basis-auto md:basis-0>
+        <PictureComponent picture={pictures.find(p => p._id === pageData.pictures[picKey])} sizes="(max-width: 1024px) 50vw, 512px" class="w-full h-full object-cover" />
       </div>
-      <div grow basis-0 flex flex-col relative px-4 py-6 style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
-        {@html marked(pageData.text[picKey])}
-        <a href="/photos/raw/{pictures.find(p => p._id === pageData.pictures[picKey]).storage[0]._id}" hover:underline target="_blank">Voir photo entière</a>
+      <div grow basis-0 flex flex-col relative justify-center>
+        <div px-4 py-6>
+          {@html marked(pageData.text[picKey])}
+          <a href="/photos/raw/{pictures.find(p => p._id === pageData.pictures[picKey]).storage[0]._id}" underline target="_blank">Photo entière</a>
+        </div>
       </div>
     </article>
   {/each}
