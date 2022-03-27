@@ -44,7 +44,8 @@
         </div>
       </div>
       <div grow basis-0 flex flex-col relative px-4 py-6 style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
-        {@html marked(pageData.text[picKey])}
+        {@html marked(pageData.text[picKey])} <br><br>
+        <a href="/photos/raw/{pictures.find(p => p._id === pageData.pictures[picKey]).storage[0]._id}" hover:underline target="_blank">Voir photo entière</a>
       </div>
     </article>
   {/each}
