@@ -112,7 +112,7 @@
   </nav>
 </header>
 
-<div>
+<main>
   {#if menuOpen}
     <nav bg-oxford flex flex-col transition:slide sm:hidden text-xl border-x-0 border-b-0 border-opacity-25 border-t-1 border-white font-bold items-center text-white>
       <a href="/" class:text-sunray="{path === '/'}" my-2 hover:text-sunray>Accueil</a>
@@ -140,7 +140,7 @@
   {/if}
 
   <slot>  </slot>
-</div>
+</main>
 
 {#if !path.startsWith("/admin/")}
 <footer bg-oxford w-full h-sm relative overflow-x-hidden flex items-center justify-center>

@@ -33,6 +33,36 @@ export interface HomePage extends Page {
   }
 }
 
+export interface CreationsPage extends Page {
+  _id: "/realisations",
+  name: "Réalisations",
+  text: {
+    google: string,
+    "realisation-1": string,
+    "realisation-2": string,
+    "realisation-3": string,
+    "realisation-4": string,
+    "realisation-5": string,
+    "realisation-6": string,
+    "realisation-7": string,
+    "realisation-8": string,
+    "realisation-9": string,
+    "realisation-10": string,
+  },
+  pictures: {
+    "realisation-1": string | null,
+    "realisation-2": string | null,
+    "realisation-3": string | null,
+    "realisation-4": string | null,
+    "realisation-5": string | null,
+    "realisation-6": string | null,
+    "realisation-7": string | null,
+    "realisation-8": string | null,
+    "realisation-9": string | null,
+    "realisation-10": string | null,
+  }
+}
+
 export interface ContactPage extends Page {
   _id: "/contact",
   name: "Contact",
@@ -121,7 +151,36 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
       "photo-2": null,
       "photo-3": null,
     }
-  }
+  },
+  "/realisations": {
+    _id: "/realisations",
+    name: "Réalisations",
+    text: {
+      google: "Admirez les sièges, fauteuils et coussins réalisés par Daphné, tapissière d'ameublement de la Bergère Enchantée",
+      "realisation-1": "",
+      "realisation-2": "",
+      "realisation-3": "",
+      "realisation-4": "",
+      "realisation-5": "",
+      "realisation-6": "",
+      "realisation-7": "",
+      "realisation-8": "",
+      "realisation-9": "",
+      "realisation-10": "",
+    },
+    pictures: {
+      "realisation-1": null,
+      "realisation-2": null,
+      "realisation-3": null,
+      "realisation-4": null,
+      "realisation-5": null,
+      "realisation-6": null,
+      "realisation-7": null,
+      "realisation-8": null,
+      "realisation-9": null,
+      "realisation-10": null,
+    }
+  } as CreationsPage
 };
 
 export let pages = defaultPages;
