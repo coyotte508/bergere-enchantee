@@ -38,8 +38,8 @@
     const TinyGesture = (await import("tinygesture")).default;
 
     const gesture = new TinyGesture(carousel);
-    gesture.on("swiperight", () => currentIndex = (currentIndex + 1) % dots);
-    gesture.on("swipeleft", () => currentIndex = (currentIndex + dots - 1) % dots);
+    gesture.on("swipeleft", () => currentIndex = (currentIndex + 1) % dots);
+    gesture.on("swiperight", () => currentIndex = (currentIndex + dots - 1) % dots);
 
     destroyCb = () => {
       gesture.off("swiperight");
