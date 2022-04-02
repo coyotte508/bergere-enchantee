@@ -160,7 +160,7 @@
       </a>
     </div>
     <div my-14>
-      <a href="/" class:text-sunray="{path === '/'}" hover:text-sunray>Acceuil</a> | 
+      <a href="/" class:text-sunray="{path === '/'}" hover:text-sunray>Accueil</a> | 
       <a href="/atelier" class:text-sunray="{path === '/atelier'}" hover:text-sunray>L'atelier</a> | 
       <a href="/realisations" class:text-sunray="{path === '/realisations'}" hover:text-sunray>Réalisations</a> | 
       <a href="/vente" class:text-sunray="{path === '/vente'}" hover:text-sunray>E-shop</a> | 
