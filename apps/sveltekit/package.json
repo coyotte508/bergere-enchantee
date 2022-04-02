@@ -23,9 +23,9 @@
     "@types/sharp": "^0.30.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
-    "@unocss/preset-attributify": "^0.22.3",
-    "@unocss/preset-icons": "^0.22.3",
-    "@unocss/preset-uno": "^0.22.3",
+    "@unocss/preset-attributify": "^0.30.11",
+    "@unocss/preset-icons": "^0.30.11",
+    "@unocss/preset-uno": "^0.30.11",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-svelte3": "^3.4.1",
@@ -35,7 +35,7 @@
     "svelte-preprocess": "^4.10.4",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3",
-    "unocss": "^0.22.3"
+    "unocss": "^0.30.11"
   },
   "type": "module",
   "dependencies": {

@@ -15,4 +15,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Deploy
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostnamectl && cd bergere-enchantee && git fetch && git checkout $GITHUB_SHA && pnpm run build --filter sveltekit && pm2 reload bergere"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostnamectl && cd bergere-enchantee && git fetch && git checkout $GITHUB_SHA && pnpm install && pnpm run build --filter sveltekit && pm2 reload bergere"
