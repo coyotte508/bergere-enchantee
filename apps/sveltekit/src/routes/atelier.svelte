@@ -35,18 +35,18 @@
     <PictureComponent picture={pictures.find(p => p._id === pageData.pictures["photo-1"])} sizes="(max-width: 1200px) 50vw, 600px" grow basis-0 class="rounded-3xl h-full object-cover w-3/6" />
   </section>
 
-  <section class="h-sm" mt-16 flex mb-16>
-    <div grow basis-0 h-full>
-      <div pr-12 h-full>
+  <section class="md:min-h-[24rem] md:max-h-[40rem]" mt-16 flex flex-wrap md:mb-16>
+    <div class="w-full md:w-3/6 h-sm md:h-auto md:max-h-[40rem]">
+      <div md:pr-12 h-full>
         <div w-full h-full relative>
           <div rounded-3xl w-full h-full bg-sunray absolute left-4 top-4 style="z-index: -1"></div>
           <PictureComponent picture={pictures.find(p => p._id === pageData.pictures["photo-2"])} sizes="(max-width: 1024px) 50vw, 512px" class="rounded-3xl w-full h-full object-cover" />
         </div>
       </div>
     </div>
-    <div grow basis-0 flex flex-col relative>
-      <h2 text-oxford text-4xl mt-6>L'atelier, mon endroit de <span text-sunray>création</span></h2>
-      <div grow flex flex-col justify-center>
+    <div class="w-full md:w-3/6" flex flex-col relative>
+      <h2 text-oxford text-4xl mt-16 md:mt-6 lg:mt-12>L'atelier, mon endroit de <span text-sunray>création</span></h2>
+      <div grow flex flex-col justify-center class="marked">
         {@html marked(pageData.text["texte-1"])}
       </div>
     </div>
@@ -58,7 +58,7 @@
   <PictureComponent picture={pictures.find(p => p._id === pageData.pictures["photo-3"])} class="h-lg w-full object-cover"/>
 </section>
 
-<Container>
+<Container class="marked">
   {@html marked(pageData.text["texte-2"])}
 
   <div my-12 mb-20 text-center> 
