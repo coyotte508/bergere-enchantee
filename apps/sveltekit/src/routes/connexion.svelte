@@ -24,5 +24,5 @@
 
   <p>Pour créer un compte, vous devez effectuer une commande au préalable.</p>
 
-  <p>En cas de problème, envoyez-moi un courrier électronique à <a href="mailto:contact@bergereenchantee.fr" link>contact@bergereenchantee.fr</a>.</p>
+  <p>En cas de problème, envoyez-moi un courrier électronique à <a href="mailto:contact@bergereenchantee.fr" rel="external" link>contact@bergereenchantee.fr</a>.</p>
 </Container>
