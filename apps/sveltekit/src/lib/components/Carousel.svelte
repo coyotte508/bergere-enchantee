@@ -1,13 +1,18 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
+  let carousel: HTMLDivElement;
   let carouselContent: HTMLDivElement;
   let carouselDots: HTMLDivElement;
   let currentIndex = 0;
   let dots = 0;
   let trigger = 1;
+
+  let destroyCb = () => void 0;
+
+  onDestroy(() => destroyCb());
   
-  onMount(() => {
+  onMount(async () => {
     dots = carouselContent.children.length;
 
     for (let i = 0; i < dots; i++) {
@@ -29,6 +34,18 @@
           break;
       }
     });
+
+    const TinyGesture = (await import("tinygesture")).default;
+
+    const gesture = new TinyGesture(carousel);
+    gesture.on("swiperight", () => currentIndex = (currentIndex + 1) % dots);
+    gesture.on("swipeleft", () => currentIndex = (currentIndex + dots - 1) % dots);
+
+    destroyCb = () => {
+      gesture.off("swiperight");
+      gesture.off("swipeleft");
+      gesture.destroy();
+    };
   });
 
   $: if (carouselContent && dots && trigger) {
@@ -51,7 +68,7 @@
 
 </script>
 
-<div flex flex-col overflow-x-hidden {...$$restProps}>
+<div flex flex-col overflow-x-hidden {...$$restProps} bind:this={carousel}>
   <div flex flex-row w-full style="height: calc(100% - 3rem)" class="carousel-content" bind:this={carouselContent} > 
     <slot />
   </div>
