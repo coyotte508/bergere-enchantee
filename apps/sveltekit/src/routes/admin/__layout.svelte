@@ -27,6 +27,7 @@ import Container from "$lib/components/Container.svelte";
 <div flex justify-evenly mb-10>
   <a href="/admin/pages" pa-2 link class:text-sunray="{url.pathname.startsWith('/admin/pages')}">Pages</a>
   <a href="/admin/photos" pa-2 link class:text-sunray="{url.pathname.startsWith('/admin/photos')}">Photos</a>
+  <a href="/admin/produits" pa-2 link class:text-sunray="{url.pathname.startsWith('/admin/produits')}">Produits</a>
 </div>
 
 <Container>  

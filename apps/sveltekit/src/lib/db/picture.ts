@@ -3,7 +3,7 @@ import type { Timestamps } from "./types";
 
 export interface Picture extends Timestamps {
   _id: string;
-  product?: string;
+  productId?: string;
   name: string;
   
   storage: Array<{

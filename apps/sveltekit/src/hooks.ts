@@ -32,7 +32,7 @@ export const handle: Handle = async({ event, resolve }) => {
       return new Response(null, {status: 303, headers: {location: event.url.href}});
     }
 
-    if (event.request.method === "DELETE") {
+    if (event.request.method === "DELETE" || event.url.searchParams.get("_method") === "delete") {
       event.url.pathname = event.url.pathname.slice(0, event.url.pathname.lastIndexOf("/"));
     }
 
