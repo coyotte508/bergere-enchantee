@@ -5,18 +5,10 @@ import { pictures } from "$lib/db";
 import { streamToBuffer } from "$lib/utils";
 import { generatePicture } from "$lib/photo";
 
-export const post: RequestHandler = async ({request, locals}) => {
-  if (!locals.admin) {
-    return {
-      status: 403,
-      body: {
-        message: "Vous devez être admin"
-      }
-    };
-  }
-
+export const post: RequestHandler = async ({request}) => {
   let buffer: Buffer;
-  let name: string;
+  let name = "";
+  let productId = "";
 
   // eslint-disable-next-line no-async-promise-executor
   await new Promise<void>(async (resolve, reject) => {
@@ -32,8 +24,11 @@ export const post: RequestHandler = async ({request, locals}) => {
         resolve();
       });
       bb.on("field", (_name, val) => {
+
         if (_name === "name") {
           name = val;
+        } else if (_name === "productId") {
+          productId = val;
         }
       });
     
@@ -43,23 +38,17 @@ export const post: RequestHandler = async ({request, locals}) => {
     }
   });
 
-  await generatePicture(buffer, name);
+  await generatePicture(buffer, name, {productId: productId || undefined});
 
   return {
-    status: 200,
+    status: productId ? 303 : 200,
+    headers: {
+      ... (productId && {"location": "/admin/produits/" + productId})
+    }
   };
 };
 
-export const get: RequestHandler = async ({locals}) => {
-  if (!locals.admin) {
-    return {
-      status: 403,
-      body: {
-        message: "Vous devez être admin"
-      }
-    };
-  }
-
+export const get: RequestHandler = async () => {
   return {
     body: {
       photos: await pictures.find({productId: {$exists: false}}).toArray()

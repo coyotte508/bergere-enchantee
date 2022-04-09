@@ -9,10 +9,13 @@ function transformHtml(html: string): string {
 }
 
 export const handle: Handle = async({ event, resolve }) => {
-  console.log(event.request.method, event.url.href);
   await connectPromise;
 
   await getSession(event); // fill in locals
+
+  if (event.url.pathname.startsWith("/admin") && !event.locals.admin) {
+    return new Response(JSON.stringify({message: "Vous devez être admin"}), {status: 403, headers: {"content-type": "application/json"}});
+  }
 
   // The replace is for meta:description tag not handled properly by sveltekit
   const result = await resolve(event, {transformPage: ({html}) => transformHtml(html)});
@@ -20,14 +23,14 @@ export const handle: Handle = async({ event, resolve }) => {
 
   const isXhr = event.request.headers.get("accept") === "application/json" 
     || event.request.headers.get("content-type") === "application/json" 
-    || event.request.headers.get("X-Requested-With") !== "XMLHttpRequest";
+    || event.request.headers.get("X-Requested-With") === "XMLHttpRequest";
 
-  if (!isXhr && (event.request.method === "POST" || event.request.method === "DELETE")) {
+  if (!isXhr && (event.request.method === "POST" || event.request.method === "DELETE") && (result.status < 300 || result.status >= 400)) {
     if (!result.ok) {
       event.url.searchParams.set("error", 
-        result.headers.get("content-type").includes("application/json") ? 
+        result.headers.get("content-type")?.includes("application/json") ? 
         (await result.json()).message : 
-        await result.text()
+        "Une erreur s'est produite"
       );
       return new Response(null, {status: 303, headers: {location: event.url.href}});
     }
@@ -36,9 +39,7 @@ export const handle: Handle = async({ event, resolve }) => {
       event.url.pathname = event.url.pathname.slice(0, event.url.pathname.lastIndexOf("/"));
     }
 
-    console.log("redirect too", event.url.pathname, event.url.href);
-
-    return new Response(null, {status: 303, headers: {location: event.url.href}});
+    return new Response(null, {status: 303, headers: {location: result.headers.get("location") || event.url.href}});
   }
 
   return result;

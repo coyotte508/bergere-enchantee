@@ -6,16 +6,7 @@ import { generateId, streamToBuffer } from "$lib/utils";
 import { generatePicture } from "$lib/photo";
 import type { Product } from "$lib/db/product";
 
-export const post: RequestHandler = async ({request, locals}) => {
-  if (!locals.admin) {
-    return {
-      status: 403,
-      body: {
-        message: "Vous devez être admin"
-      }
-    };
-  }
-
+export const post: RequestHandler = async ({request}) => {
   let buffer: Buffer;
 
   const fields = {
@@ -70,16 +61,7 @@ export const post: RequestHandler = async ({request, locals}) => {
   };
 };
 
-export const get: RequestHandler = async ({locals}) => {
-  if (!locals.admin) {
-    return {
-      status: 403,
-      body: {
-        message: "Vous devez être admin"
-      }
-    };
-  }
-
+export const get: RequestHandler = async () => {
   const products = await productsCollection.find({}).toArray();
   const pictures = await picturesCollection.find({productId: {$in: products.map(p => p._id)}}).sort({createdAt: 1}).toArray();
 
@@ -88,8 +70,6 @@ export const get: RequestHandler = async ({locals}) => {
   for (const picture of pictures) {
     byId[picture.productId].photos = [... (byId[picture.productId].photos || []), picture];
   }
-
-  console.log(JSON.stringify(products));
 
   return {
     body: {
