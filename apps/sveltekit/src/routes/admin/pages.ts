@@ -6,7 +6,7 @@ export const get: RequestHandler = async () => {
   return {
     body: {
       pages: Object.values(pages),
-      photos: await Pictures.find({}).toArray(),
+      photos: await Pictures.find({productId: {$exists: false}}).toArray(),
     }
   };
 };
