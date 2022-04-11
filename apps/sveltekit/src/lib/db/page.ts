@@ -94,7 +94,7 @@ export interface EshopPage extends Page {
     google: string
   },
   pictures: {
-
+    background: string | null,
   }
 }
 
@@ -199,7 +199,7 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
       google: "Liste des fauteuils, chaises, coussins... réalisés par Daphné et disponibles à la vente"
     },
     pictures: {
-
+      background: null,
     }
   } as EshopPage
 };
