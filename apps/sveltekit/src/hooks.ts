@@ -1,3 +1,4 @@
+import { prerendering } from "$app/env";
 import { connectPromise, users } from "$lib/db";
 import { extractCookie } from "$lib/extractCookie";
 import type { GetSession, Handle } from "@sveltejs/kit";
@@ -13,7 +14,7 @@ export const handle: Handle = async({ event, resolve }) => {
 
   await getSession(event); // fill in locals
 
-  if (event.url.pathname.startsWith("/admin") && !event.locals.admin) {
+  if (event.url.pathname.startsWith("/admin") && !event.locals.admin && !prerendering) {
     return new Response(JSON.stringify({message: "Vous devez être admin"}), {status: 403, headers: {"content-type": "application/json"}});
   }
 
