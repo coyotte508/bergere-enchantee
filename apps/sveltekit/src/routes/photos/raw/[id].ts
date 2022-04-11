@@ -1,8 +1,8 @@
-import { picturesFs } from "$lib/db";
+import { PicturesFs } from "$lib/db";
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const get: RequestHandler = async ({params}) => {
-  const fs = await picturesFs.findOne({_id: params.id});
+  const fs = await PicturesFs.findOne({_id: params.id});
   return {
     headers: {
       "Content-Type": "image/webp"

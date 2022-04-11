@@ -21,9 +21,9 @@ export interface PictureFs extends Timestamps {
   picture: string;
 }
 
-export function createPictureCollections(db: Db, client: MongoClient): {pictures: Collection<Picture>, picturesFs: Collection<PictureFs>} {
+export function createPictureCollections(db: Db, client: MongoClient): {Pictures: Collection<Picture>, PicturesFs: Collection<PictureFs>} {
   const coll = db.collection<Picture>("pictures");
   const fs = db.collection<PictureFs>("pictures.fs");
 
-  return {pictures: coll, picturesFs: fs};
+  return {Pictures: coll, PicturesFs: fs};
 }

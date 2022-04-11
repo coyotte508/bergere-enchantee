@@ -1,7 +1,7 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import busboy from "busboy";
 import { pipeline } from "stream/promises";
-import { pictures as picturesCollection, products as productsCollection } from "$lib/db";
+import { Pictures, Products } from "$lib/db";
 import { generateId, streamToBuffer } from "$lib/utils";
 import { generatePicture } from "$lib/photo";
 import type { Product } from "$lib/db/product";
@@ -44,7 +44,7 @@ export const post: RequestHandler = async ({request}) => {
   const productId = generateId(fields.name);
   
   await generatePicture(buffer, fields.name, {productId, cb: async (session) => {
-    await productsCollection.insertOne({
+    await Products.insertOne({
       _id: productId,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -62,8 +62,8 @@ export const post: RequestHandler = async ({request}) => {
 };
 
 export const get: RequestHandler = async () => {
-  const products = await productsCollection.find({}).toArray();
-  const pictures = await picturesCollection.find({productId: {$in: products.map(p => p._id)}}).sort({createdAt: 1}).toArray();
+  const products = await Products.find({}).toArray();
+  const pictures = await Pictures.find({productId: {$in: products.map(p => p._id)}}).sort({createdAt: 1}).toArray();
 
   const byId = Object.fromEntries(products.map(p => [p._id, p]));
 

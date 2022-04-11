@@ -1,9 +1,9 @@
 import type { Picture } from "$lib/db/picture";
-import { client, pictures, picturesFs } from "$lib/db";
+import { client, Pictures, PicturesFs } from "$lib/db";
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const get: RequestHandler = async ({params}) => {
-  const picture = await pictures.findOne({_id: params.id});
+  const picture = await Pictures.findOne({_id: params.id});
   return {
     headers: {
       "Content-Type": "application/json"
@@ -15,7 +15,14 @@ export const get: RequestHandler = async ({params}) => {
 };
 
 export const post: RequestHandler = async({params, request}) => {
-  await pictures.updateOne({_id: params.id}, {$set: {name: String((await request.formData()).get("name"))}});
+  await Pictures.updateOne({
+    _id: params.id
+  }, {
+    $set: {
+      name: String((await request.formData()).get("name")),
+      updatedAt: new Date(),
+    }
+  });
 
   return {
     status: 200
@@ -25,8 +32,8 @@ export const post: RequestHandler = async({params, request}) => {
 export const del: RequestHandler = async ({params}) => {
   let picture: Picture;
   await client.withSession(async (session) => {
-    picture = (await pictures.findOneAndDelete({_id: params.id}, {session})).value;
-    await picturesFs.deleteMany({"picture": params.id}, {session});
+    picture = (await Pictures.findOneAndDelete({_id: params.id}, {session})).value;
+    await PicturesFs.deleteMany({"picture": params.id}, {session});
   });
   
   return {

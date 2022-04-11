@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { pictures } from "$lib/db";
+import { Pictures } from "$lib/db";
 
 export const get: RequestHandler = async ({url}) => {
   const ids = url.searchParams.get("ids") as string;
@@ -14,6 +14,6 @@ export const get: RequestHandler = async ({url}) => {
   }
 
   return {
-    body: await pictures.find(ids ? {_id: {$in: ids.split(",")}}: {}).toArray()
+    body: await Pictures.find(ids ? {_id: {$in: ids.split(",")}}: {}).toArray()
   };
 };

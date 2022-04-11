@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import { client, pictures, picturesFs } from "$lib/db";
+import { client, Pictures, PicturesFs } from "$lib/db";
 import { generateId } from "$lib/utils";
 import type { ClientSession } from "mongodb";
 
@@ -33,7 +33,7 @@ export async function generatePicture(buffer: Buffer, name: string, opts?: {prod
   const _id = generateId(name);
 
   await client.withSession(async (session) => {
-    await pictures.insertOne({
+    await Pictures.insertOne({
       _id,
       name,
       storage: formats.map(format => ({
@@ -47,7 +47,7 @@ export async function generatePicture(buffer: Buffer, name: string, opts?: {prod
       updatedAt: new Date()
     }, {session});
     
-    await picturesFs.insertMany(formats.map(format => ({
+    await PicturesFs.insertMany(formats.map(format => ({
       _id: `${_id}-${format.width}x${format.height}`,
       createdAt: new Date(),
       updatedAt: new Date(),

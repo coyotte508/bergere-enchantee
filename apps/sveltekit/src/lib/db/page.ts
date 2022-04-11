@@ -87,6 +87,17 @@ export interface WorkshopPage extends Page {
   }
 }
 
+export interface EshopPage extends Page {
+  _id: "/vente",
+  name: "E-shop",
+  text: {
+    google: string
+  },
+  pictures: {
+
+  }
+}
+
 export const defaultPages = {
   "/": {
     _id: "/",
@@ -180,7 +191,17 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
       "realisation-9": null,
       "realisation-10": null,
     }
-  } as CreationsPage
+  } as CreationsPage,
+  "/vente": {
+    _id: "/vente",
+    name: "E-shop",
+    text: {
+      google: "Liste des fauteuils, chaises, coussins... réalisés par Daphné et disponibles à la vente"
+    },
+    pictures: {
+
+    }
+  } as EshopPage
 };
 
 export let pages = defaultPages;

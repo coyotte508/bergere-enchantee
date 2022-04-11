@@ -16,15 +16,15 @@ const db = client.db("bergere");
 
 const pages = createPageCollection(db, client);
 const users = createUserCollection(db, client);
-const products = createProductCollection(db);
-const {pictures, picturesFs} = createPictureCollections(db, client);
+const Products = createProductCollection(db);
+const {Pictures, PicturesFs} = createPictureCollections(db, client);
 
 export {
   client,
   db,
   pages,
   users,
-  pictures,
-  picturesFs,
-  products
+  Pictures,
+  PicturesFs,
+  Products
 };

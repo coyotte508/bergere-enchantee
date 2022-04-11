@@ -1,7 +1,7 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import busboy from "busboy";
 import { pipeline } from "stream/promises";
-import { pictures } from "$lib/db";
+import { Pictures } from "$lib/db";
 import { streamToBuffer } from "$lib/utils";
 import { generatePicture } from "$lib/photo";
 
@@ -51,7 +51,7 @@ export const post: RequestHandler = async ({request}) => {
 export const get: RequestHandler = async () => {
   return {
     body: {
-      photos: await pictures.find({productId: {$exists: false}}).toArray()
+      photos: await Pictures.find({productId: {$exists: false}}).toArray()
     }
   };
 };

@@ -1,9 +1,9 @@
-import { pictures as picturesCollection, products } from "$lib/db";
+import { Pictures, Products } from "$lib/db";
 import type { Product } from "$lib/db/product";
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const get: RequestHandler = async ({params}) => {
-  const product = await products.findOne({_id: params.id});
+  const product = await Products.findOne({_id: params.id});
 
   if (!product) {
     return {
@@ -11,7 +11,7 @@ export const get: RequestHandler = async ({params}) => {
     };
   }
 
-  const pictures = await picturesCollection.find({productId: params.id}).sort({createdAt: 1}).toArray();
+  const pictures = await Pictures.find({productId: params.id}).sort({createdAt: 1}).toArray();
 
   product.photos = pictures;
 
@@ -34,9 +34,10 @@ export const post: RequestHandler = async({params, request}) => {
     ...(formData.get("kind") && {kind: formData.get("kind") as Product["kind"]}),
     ...(formData.get("description") && {description: formData.get("description") as string}),
     ...(formData.get("price") && {price: Number(formData.get("price"))}),
+    updatedAt: new Date(),
   };
 
-  await products.updateOne({_id: params.id}, {$set: update});
+  await Products.updateOne({_id: params.id}, {$set: update});
 
   return {
     status: 200
