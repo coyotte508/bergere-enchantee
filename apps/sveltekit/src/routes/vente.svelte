@@ -50,10 +50,10 @@
 
 <div class="h-full-without-banner" w-full relative>
   <PictureComponent picture={pictures.find(p => p._id === pageData.pictures.background)} class="h-full w-full object-cover absolute top-0 bottom-0 left-0 right-0" style="z-index: -1"></PictureComponent>
-  <Container class="h-full flex flex-col items-start">
+  <Container noPadding class="h-full flex flex-col items-stretch md:items-start">
     <div grow basis-0></div>
-    <div style="flex-grow: 2" px-8 lg:px-0   basis-0 text-center>
-      <h1 text-7xl text-white text-left>Découvrez <br>nos ventes</h1>
+    <div style="flex-grow: 2" basis-0 text-center md:px-8 xl:px-0>
+      <h1 text-7xl text-white text-center md:text-left>Découvrez <br>nos ventes</h1>
       <a href="#produits" text-white bg-oxford px-4 py-2 mt-10 inline-block rounded-3xl font-bold>cliquez ici</a>
     </div>
   </Container>
