@@ -76,3 +76,28 @@ li {
   margin-left: 1.5rem;
   list-style-type: disc;
 }
+
+.h-full-without-banner {
+  height: calc(100vh - 1rem - (14rem / 4))
+}
+
+@media (min-width: 640px) { 
+  .h-full-without-banner {
+    height: calc(100vh - 1rem - (18rem / 4))
+  }
+}
+@media (min-width: 768px) { 
+  .h-full-without-banner {
+    height: calc(100vh - 1rem - (24rem / 4))
+  }
+}
+@media (min-width: 1024px) { 
+  .h-full-without-banner {
+    height: calc(100vh - 1rem - (32rem / 4))
+  }
+}
+
+/*
+@media (min-width: 1280px) { ... }
+@media (min-width: 1536px) { ... }
+*/

@@ -90,7 +90,7 @@
 
 <header bg-oxford py-2 flex items-center style="font-family: Aileron">
   <nav bg-oxford text-xl font-bold flex grow px-2 sm:px-0 sm:text-center items-center text-white>
-    <a href="/" grow><img src="/logo.svg" alt="Logo" title="Accueil" w-14 sm:w-18 md:w-24 lg:w-32></a>
+    <a href="/" style="line-height: 0;" grow><img src="/logo.svg" alt="Logo" title="Accueil" h-14 w-14 sm:h-18 sm:w-18 md:h-24 md:w-24 lg:h-32 lg:w-32></a>
     <a href="/atelier" class:text-sunray="{path === '/atelier'}" hidden sm:inline py-4 grow hover:text-sunray>L'atelier</a>
     <a href="/realisations" class:text-sunray="{path === '/realisations'}" hidden sm:inline py-4 grow hover:text-sunray>Réalisations</a>
     <a href="/vente" class:text-sunray="{path === '/vente'}" hidden sm:inline py-4 grow hover:text-sunray>e-shop</a>
