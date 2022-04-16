@@ -10,7 +10,7 @@ export interface Page extends Timestamps {
 
 export interface HomePage extends Page {
   _id: "/",
-  name: "Accueil"
+  name: "Bergère Enchantée - Tapisserie d'ameublement"
   text: {
     "presentation": string,
     "eshop-description": string,
@@ -101,7 +101,7 @@ export interface EshopPage extends Page {
 export const defaultPages = {
   "/": {
     _id: "/",
-    name: "Accueil",
+    name: "Bergère Enchantée - Tapisserie d'ameublement",
     text: {
       "presentation": `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
 
