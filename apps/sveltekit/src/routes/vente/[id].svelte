@@ -30,18 +30,18 @@ export async function load(input: LoadInput): Promise<LoadOutput> {
   export let product: Product;
 
   function submit() {
-    alert("Cette partie de l'e-shop n'est pas encore implémentée. Veuillez prendre contact par mail, téléphone ou instagram.");
+    alert("Cette partie de l'e-shop n'est pas encore implémentée. Veuillez prendre contact par mail (contact@bergereenchantee.fr), téléphone (07 74 52 11 15) ou instagram.");
   }
 </script>
 
 <Container>
-  <article flex my-16>
-    <div grow basis-0>
+  <article flex my-8 lg:my-16 flex-wrap lg:flex-nowrap>
+    <div grow lg:basis-0 justify-center items-center flex>
       <a href="/photos/raw/{product.photos[0].storage[0]._id}" target="_blank">
-        <PictureComponent picture={product.photos[0]} title="Cliquez pour voir la photo entière" class="w-full"></PictureComponent>
+        <PictureComponent picture={product.photos[0]} title="Cliquez pour voir la photo entière" class="max-w-full max-h-md lg:max-h-xl rounded-3xl"></PictureComponent>
       </a>
     </div>
-    <div grow basis-0 px-8>
+    <div grow lg:basis-0 lg:px-8 mt-6 lg:m-t0>
       <h1 text-oxford text-4xl>{product.name}</h1>
 
       <div mt-4 flex items-center><span font-bold text-2xl mr-2>{product.price} €</span> (+ livraison hors Finistère)</div>
