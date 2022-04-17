@@ -5,9 +5,7 @@ import type { GetSession, Handle } from "@sveltejs/kit";
 
 function transformHtml(html: string): string {
   return html
-    .replace(/<meta property="og:description" content="[^"]+"/, str => str.replace(/\\n/g, "\n"))
-    .replace(/<meta name="description" content="[^"]+"/, str => str.replace(/\\n/g, "\n"))
-    .replace(/<meta name="twitter:description" content="[^"]+"/, str => str.replace(/\\n/g, "\n"));
+    .replace(/<meta (property|name)="(og:|twitter:|)description" content="[^"]+"/g, str => str.replace(/\\n/g, "\n"));
 }
 
 export const handle: Handle = async({ event, resolve }) => {
