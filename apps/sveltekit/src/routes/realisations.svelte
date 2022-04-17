@@ -1,33 +1,17 @@
-<script context="module" lang="ts">
-  export const load: Load = async (input) => {
-    return {
-      props: {
-        pageData: input.stuff.pageData,
-        pictures: input.stuff.pictures
-      }
-    };  
-  };
-</script>
-
-
 <script lang="ts">
+  import { page } from "$app/stores";
+
   import Container from "$lib/components/Container.svelte";
   import PictureComponent from "$lib/components/Picture.svelte";
-  import type { CreationsPages, HomePage } from "$lib/db/page";
+  import type { CreationsPage } from "$lib/db/page";
   import type { Picture } from "$lib/db/picture";
-  import type { Load } from "@sveltejs/kit";
   import { marked } from "marked";
 
-  export let pageData: CreationsPages;
-  export let pictures: Picture[];
+  const pageData: CreationsPage = $page.stuff.pageData;
+  const pictures: Picture[]  = $page.stuff.pictures;
 
   const picKeys = Object.keys(pageData.pictures)
     .filter(key => key.startsWith("realisation-") && pageData.pictures[key]);
-
-  const showcasePics = Object.keys(pageData.pictures)
-    .filter(key => key.startsWith("realisation-") && pageData.pictures[key])
-    .map(key => pictures.find(pic => pic._id === pageData.pictures[key]))
-    .filter(Boolean);
 </script>
 
 <Container>

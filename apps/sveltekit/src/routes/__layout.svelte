@@ -73,15 +73,18 @@
     {#if title}
       <title>{title}</title>
       <meta property="og:title" content={title}>
+      <meta property="twitter:title" content={title}>
     {/if}
     {#if google}
       <meta name="description" content={google} >
       <meta property="og:description" content={google}>
+      <meta property="twitter:description" content={google}>
     {/if}
     <meta property="og:type" content="{$page.stuff.type || "website"}" />
     {#if pictures.length > 0}
       <meta property="og:image" content="{origin}/photos/raw/{shownPicture.storage.slice(-2)[0]._id}">
-      <meta name="twitter:card" content="{origin}/photos/raw/{shownPicture.storage[0]._id}">
+      <meta name="twitter:image" content="{origin}/photos/raw/{shownPicture.storage[0]._id}">
+      <meta name="twitter:card" content="summary_large_image">
     {/if}
     <meta property="og:url" content="{origin}{path}">
     {#if $page.stuff.price}
