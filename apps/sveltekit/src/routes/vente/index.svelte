@@ -48,7 +48,7 @@
 </script>
 
 <div class="h-full-without-banner" w-full relative>
-  <PictureComponent picture={pictures.find(p => p._id === pageData.pictures.background)} class="h-full w-full object-cover absolute top-0 bottom-0 left-0 right-0" style="z-index: -1"></PictureComponent>
+  <PictureComponent picture={pictures.find(p => p._id === pageData.pictures.background)} class="h-full w-full object-cover absolute top-0 bottom-0 left-0 right-0 bg-brunswick text-white" style="z-index: -1"></PictureComponent>
   <Container noPadding class="h-full flex flex-col items-stretch md:items-start">
     <div grow basis-0></div>
     <div style="flex-grow: 2" basis-0 text-center md:px-8 xl:px-0>
