@@ -52,7 +52,7 @@ export async function load(input: LoadInput): Promise<LoadOutput> {
     <div grow lg:basis-0 lg:px-8 mt-6 lg:m-t0>
       <h1 text-oxford text-4xl>{product.name}</h1>
 
-      <div mt-4 flex items-center><span font-bold text-2xl mr-2>{product.price} €</span> (+ livraison hors Finistère)</div>
+      <div mt-4 flex items-center><span font-bold text-2xl mr-2>{product.price} €</span> (+ coût livraison hors Finistère)</div>
       <div class="marked leading-6">
         {@html marked(product.description)}
       </div>

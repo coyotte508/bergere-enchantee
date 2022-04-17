@@ -48,7 +48,7 @@ export const post: RequestHandler = async ({request}) => {
       _id: productId,
       createdAt: new Date(),
       updatedAt: new Date(),
-      description: fields.description,
+      description: fields.description.replaceAll("\r", ""),
       kind: fields.kind,
       name: fields.name,
       price: +fields.price,

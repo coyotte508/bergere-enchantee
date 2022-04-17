@@ -32,7 +32,7 @@ export const post: RequestHandler = async({params, request}) => {
     ...(formData.get("name") && {name: formData.get("name") as string}),
     ...(formData.get("state") && {state: formData.get("state") as Product["state"]}),
     ...(formData.get("kind") && {kind: formData.get("kind") as Product["kind"]}),
-    ...(formData.get("description") && {description: formData.get("description") as string}),
+    ...(formData.get("description") && {description: (formData.get("description") as string).replaceAll("\r", "")}),
     ...(formData.get("price") && {price: Number(formData.get("price"))}),
     updatedAt: new Date(),
   };
