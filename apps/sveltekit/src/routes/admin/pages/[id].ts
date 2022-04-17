@@ -13,7 +13,7 @@ export const post: RequestHandler = async (input) => {
     };
   }
 
-  await pagesCollection.updateOne({_id: pageId}, {$set: {[`${type}.${body.key}`]: String(body.value)}}, {upsert: true});
+  await pagesCollection.updateOne({_id: pageId}, {$set: {[`${type}.${body.key}`]: String(body.value).replaceAll("\r", "")}}, {upsert: true});
 
   return {status: 200};
 };

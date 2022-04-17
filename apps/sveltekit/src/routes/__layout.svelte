@@ -20,12 +20,10 @@
         user: input.session.user,
         admin: input.session.user?.authority === "admin",
         pageData,
-        pictures
+        pictures,
       },
       props: {
         user: input.session.user,
-        pageData,
-        pictures,
         origin: input.session.origin
       }
     };  
@@ -44,8 +42,6 @@
   import { slide } from "svelte/transition";
 
   export let user: User;
-  export let pageData: Page;
-  export let pictures: Picture[];
   export let origin: string;
 
   let menuOpen = false;
@@ -59,10 +55,13 @@
     return s[0].toLocaleUpperCase() + s.slice(1);
   }
 
+  const pageData = $page.stuff.pageData;
+  const pictures = $page.stuff.pictures;
+
   $: shownPicture = pictures.find(p => p.storage[0].width >= p.storage[0].height) ?? pictures[0];
   $: path = $page.url.pathname;
-  $: title = pageData?.name ?? upperFirst(path?.split("/")?.[1]);
-  $: google = pageData?.text["google"];
+  $: title = $page.stuff.title ?? pageData?.name ?? upperFirst(path?.split("/")?.[1]);
+  $: google = $page.stuff.description ?? pageData?.text["google"];
   $: if (navigating) {
     menuOpen = false;
   }
@@ -79,12 +78,16 @@
       <meta name="description" content={google} >
       <meta property="og:description" content={google}>
     {/if}
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="{$page.stuff.type || "website"}" />
     {#if pictures.length > 0}
       <meta property="og:image" content="{origin}/photos/raw/{shownPicture.storage.slice(-2)[0]._id}">
       <meta name="twitter:card" content="{origin}/photos/raw/{shownPicture.storage[0]._id}">
     {/if}
     <meta property="og:url" content="{origin}{path}">
+    {#if $page.stuff.price}
+      <meta property="product:price:amount" content="{$page.stuff.price}">
+      <meta property="product:price:currency" content="€">
+    {/if}
   {/key}
 </svelte:head>
 

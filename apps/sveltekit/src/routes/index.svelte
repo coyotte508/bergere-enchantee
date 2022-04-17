@@ -1,25 +1,13 @@
-<script context="module" lang="ts">
-  export const load: Load = (input) => {
-    return {
-      props: {
-        pageData: input.stuff.pageData,
-        pictures: input.stuff.pictures
-      }
-    };
-  };
-</script>
-
 <script lang="ts">
   import type { HomePage } from "$lib/db/page";
   import PictureComponent from "$lib/components/Picture.svelte";
-  import type { Load } from "@sveltejs/kit";
   import { marked } from "marked";
-  import type { Picture } from "$lib/db/picture";
   import Container from "$lib/components/Container.svelte";
   import Carousel from "$lib/components/Carousel.svelte";
+  import { page } from "$app/stores";
 
-  export let pageData: HomePage;
-  export let pictures: Picture[];
+  const pageData = $page.stuff.pageData as HomePage;
+  const pictures = $page.stuff.pictures || [];
 
   const showcasePics = Object.keys(pageData.pictures)
     .filter(key => key.startsWith("realisation-") && pageData.pictures[key])

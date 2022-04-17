@@ -23,6 +23,10 @@ declare namespace App {
     user: User;
     admin: boolean;
     pageData: Page;
-    pictures: Picture[]
+    pictures: Picture[];
+    title?: string;
+    description?: string;
+    price?: number;
+    type?: string;
   }
 }

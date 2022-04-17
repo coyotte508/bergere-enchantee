@@ -14,7 +14,15 @@ export async function load(input: LoadInput): Promise<LoadOutput> {
 
   return {
     props: {
-      product
+      product,
+    },
+    stuff: {
+      ...input.stuff,
+      title: `${product.name} - ${product.price} €`,
+      description: product.description,
+      pictures: product.photos,
+      type: "og:product",
+      price: product.price,
     }
   };
 }
@@ -33,10 +41,6 @@ export async function load(input: LoadInput): Promise<LoadOutput> {
     alert("Cette partie de l'e-shop n'est pas encore implémentée. Veuillez prendre contact par mail (contact@bergereenchantee.fr), téléphone (07 74 52 11 15) ou instagram.");
   }
 </script>
-
-<svelte:head>
-  <title>{product.name} - {product.price} €</title>
-</svelte:head>
 
 <Container>
   <article flex my-8 lg:my-16 flex-wrap lg:flex-nowrap>

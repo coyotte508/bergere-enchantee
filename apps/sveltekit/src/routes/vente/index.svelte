@@ -10,8 +10,6 @@
 
     return {
       props: {
-        pageData: input.stuff.pageData,
-        pictures: input.stuff.pictures,
         published,
         retired
       }
@@ -29,10 +27,11 @@
   import type { Picture } from "$lib/db/picture";
   import type { EshopPage } from "$lib/db/page";
   import { onMount } from "svelte";
+  import { page } from "$app/stores";
 
   export let published: Product[];
-  export let pictures: Picture[];
-  export let pageData: EshopPage;
+  const pictures: Picture[] = $page.stuff.pictures;
+  const pageData: EshopPage = $page.stuff.pageData;
   // export let retired: Product[];
 
   onMount(() => {

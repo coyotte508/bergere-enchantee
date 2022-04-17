@@ -1,25 +1,13 @@
-<script context="module" lang="ts">
-  export const load: Load = (input) => {
-    return {
-      props: {
-        pageData: input.stuff.pageData,
-        pictures: input.stuff.pictures
-      }
-    };
-  };
-</script>
-
-
 <script lang="ts">
   import type { WorkshopPage } from "$lib/db/page";
-  import type { Load } from "@sveltejs/kit";
   import Container from "$lib/components/Container.svelte";
   import type { Picture } from "$lib/db/picture";
   import PictureComponent from "$lib/components/Picture.svelte";
   import { marked } from "marked";
+  import { page } from "$app/stores";
 
-  export let pageData: WorkshopPage;
-  export let pictures: Picture[];
+  const pageData: WorkshopPage = $page.stuff.pageData;
+  const pictures: Picture[] = $page.stuff.pictures;
 </script>
 
 <Container>
