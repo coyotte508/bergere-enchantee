@@ -34,6 +34,10 @@ export async function load(input: LoadInput): Promise<LoadOutput> {
   }
 </script>
 
+<svelte:head>
+  <title>{product.name} - {product.price} €</title>
+</svelte:head>
+
 <Container>
   <article flex my-8 lg:my-16 flex-wrap lg:flex-nowrap>
     <div grow lg:basis-0 justify-center items-center flex>
