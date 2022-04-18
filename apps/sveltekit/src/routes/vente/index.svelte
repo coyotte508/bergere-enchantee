@@ -33,18 +33,6 @@
   const pictures: Picture[] = $page.stuff.pictures;
   const pageData: EshopPage = $page.stuff.pageData;
   // export let retired: Product[];
-
-  onMount(() => {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        document.querySelector(this.getAttribute("href")).scrollIntoView({
-          behavior: "smooth"
-        });
-      });
-    });
-  });
 </script>
 
 <div class="h-full-without-banner" w-full relative>
