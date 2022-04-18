@@ -5,5 +5,5 @@
 </script>
 
 {#if picture}
-  <img alt="{picture.name}" srcset="{picture.storage.map(format => `/photos/raw/${format._id} ${format.width}w`).join(", ")}" {...$$restProps}>
+  <img alt="{picture.name}" srcset="{picture.storage.map(format => `/photos/raw/${format._id} ${format.width}w`).join(", ")}" {...$$restProps} on:click>
 {/if}
