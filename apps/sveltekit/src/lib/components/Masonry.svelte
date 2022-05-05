@@ -64,7 +64,7 @@
   }
 </script>
 
-<svelte:window on:resize={refreshLayout}></svelte:window>
+<svelte:window on:resize={refreshLayout} on:load={refreshLayout}></svelte:window>
 
 <div bind:this={masonryElement} class="__grid--masonry">
   <slot></slot>
