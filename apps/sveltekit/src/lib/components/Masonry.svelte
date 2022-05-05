@@ -78,7 +78,7 @@ $s: var(--grid-gap); // .5em;
 <style>
 :global(.__grid--masonry) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, var(--col-width, minmax(Min(20em, 100%), Min(1fr, 50%))));
+  grid-template-columns: repeat(auto-fit, var(--col-width, minmax(Min(20em, 100%), 1fr)));
   grid-template-rows: masonry;
   justify-content: start;
   grid-gap: var(--grid-gap, 0.5em);

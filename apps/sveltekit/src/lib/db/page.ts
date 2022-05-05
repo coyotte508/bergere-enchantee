@@ -63,6 +63,31 @@ export interface CreationsPage extends Page {
   }
 }
 
+export interface FabricsPage {
+  _id: "/tissus-et-finitions",
+  name: "Tissus et finitions",
+  text: {
+    google: string,
+  },
+  pictures: {
+    "photo-1": string | null,
+    "photo-2": string | null,
+    "photo-3": string | null,
+    "photo-4": string | null,
+    "photo-5": string | null,
+    "photo-6": string | null,
+    "photo-7": string | null,
+    "photo-8": string | null,
+    "photo-9": string | null,
+    "photo-10": string | null,
+    "photo-11": string | null,
+    "photo-12": string | null,
+    "photo-13": string | null,
+    "photo-14": string | null,
+    "photo-15": string | null,
+  }
+}
+
 export interface ContactPage extends Page {
   _id: "/contact",
   name: "Contact",
@@ -167,7 +192,7 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
     _id: "/realisations",
     name: "Réalisations",
     text: {
-      google: "Admirez les sièges, fauteuils et coussins réalisés par Daphné, tapissière d'ameublement de la Bergère Enchantée",
+      google: "Découvrez les sièges, fauteuils et coussins réalisés par Daphné, tapissière d'ameublement de la Bergère Enchantée",
       "realisation-1": "",
       "realisation-2": "",
       "realisation-3": "",
@@ -192,6 +217,30 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
       "realisation-10": null,
     }
   } as CreationsPage,
+  "/tissus-et-finitions": {
+    _id: "/tissus-et-finitions",
+    name: "Tissus et finitions",
+    pictures: {
+      "photo-1": null,
+      "photo-2": null,
+      "photo-3": null,
+      "photo-4": null,
+      "photo-5": null,
+      "photo-6": null,
+      "photo-7": null,
+      "photo-8": null,
+      "photo-9": null,
+      "photo-10": null,
+      "photo-11": null,
+      "photo-12": null,
+      "photo-13": null,
+      "photo-14": null,
+      "photo-15": null,
+    },
+    text: {
+      google: "Découvrez les finitions et tissus utilisés par Daphné, tapissière d'ameublement de la Bergère Enchantée",
+    }
+  } as FabricsPage,
   "/vente": {
     _id: "/vente",
     name: "E-shop",

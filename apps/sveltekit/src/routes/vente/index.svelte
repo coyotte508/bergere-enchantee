@@ -26,7 +26,6 @@
   import type { Load } from "@sveltejs/kit";
   import type { Picture } from "$lib/db/picture";
   import type { EshopPage } from "$lib/db/page";
-  import { onMount } from "svelte";
   import { page } from "$app/stores";
 
   export let published: Product[];
@@ -44,10 +43,9 @@
       <a href="#produits" text-white bg-oxford px-4 py-2 mt-10 inline-block rounded-3xl font-bold>cliquez ici</a>
     </div>
   </Container>
-
 </div>
 
-<Container>
+<Container class="mb-4">
   <h2 text-4xl text-oxford my-4 id="produits">Produits à la vente</h2>
 
   <Masonry>
@@ -58,6 +56,8 @@
         <span class="price" text-right>{product.price} €</span>
       </a>
     {/each}
+    <!-- In case there is only one product. We don't want a product to take full row in desktop mode -->
+    <div></div>
   </Masonry>
 </Container>
 
