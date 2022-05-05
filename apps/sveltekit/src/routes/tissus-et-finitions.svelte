@@ -11,11 +11,11 @@
 </script>
 
 <Container class="my-4">
-  <h1 text-4xl text-oxford>Tissus et finitions</h1>
+  <h1 text-4xl text-oxford mb-3>Tissus et finitions</h1>
   <Masonry>
     {#each pictures as picture}
       <a href="/photos/raw/{picture.storage[0]._id}" target="_blank" class="inline">
-        <PictureComponent picture={picture} class="max-w-full"></PictureComponent>
+        <PictureComponent minStorage={1} picture={picture} class="max-w-full"></PictureComponent>
       </a>
     {/each}
   </Masonry>

@@ -51,7 +51,7 @@
   <Masonry>
     {#each published as product}
       <a href="/vente/{product._id}" class="product">
-        <PictureComponent picture={product.photos[0]} class="picture"></PictureComponent>
+        <PictureComponent picture={product.photos[0]} minStorage={1} class="picture"></PictureComponent>
         <span class="name">{product.name}</span>
         <span class="price" text-right>{product.price} €</span>
       </a>

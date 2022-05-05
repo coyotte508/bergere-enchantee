@@ -1,8 +1,9 @@
 
-<script>
+<script lang="ts">
   import { tick } from "svelte";
   export let items = []; // pass in data if it's dynamically updated
-  let grids = [], masonryElement;
+  let grids = []; 
+  let masonryElement: HTMLElement;
   
   const refreshLayout = async () => {
     grids.forEach(async grid => {
@@ -61,6 +62,15 @@
   
   $: if(items) { // update if items are changed
     masonryElement = masonryElement; // refresh masonryElement
+
+    if (masonryElement) {
+      const images = masonryElement.querySelectorAll("img");
+
+      images.forEach(img => {
+        img.removeEventListener("load", refreshLayout);
+        img.addEventListener("load", refreshLayout);
+      });
+    }
   }
 </script>
 
@@ -82,7 +92,6 @@ $s: var(--grid-gap); // .5em;
   grid-template-rows: masonry;
   justify-content: start;
   grid-gap: var(--grid-gap, 0.5em);
-  padding: var(--grid-gap, 0.5em);
 }
 
 :global(.__grid--masonry > *) { 
