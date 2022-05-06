@@ -6,6 +6,12 @@
   let masonryElement: HTMLElement;
   
   const refreshLayout = async () => {
+    masonryElement.querySelectorAll("img").forEach(img => {
+      if (img.complete) {
+        img.classList.add("loaded");
+      }
+    });
+
     grids.forEach(async grid => {
       /* get the post relayout number of columns */
       let ncol = getComputedStyle(grid._el).gridTemplateColumns.split(" ").length;
