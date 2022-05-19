@@ -1,5 +1,5 @@
-import type { EndpointOutput, RequestEvent } from "@sveltejs/kit";
+import type { RequestHandler } from "@sveltejs/kit";
 
-export async function post({request}: RequestEvent): Promise<EndpointOutput> {
+export const post: RequestHandler = ({request}) => {
   return {status: 201};
-}
+};

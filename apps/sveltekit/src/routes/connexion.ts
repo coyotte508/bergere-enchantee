@@ -1,9 +1,9 @@
-import type { EndpointOutput, RequestEvent } from "@sveltejs/kit";
+import type { RequestHandler } from "@sveltejs/kit";
 import {users} from "$lib/db";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
-export async function post({request}: RequestEvent): Promise<EndpointOutput> {
+export const post: RequestHandler = async ({request}) => {
   const data = await request.formData();
 
   const email = data.get("email");
@@ -42,4 +42,4 @@ export async function post({request}: RequestEvent): Promise<EndpointOutput> {
       }; Path=/; SameSite=Lax; Secure`
     }
   };
-}
+};
