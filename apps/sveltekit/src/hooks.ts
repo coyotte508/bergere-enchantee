@@ -37,9 +37,8 @@ export const handle: Handle = async({ event, resolve }) => {
 
     if (event.request.method === "DELETE" || event.url.searchParams.get("_method") === "delete") {
       event.url.pathname = event.url.pathname.slice(0, event.url.pathname.lastIndexOf("/"));
+      return new Response(null, {status: 303, headers: {location: result.headers.get("location") || event.url.href}});
     }
-
-    return new Response(null, {status: 303, headers: {location: result.headers.get("location") || event.url.href}});
   }
 
   return result;

@@ -44,7 +44,8 @@ export const post: RequestHandler = async ({request}) => {
     status: productId ? 303 : 200,
     headers: {
       ... (productId && {"location": "/admin/produits/" + productId})
-    }
+    },
+    body: productId ? undefined : await get()
   };
 };
 

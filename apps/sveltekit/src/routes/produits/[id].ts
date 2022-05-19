@@ -1,5 +1,6 @@
 import { Products, Pictures } from "$lib/db";
 import type { RequestHandler } from "@sveltejs/kit";
+import type { JSONObject } from "@sveltejs/kit/types/private";
 
 export const get: RequestHandler = async ({params}) => {
   const product = await Products.findOne({_id: params.id, state: {$ne: "draft"}});
@@ -13,6 +14,6 @@ export const get: RequestHandler = async ({params}) => {
   return {
     body: {
       product
-    }
+    } as unknown as JSONObject
   };
 };

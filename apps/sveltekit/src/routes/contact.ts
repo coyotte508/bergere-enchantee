@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const post: RequestHandler = ({request}) => {
-  return {status: 201};
+  return {status: 201, body: {success: true}};
 };

@@ -1,6 +1,7 @@
 import { Pictures, Products } from "$lib/db";
 import type { Product } from "$lib/db/product";
 import type { RequestHandler } from "@sveltejs/kit";
+import type { JSONObject } from "@sveltejs/kit/types/private";
 
 export const get: RequestHandler = async ({params}) => {
   const product = await Products.findOne({_id: params.id});
@@ -12,7 +13,6 @@ export const get: RequestHandler = async ({params}) => {
   }
 
   const pictures = await Pictures.find({productId: params.id}).sort({createdAt: 1}).toArray();
-
   product.photos = pictures;
 
   return {
@@ -21,7 +21,7 @@ export const get: RequestHandler = async ({params}) => {
     },
     body: {
       product
-    }
+    } as unknown as JSONObject
   };
 };
 
@@ -37,9 +37,21 @@ export const post: RequestHandler = async({params, request}) => {
     updatedAt: new Date(),
   };
 
-  await Products.updateOne({_id: params.id}, {$set: update});
+  const product = await Products.findOneAndUpdate({_id: params.id}, {$set: update}, {returnDocument: "after"});
+
+  if (!product.value) {
+    return {
+      status: 404
+    };
+  }
+
+  const pictures = await Pictures.find({productId: product.value._id}).sort({createdAt: 1}).toArray();
+  product.value.photos = pictures;
 
   return {
-    status: 200
+    status: 200,
+    body: {
+      product: product.value
+    } as unknown as JSONObject
   };
 };

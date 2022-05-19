@@ -1,7 +1,8 @@
 <script lang="ts" context="module">
   export const load: Load = async (input) => {
+    console.log(input.props);
     return {
-      
+      props: input.props
     };
   };
 </script>
@@ -14,6 +15,7 @@
   import type { Load } from "@sveltejs/kit";
 
   const pageData: ContactPage = $page.stuff.pageData;
+  console.log("within", $$props);
 </script>
 
 <Container>

@@ -56,9 +56,7 @@ export const post: RequestHandler = async ({request}) => {
     } as Product, {session});
   }});
 
-  return {
-    status: 200,
-  };
+  return await get();
 };
 
 export const get: RequestHandler = async () => {
