@@ -100,7 +100,7 @@
     <a href="/atelier" class:text-sunray="{path === '/atelier'}" hidden sm:inline py-4 grow hover:text-sunray>L'atelier</a>
     <a href="/realisations" class:text-sunray="{path === '/realisations'}" hidden sm:inline py-4 grow hover:text-sunray>Réalisations</a>
     <a href="/vente" class:text-sunray="{path === '/vente'}" hidden sm:inline py-4 grow hover:text-sunray>e-shop</a>
-    <a href="/tissus-et-finitions" class:text-sunray="{path === '/tissus'}" hidden sm:inline py-4 grow hover:text-sunray>Tissus / Finitions</a>
+    <a href="/tissus-et-finitions" class:text-sunray="{path === '/tissus-et-finitions'}" hidden sm:inline py-4 grow hover:text-sunray>Tissus / Finitions</a>
     <a href="/contact" class:text-sunray="{path === '/contact'}" hidden sm:inline py-4 grow hover:text-sunray>Contact</a>
     {#if user}
       <a href="/compte" title="Espace client" hidden sm:inline grow text-sunray text-3xl>
@@ -170,7 +170,7 @@
       <a href="/atelier" class:text-sunray="{path === '/atelier'}" hover:text-sunray>L'atelier</a> | 
       <a href="/realisations" class:text-sunray="{path === '/realisations'}" hover:text-sunray>Réalisations</a> | 
       <a href="/vente" class:text-sunray="{path === '/vente'}" hover:text-sunray>E-shop</a> | 
-      <a href="/tissus-et-finitions" class:text-sunray="{path === '/tissus'}" hover:text-sunray>Tissus / Finitions</a> | 
+      <a href="/tissus-et-finitions" class:text-sunray="{path === '/tissus-et-finitions'}" hover:text-sunray>Tissus / Finitions</a> | 
       <a href="/contact" class:text-sunray="{path === '/contact'}" hover:text-sunray>Contact</a>
     </div>
     <div text-center>
