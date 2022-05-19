@@ -1,8 +1,17 @@
+<script lang="ts" context="module">
+  export const load: Load = async (input) => {
+    return {
+      
+    };
+  };
+</script>
+
 <script lang="ts">
-  import type { ContactPage, Page } from "$lib/db/page";
+  import type { ContactPage } from "$lib/db/page";
   import Container from "$lib/components/Container.svelte";
   import { marked } from "marked";
   import { page } from "$app/stores";
+  import type { Load } from "@sveltejs/kit";
 
   const pageData: ContactPage = $page.stuff.pageData;
 </script>
@@ -21,5 +30,6 @@
       <li py-1>📧 <a rel="external" href="mailto:contact@bergereenchantee.fr">contact@bergereenchantee.fr</a></li>
       <li py-1 flex items-center gap-1><div class="i-il-instagram" inline-block />  <a rel="external" href="https://instagram.com/bergereenchantee">bergereenchantee</a></li>
     </ol>
+    <form method="post"><input type="submit" value=""></form>
   </div>
 </Container>
