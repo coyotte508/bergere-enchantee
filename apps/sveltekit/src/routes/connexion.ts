@@ -37,9 +37,9 @@ export const post: RequestHandler = async ({request}) => {
     status: 303,
     headers: {
       location: data.get("redirect") as string ?? "/",
-      "Set-Cookie": `bergereToken=${JSON.stringify(token)}; Max-Age=${
+      "Set-Cookie": `bergereToken=${token}; Max-Age=${
         24 * 3600 * 365 * 3
-      }; Path=/; SameSite=Lax; Secure`
+      }; Path=/; SameSite=Lax; Secure; HttpOnly`
     }
   };
 };

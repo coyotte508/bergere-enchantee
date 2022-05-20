@@ -94,6 +94,9 @@ export interface ContactPage extends Page {
   text: {
     description: string,
     google: string
+  },
+  pictures: {
+    "photo-garde": string | null
   }
 }
 
@@ -166,7 +169,9 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
     _id: "/contact",
     name: "Contact",
     text: {"description": "Je me déplace à votre domicile dans le Finistère sur rendez-vous.", google: "Je me déplace à votre domicile dans le Finistère sur rendez-vous."},
-    pictures: {}
+    pictures: {
+      "photo-garde": null
+    }
   } as ContactPage,
   "/atelier": {
     _id: "/atelier",

@@ -1,8 +1,10 @@
 <script lang="ts" context="module">
   export const load: Load = async (input) => {
-    console.log(input.props);
     return {
-      props: input.props
+      stuff: {
+        ...input.stuff,
+        error: input.props.error
+      }
     };
   };
 </script>
@@ -13,25 +15,51 @@
   import { marked } from "marked";
   import { page } from "$app/stores";
   import type { Load } from "@sveltejs/kit";
+  import type { Picture } from "$lib/db/picture";
+  import PictureComponent from "$lib/components/Picture.svelte";
 
   const pageData: ContactPage = $page.stuff.pageData;
-  console.log("within", $$props);
+  const pictures: Picture[] = $page.stuff.pictures;
 </script>
 
-<Container>
-  <div text-center>
-    <iframe w-full max-w-2xl height="450" title="Carte" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21218.095703681618!2d-4.298313461852108!3d48.33626987923979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816b59434b9b9a1%3A0x497027a2d3e4d4db!2s39%20Rte%20de%20l&#39;Argoat%2C%2029460%20Logonna-Daoulas!5e0!3m2!1sen!2sfr!4v1642367156653!5m2!1sen!2sfr" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-  </div>
-  
-  <div max-w-2xl mx-auto pt-3>
+<Container class="mb-6">
+  <section relative class="h-xl" mt-12 flex>
+    <img src="/triangles.svg" alt="Triangles" pointer-events-none select-none absolute class="h-5/6" style="left: 50%; top: 50%; transform: translate(-50%, -50%) scaleX(-1); z-index: -1">
+    <PictureComponent picture={pictures.find(p => p._id === pageData.pictures["photo-garde"])} sizes="(max-width: 1200px) 50vw, 600px" grow basis-0 class="rounded-3xl h-full object-cover w-3/6" />
+    <div class="w-3/6" h-full flex flex-col justify-evenly pl-12>
+      <h2 text-oxford text-7xl style="mix-blend-mode: color-burn;">Contact</h2>
+      <ul text-oxford>
+        <li flex items-center><div class="i-ant-design-phone-outlined" inline-block mr-2 /> <a rel="external" href="tel:+33774521115">07 74 52 11 15</a></li>
+        <li flex items-center mt-2><div class="i-ant-design-mail-outlined" inline-block mr-2 /> <a rel="external" href="mailto:contact@bergereenchantee.fr">contact@bergereenchantee.fr</a></li>
+        <li flex mt-2><div class="i-ant-design-clock-circle-outlined" inline-block mr-2 mt-1 /> le lundi mardi jeudi vendredi de 9h à 17h30 et le mercredi de 9h à 12h</li>
+      </ul>
+    </div>
+  </section>
+  <div pt-3>
     {@html marked(pageData.text.description)}
-  
-    <ol pt-3>
-      <li py-1>📍 <address inline>39 route de l'Argoat, 29460 Logonna Daoulas <i>(dépôt et retrait uniquement)</i></address></li>
-      <li py-1>📱 <a rel="external" href="tel:+33774521115">07 74 52 11 15</a></li>
-      <li py-1>📧 <a rel="external" href="mailto:contact@bergereenchantee.fr">contact@bergereenchantee.fr</a></li>
-      <li py-1 flex items-center gap-1><div class="i-il-instagram" inline-block />  <a rel="external" href="https://instagram.com/bergereenchantee">bergereenchantee</a></li>
-    </ol>
-    <form method="post"><input type="submit" value=""></form>
   </div>
+
+  <form method="post" text-oxford font-semibold text-lg>
+    <div mt-4>
+      <label for="name" block>Nom</label>
+      <input type="text" name="name" id="name" placeholder="Nom" input box-border style="max-width: 100% !important">
+    </div>
+
+    <div mt-4>
+      <label for="email" block>Email</label>
+      <input type="email" name="email" id="email" placeholder="E-mail" input box-border style="max-width: 100% !important">
+    </div>
+
+    <div mt-4>
+      <label for="message" block>Message</label>
+      <textarea name="message" id="message" cols="30" rows="5" input box-border style="max-width: 100% !important" placeholder="Votre message"></textarea>
+    </div>
+
+    <div w-full flex mt-4>
+      <button type="submit" btn ml-auto>
+        Envoyer
+      </button>
+    </div>
+    
+  </form>
 </Container>

@@ -39,8 +39,10 @@ const config = {
 						}],
 					],
 					shortcuts: {
-						input: "w-full max-w-80 text-lg pl-2 border border-solid border-2 rounded-lg",
-						link: "underline text-brunswick"
+						input: "w-full max-w-80 text-lg pl-2 border border-solid border-2 rounded-xl",
+						link: "underline text-brunswick",
+						btn: "text-white bg-oxford px-4 py-2 rounded-3xl font-bold border-0",
+						"btn-sunray": "text-white bg-sunray px-4 py-2 rounded-3xl font-bold border-0",
 					},
           theme: {
 						colors: {

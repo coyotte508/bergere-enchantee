@@ -40,7 +40,7 @@
     <div grow basis-0></div>
     <div style="flex-grow: 2" basis-0 text-center md:px-8 xl:px-0>
       <h1 text-7xl text-white text-center md:text-left>Découvrez <br>nos ventes</h1>
-      <a href="#produits" text-white bg-oxford px-4 py-2 mt-10 inline-block rounded-3xl font-bold>cliquez ici</a>
+      <a href="#produits" btn mt-10 inline-block>cliquez ici</a>
     </div>
   </Container>
 </div>

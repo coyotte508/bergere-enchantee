@@ -50,6 +50,6 @@
   {@html marked(pageData.text["texte-2"])}
 
   <div my-12 mb-20 text-center> 
-    <a href="/vente" text-white bg-sunray px-4 py-2 rounded-3xl font-bold>e-shop</a>
+    <a href="/vente" btn-sunray>e-shop</a>
   </div>
 </Container>
