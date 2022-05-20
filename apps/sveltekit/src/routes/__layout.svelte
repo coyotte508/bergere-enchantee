@@ -24,7 +24,7 @@
       },
       props: {
         user: input.session.user,
-        origin: input.session.origin
+        origin: input.session.origin,
       }
     };  
   };
@@ -57,6 +57,7 @@
 
   const pageData = $page.stuff.pageData;
   const pictures = $page.stuff.pictures;
+  const error = $page.stuff.error;
 
   $: shownPicture = pictures.find(p => p.storage[0].width >= p.storage[0].height) ?? pictures[0];
   $: path = $page.url.pathname;
@@ -139,9 +140,9 @@
     </nav>
   {/if}
 
-  {#if $page.url.searchParams.get("error")}
-  <Container>
-    <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{$page.url.searchParams.get("error")}</div>
+  {#if error}
+  <Container class="mt-8">
+    <div class="border border-red-500 bg-red-300 rounded-lg pa-2">{error}</div>
   </Container>
   {/if}
 

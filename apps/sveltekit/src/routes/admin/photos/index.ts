@@ -45,7 +45,6 @@ export const post: RequestHandler = async ({request}) => {
     headers: {
       ... (productId && {"location": "/admin/produits/" + productId})
     },
-    body: productId ? undefined : await get()
   };
 };
 

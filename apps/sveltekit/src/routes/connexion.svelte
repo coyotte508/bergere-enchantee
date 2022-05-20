@@ -1,6 +1,18 @@
+<script lang="ts" context="module">
+  export const load: Load = async (input) => {
+    return {
+      stuff: {
+        ...input.stuff,
+        error: input.props.error
+      }
+    };
+  };
+</script>
+
 <script lang="ts">
   import { page } from "$app/stores";
   import Container from "$lib/components/Container.svelte";
+  import type { Load } from "@sveltejs/kit";
 
   const redirectUrl = $page.url.searchParams.get("suivant") ? decodeURIComponent($page.url.searchParams.get("suivant")) : "/";
 </script>

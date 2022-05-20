@@ -8,7 +8,10 @@ export const get: RequestHandler = async ({params}) => {
 
   if (!product) {
     return {
-      status: 404
+      status: 404,
+      body: {
+        error: "Produit non trouvé"
+      }
     };
   }
 
@@ -41,17 +44,14 @@ export const post: RequestHandler = async({params, request}) => {
 
   if (!product.value) {
     return {
-      status: 404
+      status: 404,
+      body: {
+        error: "Produit non trouvé"
+      }
     };
   }
 
-  const pictures = await Pictures.find({productId: product.value._id}).sort({createdAt: 1}).toArray();
-  product.value.photos = pictures;
-
   return {
     status: 200,
-    body: {
-      product: product.value
-    } as unknown as JSONObject
   };
 };

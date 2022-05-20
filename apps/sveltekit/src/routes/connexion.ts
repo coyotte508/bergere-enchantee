@@ -14,7 +14,7 @@ export const post: RequestHandler = async ({request}) => {
     return {
       status: 404,
       body: {
-        message: "Utilisateur non trouvé"
+        error: "Utilisateur non trouvé"
       }
     };
   }
@@ -25,7 +25,7 @@ export const post: RequestHandler = async ({request}) => {
     return {
       status: 403,
       body: {
-        message: "Mauvais mot de passe"
+        error: "Mauvais mot de passe"
       }
     };
   }
