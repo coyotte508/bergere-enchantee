@@ -4,7 +4,8 @@
       stuff: {
         ...input.stuff,
         error: input.props.error
-      }
+      },
+      props: input.props
     };
   };
 </script>
@@ -20,6 +21,7 @@
 
   const pageData: ContactPage = $page.stuff.pageData;
   const pictures: Picture[] = $page.stuff.pictures;
+  export let success: boolean;
 </script>
 
 <Container class="mb-6">
@@ -39,27 +41,36 @@
     {@html marked(pageData.text.description)}
   </div>
 
-  <form method="post" text-oxford font-semibold text-lg>
-    <div mt-4>
-      <label for="name" block>Nom</label>
-      <input type="text" name="name" id="name" placeholder="Nom" input box-border style="max-width: 100% !important">
-    </div>
+  {#if success}
+    <div class="border border-blue-500 bg-blue-300 rounded-lg pa-2">Votre message a bien été envoyé. <br><br> Daphné vous répondra rapidement.</div>
+  {:else}
+    <form method="post" text-oxford font-semibold text-lg>
+      <div mt-4>
+        <label for="lastName" block>Nom</label>
+        <input type="text" name="lastName" id="lastName" placeholder="Nom" input box-border style="max-width: 100% !important" required>
+      </div>
 
-    <div mt-4>
-      <label for="email" block>Email</label>
-      <input type="email" name="email" id="email" placeholder="E-mail" input box-border style="max-width: 100% !important">
-    </div>
+      <div mt-4>
+        <label for="firstName" block>Prénom</label>
+        <input type="text" name="firstName" id="firstName" placeholder="Prénom" input box-border style="max-width: 100% !important" required>
+      </div>
 
-    <div mt-4>
-      <label for="message" block>Message</label>
-      <textarea name="message" id="message" cols="30" rows="5" input box-border style="max-width: 100% !important" placeholder="Votre message"></textarea>
-    </div>
+      <div mt-4>
+        <label for="email" block>Mail</label>
+        <input type="email" name="email" id="email" placeholder="Adresse mail" input box-border style="max-width: 100% !important" required>
+      </div>
 
-    <div w-full flex mt-4>
-      <button type="submit" btn ml-auto>
-        Envoyer
-      </button>
-    </div>
-    
-  </form>
+      <div mt-4>
+        <label for="message" block>Message</label>
+        <textarea name="message" id="message" cols="30" rows="5" input box-border style="max-width: 100% !important" placeholder="Votre message" required></textarea>
+      </div>
+
+      <div w-full flex mt-4>
+        <button type="submit" btn ml-auto cursor-pointer>
+          Envoyer
+        </button>
+      </div>
+      
+    </form>
+  {/if}
 </Container>
