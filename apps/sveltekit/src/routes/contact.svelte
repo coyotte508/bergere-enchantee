@@ -25,15 +25,15 @@
 </script>
 
 <Container class="mb-6">
-  <section relative class="h-xl" mt-12 flex>
-    <img src="/triangles.svg" alt="Triangles" pointer-events-none select-none absolute class="h-5/6" style="left: 50%; top: 50%; transform: translate(-50%, -50%) scaleX(-1); z-index: -1">
-    <PictureComponent picture={pictures.find(p => p._id === pageData.pictures["photo-garde"])} sizes="(max-width: 1200px) 50vw, 600px" grow basis-0 class="rounded-3xl h-full object-cover w-3/6" />
-    <div class="w-3/6" h-full flex flex-col justify-evenly pl-12>
-      <h2 text-oxford text-7xl style="mix-blend-mode: color-burn;">Contact</h2>
+  <section relative class="lg:h-xl" mt-12 flex>
+    <img src="/triangles.svg" alt="Triangles" pointer-events-none select-none absolute hidden lg:block class="h-5/6" style="left: 50%; top: 50%; transform: translate(-50%, -50%) scaleX(-1); z-index: -1">
+    <PictureComponent picture={pictures.find(p => p._id === pageData.pictures["photo-garde"])} sizes="(max-width: 1200px) 50vw, 600px" grow basis-0 hidden class="rounded-3xl h-full object-cover w-3/6 lg:block" />
+    <div class="lg:w-3/6" h-full flex flex-col justify-evenly lg:pl-12>
+      <h2 text-oxford text-7xl style="mix-blend-mode: color-burn;" mb-7 lg:mb-0>Contact</h2>
       <ul text-oxford>
         <li flex items-center><div class="i-ant-design-phone-outlined" inline-block mr-2 /> <a rel="external" href="tel:+33774521115">07 74 52 11 15</a></li>
         <li flex items-center mt-2><div class="i-ant-design-mail-outlined" inline-block mr-2 /> <a rel="external" href="mailto:contact@bergereenchantee.fr">contact@bergereenchantee.fr</a></li>
-        <li flex mt-2><div class="i-ant-design-clock-circle-outlined" inline-block mr-2 mt-1 /> le lundi mardi jeudi vendredi de 9h à 17h30 et le mercredi de 9h à 12h</li>
+        <li flex mt-2><div class="i-ant-design-clock-circle-outlined" inline-block mr-2 lg:mt-1 /> le lundi mardi jeudi vendredi de 9h à 17h30 et le mercredi de 9h à 12h</li>
       </ul>
     </div>
   </section>
