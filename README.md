@@ -7,3 +7,9 @@ Website for upholstery, using pnpm & SvelteKit.
 ```
 pnpm install
 ```
+
+## Run
+
+```
+pnpm dev
+```
