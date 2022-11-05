@@ -1,3 +1,7 @@
+---
+license: other
+---
+
 # Bergère Enchantée
 
 Website for upholstery, using pnpm & SvelteKit.
