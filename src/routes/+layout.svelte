@@ -6,6 +6,114 @@
 
 <slot></slot>
 
-<style>
+<style global>
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Gotham", sans-serif;
+  scroll-behavior: smooth;
 
+  --sunray: #d3a95a;
+}
+
+body {
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+h1, h2, h3{
+  font-family: "RiotSquad", serif;
+  margin: 0
+}
+
+nav {
+  font-family: "Aileron", sans-serif;
+  margin: 0
+}
+
+ol, ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style-type: none;
+}
+ 
+@font-face {
+  font-family: "Aileron";
+  src: url(/Ailerons-Typeface.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "RiotSquad";
+  src: url("/RIOTSQUA.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*
+@font-face {
+  font-family: "Raleway";
+  src: url(/Raleway-VariableFont_wght.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-style: italic;
+  src: url(/Raleway-Italic-VariableFont_wght.ttf) format("truetype");
+}
+*/
+
+@font-face {
+  font-family: "Gotham";
+  font-weight: 400;
+  src: url(/GothamBook.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Gotham";
+  font-weight: 700;
+  src: url(/GothamBold.ttf) format("truetype");
+}
+
+.drop-white {
+  filter: drop-shadow(2px 2px 2px white)
+}
+
+.marked ul li {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.h-full-without-banner {
+  height: calc(100vh - 1rem - (14rem / 4))
+}
+
+@media (min-width: 640px) { 
+  .h-full-without-banner {
+    height: calc(100vh - 1rem - (18rem / 4))
+  }
+}
+@media (min-width: 768px) { 
+  .h-full-without-banner {
+    height: calc(100vh - 1rem - (24rem / 4))
+  }
+}
+@media (min-width: 1024px) { 
+  .h-full-without-banner {
+    height: calc(100vh - 1rem - (32rem / 4))
+  }
+}
+
+/*
+@media (min-width: 1280px) { ... }
+@media (min-width: 1536px) { ... }
+*/
 </style>
