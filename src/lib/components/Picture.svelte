@@ -17,3 +17,15 @@
 		on:load
 	/>
 {/if}
+
+<style>
+	img.hover-zoom {
+		transition: 400ms;
+
+		transform: scale(1);
+	}
+
+	img:hover.hover-zoom {
+		transform: scale(1.2);
+	}
+</style>

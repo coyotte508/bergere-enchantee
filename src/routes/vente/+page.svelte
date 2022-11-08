@@ -34,9 +34,17 @@
 	<Masonry>
 		{#each published as product}
 			<a href="/vente/{product._id}" class="product">
-				<Picture picture={product.photos[0]} minStorage={1} class="picture mx-auto" />
-				<span class="name">{product.name}</span>
-				<span class="price text-right">{product.price} €</span>
+				<div class="overflow-hidden">
+					<Picture
+						picture={product.photos[0]}
+						minStorage={1}
+						class="picture mx-auto max-w-full hover-zoom"
+					/>
+				</div>
+				<div class="flex">
+					<span class="name">{product.name}</span>
+					<span class="price ml-auto">{product.price} €</span>
+				</div>
 			</a>
 		{/each}
 		<!-- In case there is only one product. We don't want a product to take full row in desktop mode -->
@@ -48,28 +56,18 @@
 	.product {
 		display: grid;
 		gap: 0.5rem;
-		grid-template-columns: 1fr auto;
 		grid-template-rows: auto auto;
-		grid-template-areas:
-			'picture picture'
-			'name price';
 	}
 
-	:global(.product > .picture) {
-		grid-area: picture;
+	:global(.product .picture) {
 		max-height: 24rem;
-		max-width: 100%;
+		width: 100%;
+		object-fit: cover;
 	}
 
-	.product > .name {
-		grid-area: name;
-
+	.product .name {
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
-	}
-
-	.product > .price {
-		grid-area: price;
 	}
 </style>
