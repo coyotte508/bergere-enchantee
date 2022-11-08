@@ -1,5 +1,4 @@
 import type { PageServerLoad } from './$types';
-import '$lib/server/db';
 import { collections } from '$lib/server/db';
 
 export const load: PageServerLoad = async () => {
