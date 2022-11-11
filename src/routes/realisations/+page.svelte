@@ -2,6 +2,7 @@
 	import Container from '$lib/components/Container.svelte';
 	import PictureComponent from '$lib/components/Picture.svelte';
 	import type { CreationsPage } from '$lib/types/Page';
+	import { typedKeys } from '$lib/utils/typedKeys';
 	import { marked } from 'marked';
 	import type { PageData } from './$types';
 
@@ -12,7 +13,7 @@
 
 	type PictureKey = keyof typeof pageData.pictures;
 
-	const picKeys = Object.keys(pageData.pictures).filter(
+	const picKeys = typedKeys(pageData.pictures).filter(
 		(key) => key.startsWith('realisation-') && pageData.pictures[key as PictureKey]
 	);
 </script>

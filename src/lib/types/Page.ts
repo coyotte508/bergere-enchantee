@@ -3,8 +3,8 @@ import type { Timestamps } from './Timestamps';
 export interface Page extends Timestamps {
 	_id: string;
 	name: string;
-	text: Record<string, string>;
-	pictures: Record<string, string | null>;
+	text: Record<string, string | undefined>;
+	pictures: Record<string, string | null | undefined>;
 }
 
 export interface HomePage extends Page {
@@ -13,60 +13,29 @@ export interface HomePage extends Page {
 	text: {
 		presentation: string;
 		'eshop-description': string;
-		description: string;
+		'search-engine-description': string;
 	};
 	pictures: {
 		discover: string | null;
 		move: string | null;
 		'e-shop': string | null;
-		'realisation-1': string | null;
-		'realisation-2': string | null;
-		'realisation-3': string | null;
-		'realisation-4': string | null;
-		'realisation-5': string | null;
-		'realisation-6': string | null;
-		'realisation-7': string | null;
-		'realisation-8': string | null;
-		'realisation-9': string | null;
-		'realisation-10': string | null;
-	};
+	} & Partial<Record<`realisation-${number}`, string | null>>;
 }
 
 export interface CreationsPage extends Page {
 	_id: '/realisations';
 	name: 'Réalisations';
 	text: {
-		description: string;
-		'realisation-1': string;
-		'realisation-2': string;
-		'realisation-3': string;
-		'realisation-4': string;
-		'realisation-5': string;
-		'realisation-6': string;
-		'realisation-7': string;
-		'realisation-8': string;
-		'realisation-9': string;
-		'realisation-10': string;
-	};
-	pictures: {
-		'realisation-1': string | null;
-		'realisation-2': string | null;
-		'realisation-3': string | null;
-		'realisation-4': string | null;
-		'realisation-5': string | null;
-		'realisation-6': string | null;
-		'realisation-7': string | null;
-		'realisation-8': string | null;
-		'realisation-9': string | null;
-		'realisation-10': string | null;
-	};
+		'search-engine-description': string;
+	} & Partial<Record<`realisation-${number}`, string>>;
+	pictures: Partial<Record<`realisation-${number}`, string | null>>;
 }
 
 export interface FabricsPage {
 	_id: '/tissus-et-finitions';
 	name: 'Tissus et finitions';
 	text: {
-		description: string;
+		'search-engine-description': string;
 	};
 	pictures: {
 		'photo-1': string | null;
@@ -92,6 +61,7 @@ export interface ContactPage extends Page {
 	name: 'Contact';
 	text: {
 		description: string;
+		'search-engine-description': string;
 	};
 	pictures: {
 		'photo-garde': string | null;
@@ -102,7 +72,7 @@ export interface WorkshopPage extends Page {
 	_id: '/atelier';
 	name: "L'Atelier";
 	text: {
-		description: string;
+		'search-engine-description': string;
 		'texte-1': string;
 		'texte-2': string;
 	};
@@ -117,7 +87,7 @@ export interface EshopPage extends Page {
 	_id: '/vente';
 	name: 'E-shop';
 	text: {
-		description: string;
+		'search-engine-description': string;
 	};
 	pictures: {
 		background: string | null;

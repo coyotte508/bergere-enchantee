@@ -24,9 +24,9 @@
 		<meta property="twitter:title" content={$page.data.title} />
 	{/if}
 	{#if $page.data.description}
-		<meta name="description" content={$page.data.description} />
-		<meta property="og:description" content={$page.data.description} />
-		<meta property="twitter:description" content={$page.data.description} />
+		<meta name="description" content={$page.data['search-engine-description']} />
+		<meta property="og:description" content={$page.data['search-engine-description']} />
+		<meta property="twitter:description" content={$page.data['search-engine-description']} />
 	{/if}
 	<meta property="og:type" content={$page.data.type || 'website'} />
 	{#if shownPicture}
