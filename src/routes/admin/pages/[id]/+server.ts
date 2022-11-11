@@ -22,7 +22,15 @@ export const POST: RequestHandler = async (input) => {
 
 	await collections.pages.updateOne(
 		{ _id: id },
-		{ $set: { [`${type}.${body.key}`]: String(body.value).replaceAll('\r', '') } },
+		{
+			$set: {
+				[`${type}.${body.key}`]: String(body.value).replaceAll('\r', ''),
+				updatedAt: new Date()
+			},
+			$setOnInsert: {
+				createdAt: new Date()
+			}
+		},
 		{ upsert: true }
 	);
 
