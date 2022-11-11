@@ -17,13 +17,23 @@ export const load: LayoutServerLoad = async (input) => {
 		return {
 			pageData,
 			pictures: pics,
-			user: !!input.locals.user
+			user: input.locals.user
+				? {
+						email: input.locals.user.email,
+						admin: input.locals.user.authority === 'admin'
+				  }
+				: null
 		};
 	}
 
 	return {
 		pageData: null,
 		pictures: [] as Picture[],
-		user: !!input.locals.user
+		user: input.locals.user
+			? {
+					email: input.locals.user.email,
+					admin: input.locals.user.authority === 'admin'
+			  }
+			: null
 	};
 };
