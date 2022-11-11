@@ -15,11 +15,7 @@
 		<p><a href="/admin" class="link">Admin</a></p>
 	{/if}
 
-	<form
-		action="/deconnexion"
-		method="post"
-		class="text-sunray text-3xl inline-block cursor-pointer"
-	>
-		<input type="submit" value="Déconnexion" class="cursor-pointer btn" />
+	<form action="/deconnexion" method="post" class="text-sunray text-3xl inline-block">
+		<input type="submit" value="Déconnexion" class="btn" />
 	</form>
 </Container>

@@ -113,7 +113,7 @@
 			</div>
 
 			<div class="w-full flex mt-4">
-				<button type="submit" class="btn ml-auto cursor-pointer"> Envoyer </button>
+				<button type="submit" class="btn ml-auto"> Envoyer </button>
 			</div>
 		</form>
 	{/if}

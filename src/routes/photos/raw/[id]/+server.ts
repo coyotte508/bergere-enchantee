@@ -1,9 +1,9 @@
-import { picturesFs } from '$lib/server/db';
+import { collections } from '$lib/server/db';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params }) => {
-	const fs = await picturesFs.findOne({ _id: params.id });
+	const fs = await collections.picturesFs.findOne({ _id: params.id });
 
 	if (!fs) {
 		throw error(404, 'Image non trouvée');

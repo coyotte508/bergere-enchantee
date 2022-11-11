@@ -1,8 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
-import { users } from '$lib/server/db';
 import bcrypt from 'bcryptjs';
 import type { Actions } from './$types';
 import { addYears } from 'date-fns';
+import { collections } from '$lib/server/db';
 
 export const actions: Actions = {
 	default: async (event) => {
@@ -14,7 +14,10 @@ export const actions: Actions = {
 
 		const email = data.get('email')!.toString().trim();
 
-		const user = await users.findOne({ email }, { collation: { locale: 'en', strength: 1 } });
+		const user = await collections.users.findOne(
+			{ email },
+			{ collation: { locale: 'en', strength: 1 } }
+		);
 
 		if (!user) {
 			throw error(404, "Utilisateur non trouvé pour l'email: " + email);
@@ -30,7 +33,7 @@ export const actions: Actions = {
 
 		if (!token) {
 			token = crypto.randomUUID();
-			await users.updateOne({ _id: user._id }, { $set: { token } });
+			await collections.users.updateOne({ _id: user._id }, { $set: { token } });
 		}
 
 		event.cookies.set('bergereToken', token, {

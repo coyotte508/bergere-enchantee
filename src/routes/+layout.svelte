@@ -348,6 +348,14 @@
 		}
 	}
 
+	select.input {
+		cursor: pointer;
+	}
+
+	textarea.input {
+		max-width: calc(100% - 1rem);
+	}
+
 	/*
 @media (min-width: 1280px) { ... }
 @media (min-width: 1536px) { ... }

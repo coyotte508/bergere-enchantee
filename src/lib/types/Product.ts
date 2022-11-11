@@ -6,7 +6,7 @@ export interface Product extends Timestamps {
 	name: string;
 	description: string;
 	price: number;
-	kind: 'armchair' | 'cushion';
+	kind: 'armchair' | 'cushion' | 'chair' | 'couch' | 'tufting';
 	state: 'draft' | 'published' | 'retired';
 
 	photos: Picture[];

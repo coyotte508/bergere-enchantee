@@ -18,10 +18,10 @@ export const actions: Actions = {
 			};
 		}
 
-		const firstName = body.get('firstName').toString().trim();
-		const lastName = body.get('lastName').toString().trim();
-		const message = body.get('message').toString().trim();
-		const email = body.get('email').toString().trim();
+		const firstName = body.get('firstName')!.toString().trim();
+		const lastName = body.get('lastName')!.toString().trim();
+		const message = body.get('message')!.toString().trim();
+		const email = body.get('email')!.toString().trim();
 
 		await mg.messages.create('mails.bergereenchantee.fr', {
 			from: 'Formulaire de contact <contact@mails.bergereenchantee.fr>',

@@ -18,5 +18,5 @@ const users = createUserCollection(db, client);
 const products = createProductCollection(db);
 const { pictures, picturesFs } = createPictureCollections(db);
 
-export { client, db, pages, users, pictures, picturesFs, products };
-export const collections = { products, pictures, pages, users };
+export { client, db };
+export const collections = { products, pictures, pages, users, picturesFs };
