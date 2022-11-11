@@ -2,11 +2,17 @@ import { error, redirect } from '@sveltejs/kit';
 import { users } from '$lib/server/db';
 import bcrypt from 'bcryptjs';
 import type { Actions } from './$types';
+import { addYears } from 'date-fns';
 
 export const actions: Actions = {
 	default: async (event) => {
 		const data = await event.request.formData();
-		const email = data.get('email').trim();
+
+		if (!data || !data.get('email') || !data.get('password')) {
+			throw error(400, 'Pas de login renseigné');
+		}
+
+		const email = data.get('email')!.toString().trim();
 
 		const user = await users.findOne({ email }, { collation: { locale: 'en', strength: 1 } });
 
@@ -14,7 +20,7 @@ export const actions: Actions = {
 			throw error(404, "Utilisateur non trouvé pour l'email: " + email);
 		}
 
-		const password = data.get('password').trim();
+		const password = data.get('password')!.toString().trim();
 
 		if (!(await bcrypt.compare(password as string, user.hash))) {
 			throw error(401, 'Mauvais mot de passe');
@@ -32,11 +38,11 @@ export const actions: Actions = {
 			sameSite: 'lax',
 			secure: true,
 			httpOnly: true,
-			maxAge: 24 * 3600 * 365 * 3
+			expires: addYears(new Date(), 3)
 		});
 
 		if (event.url.searchParams.get('suivant')) {
-			throw redirect(303, event.url.searchParams.get('suivant'));
+			throw redirect(303, event.url.searchParams.get('suivant')!);
 		}
 
 		return { success: true };

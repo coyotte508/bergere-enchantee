@@ -3,10 +3,15 @@
 	import { slide } from 'svelte/transition';
 	import '@unocss/reset/normalize.css';
 	import 'uno.css';
+	import type { LayoutData } from './$types';
 
-	$: path = $page.route.id ?? '';
+	$: path = $page.route?.id ?? '';
 
-	let user: null = null;
+	export let data: LayoutData;
+
+	$: shownPicture =
+		data.pictures.find((p) => p.storage[0].width >= p.storage[0].height) ?? data.pictures[0];
+
 	let menuOpen = false;
 	let date = new Date();
 </script>
@@ -24,15 +29,19 @@
 		<meta property="twitter:description" content={$page.data.description} />
 	{/if}
 	<meta property="og:type" content={$page.data.type || 'website'} />
-	<!-- {#if pictures.length > 0}
+	{#if shownPicture}
 		<meta
 			property="og:image"
-			content="{origin}/photos/raw/{shownPicture.storage.slice(-2)[0]._id}"
+			content="{$page.url.protocol}//{$page.url.host}/photos/raw/{shownPicture.storage.slice(-2)[0]
+				._id}"
 		/>
-		<meta name="twitter:image" content="{origin}/photos/raw/{shownPicture.storage[0]._id}" />
+		<meta
+			name="twitter:image"
+			content="{$page.url.protocol}//{$page.url.host}/photos/raw/{shownPicture.storage[0]._id}"
+		/>
 		<meta name="twitter:card" content="summary_large_image" />
-	{/if} -->
-	<!-- <meta property="og:url" content="{origin}{path}" /> -->
+	{/if}
+	<meta property="og:url" content="{$page.url.protocol}//{$page.url.host}{path}" />
 	{#if $page.data.price}
 		<meta property="product:price:amount" content={$page.data.price} />
 		<meta property="product:price:currency" content="€" />
@@ -76,7 +85,7 @@
 			class:text-sunray={path === '/contact'}
 			class="hidden sm:inline py-4 grow hover:text-sunray">Contact</a
 		>
-		{#if user}
+		{#if data.user}
 			<a href="/compte" title="Espace client" class="hidden sm:inline grow text-sunray text-3xl">
 				<div class="inline-block i-ant-design-user-outlined" />
 			</a>
@@ -127,7 +136,7 @@
 			<a href="/contact" class:text-sunray={path === '/contact'} class="my-2 hover:text-sunray"
 				>Contact</a
 			>
-			{#if user}
+			{#if data.user}
 				<a
 					href="/compte"
 					title="Espace client"

@@ -16,12 +16,14 @@ export const load: LayoutServerLoad = async (input) => {
 
 		return {
 			pageData,
-			pictures: pics
+			pictures: pics,
+			user: !!input.locals.user
 		};
 	}
 
 	return {
 		pageData: null,
-		pictures: [] as Picture[]
+		pictures: [] as Picture[],
+		user: !!input.locals.user
 	};
 };

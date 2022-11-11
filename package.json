@@ -16,6 +16,7 @@
 		"@iconify-json/il": "^1.1.2",
 		"@sveltejs/adapter-node": "next",
 		"@sveltejs/kit": "next",
+		"@types/bcryptjs": "^2.4.2",
 		"@types/lodash": "^4.14.188",
 		"@types/marked": "^4.0.7",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
@@ -40,6 +41,7 @@
 	"type": "module",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
+		"date-fns": "^2.29.3",
 		"form-data": "^4.0.0",
 		"lodash": "^4.17.21",
 		"mailgun.js": "^8.0.2",
