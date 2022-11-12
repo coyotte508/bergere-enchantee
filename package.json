@@ -17,8 +17,10 @@
 		"@sveltejs/adapter-node": "next",
 		"@sveltejs/kit": "next",
 		"@types/bcryptjs": "^2.4.2",
+		"@types/busboy": "^1.5.0",
 		"@types/lodash": "^4.14.188",
 		"@types/marked": "^4.0.7",
+		"@types/sharp": "^0.31.0",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"@unocss/preset-icons": "^0.46.3",
@@ -41,11 +43,14 @@
 	"type": "module",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
+		"busboy": "^1.6.0",
 		"date-fns": "^2.29.3",
 		"form-data": "^4.0.0",
 		"lodash": "^4.17.21",
 		"mailgun.js": "^8.0.2",
 		"marked": "^4.2.2",
-		"mongodb": "^4.11.0"
+		"mongodb": "^4.11.0",
+		"nanoid": "^4.0.0",
+		"sharp": "^0.31.2"
 	}
 }

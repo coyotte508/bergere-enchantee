@@ -8,7 +8,7 @@
 <h1 class="text-sunray">Modifier un produit</h1>
 
 <div class="flex flex-col">
-	<form method="post">
+	<form method="post" action="?/update">
 		<label class="block w-full mt-4 leading-8">
 			Nom
 			<input type="text" name="name" class="input block" value={data.product.name} />
@@ -45,6 +45,7 @@
 		</label>
 
 		<button type="submit" class="mt-4 btn">Valider</button>
+		<button type="submit" class="mt-4 btn-red float-right" formaction="?/delete">Supprimer</button>
 	</form>
 </div>
 

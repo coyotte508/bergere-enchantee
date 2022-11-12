@@ -1,6 +1,6 @@
-import { collections } from '$lib/server/db';
+import { client, collections, db } from '$lib/server/db';
 import type { Product } from '$lib/types/Product';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { omit } from 'lodash';
 
@@ -23,7 +23,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, params }) => {
+	update: async ({ request, params }) => {
 		const formData = await request.formData();
 
 		const update = {
@@ -48,5 +48,32 @@ export const actions: Actions = {
 		}
 
 		return {};
+	},
+
+	delete: async ({ params }) => {
+		await client.withSession(async (session) => {
+			const product = await collections.products.findOneAndDelete({ _id: params.id });
+
+			if (!product.value) {
+				throw error(404);
+			}
+
+			const pictures = await collections.pictures
+				.find({ productId: params.id }, { session })
+				.toArray();
+
+			await collections.pictures.deleteMany(
+				{ _id: { $in: pictures.map((p) => p._id) } },
+				{ session }
+			);
+			await collections.picturesFs.deleteMany(
+				{
+					_id: { $in: pictures.flatMap((p) => p.storage.map((s) => s._id)) }
+				},
+				{ session }
+			);
+		});
+
+		throw redirect(303, '/admin/produits');
 	}
 };

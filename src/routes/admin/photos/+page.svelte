@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<h1 class="text-sunray">Liste des photos</h1>
+<h1 class="text-sunray">Liste des photos sans produit</h1>
 
 <a href="/admin/photos/nouveau" class="my-4 block link">Nouvelle photo</a>
 

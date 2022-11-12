@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 
 	const productId = $page.url.searchParams.get('productId');
@@ -7,7 +6,7 @@
 
 <h1 class="text-sunray">Ajouter une photo</h1>
 
-<form method="post" action="/admin/photos" enctype="multipart/form-data" use:enhance>
+<form method="post" enctype="multipart/form-data">
 	<label class="block my-4 leading-8">
 		Nom de la photo
 		<input class="input block" type="text" name="name" placeholder="Nom définitif" required />

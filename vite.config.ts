@@ -28,6 +28,7 @@ const config: UserConfig = {
 				input: 'w-full max-w-80 text-lg pl-2 border border-solid border-2 rounded-xl',
 				link: 'underline text-brunswick',
 				btn: 'text-white bg-oxford px-4 py-2 rounded-3xl font-bold border-0 cursor-pointer',
+				'btn-red': 'text-white bg-red-500 px-4 py-2 rounded-3xl font-bold border-0 cursor-pointer',
 				'btn-sunray': 'text-white bg-sunray px-4 py-2 rounded-3xl font-bold border-0 cursor-pointer'
 			},
 			theme: {

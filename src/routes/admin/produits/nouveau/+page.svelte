@@ -1,6 +1,6 @@
 <h1 class="text-sunray">Ajouter un produit</h1>
 
-<form method="post" enctype="multipart/form-data" action="/admin/produits">
+<form method="post" enctype="multipart/form-data">
 	<label class="block my-4 leading-8">
 		Nom du produit
 		<input class="input block" type="text" name="name" placeholder="Nom définitif" required />
@@ -23,7 +23,7 @@
 
 	<label class="block my-4 leading-8">
 		Type
-		<select name="kind">
+		<select name="kind" class="input">
 			<option value="armchair">Fauteuil</option>
 			<option value="chair">Chaise</option>
 			<option value="couch">Canapé</option>
