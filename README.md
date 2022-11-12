@@ -6,6 +6,8 @@ license: other
 
 Website for upholstery, using pnpm & SvelteKit.
 
+See on https://bergereenchantee.fr.
+
 ## Install
 
 ```
