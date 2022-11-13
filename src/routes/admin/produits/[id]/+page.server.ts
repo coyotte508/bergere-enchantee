@@ -1,8 +1,7 @@
-import { client, collections, db } from '$lib/server/db';
+import { client, collections } from '$lib/server/db';
 import type { Product } from '$lib/types/Product';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { omit } from 'lodash';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const product = await collections.products.findOne({ _id: params.id });
