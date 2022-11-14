@@ -4,6 +4,7 @@
 	import '@unocss/reset/normalize.css';
 	import 'uno.css';
 	import type { LayoutData } from './$types';
+	import { upperFirst } from '$lib/utils/upperFirst';
 
 	$: path = $page.route?.id ?? '';
 
@@ -14,19 +15,22 @@
 
 	let menuOpen = false;
 	let date = new Date();
+
+	$: title = $page.data.title ?? data.pageData?.name ?? upperFirst(path?.split('/')?.[1]);
+	$: description = $page.data.description ?? data.pageData?.text['search-engine-description'];
 </script>
 
 <svelte:head>
 	<meta property="og:site_name" content="Bergère Enchantée" />
-	{#if $page.data.title}
-		<title>{$page.data.title}</title>
-		<meta property="og:title" content={$page.data.title} />
-		<meta property="twitter:title" content={$page.data.title} />
+	{#if title}
+		<title>{title}</title>
+		<meta property="og:title" content={title} />
+		<meta property="twitter:title" content={title} />
 	{/if}
-	{#if $page.data.description}
-		<meta name="description" content={$page.data['search-engine-description']} />
-		<meta property="og:description" content={$page.data['search-engine-description']} />
-		<meta property="twitter:description" content={$page.data['search-engine-description']} />
+	{#if description}
+		<meta name="description" content={description} />
+		<meta property="og:description" content={description} />
+		<meta property="twitter:description" content={description} />
 	{/if}
 	<meta property="og:type" content={$page.data.type || 'website'} />
 	{#if shownPicture}

@@ -19,3 +19,7 @@ pnpm install
 ```
 pnpm dev
 ```
+
+## Original repo
+
+https://github.com/coyotte508/bergere-enchantee
