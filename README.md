@@ -8,6 +8,8 @@ Website for upholstery, using pnpm & SvelteKit.
 
 See on https://bergereenchantee.fr.
 
+Hooked to https://huggingface.co/spaces/coyotte508/bergere-ci-cd
+
 ## Install
 
 ```
