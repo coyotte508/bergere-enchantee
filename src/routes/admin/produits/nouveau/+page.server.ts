@@ -59,6 +59,7 @@ export const actions: Actions = {
 						name: fields.name,
 						price: +fields.price,
 						photos: [],
+						stock: 1,
 						state: 'draft'
 					},
 					{ session }

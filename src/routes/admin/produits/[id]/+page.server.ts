@@ -33,6 +33,7 @@ export const actions: Actions = {
 				description: (formData.get('description') as string).replaceAll('\r', '')
 			}),
 			...(formData.get('price') && { price: Number(formData.get('price')) }),
+			...(formData.get('stock') && { stock: Number(formData.get('stock')) }),
 			updatedAt: new Date()
 		};
 
