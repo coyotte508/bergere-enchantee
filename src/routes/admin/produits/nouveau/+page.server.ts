@@ -3,24 +3,22 @@ import { generatePicture } from '$lib/server/photo';
 import type { Product } from '$lib/types/Product';
 import { generateId } from '$lib/utils/generateId';
 import type { Actions } from './$types';
-import { pipeline } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 import busboy from 'busboy';
 import { streamToBuffer } from '$lib/server/utils/streamToBuffer';
 import { redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	default: async ({ request }) => {
-		let buffer: Buffer;
-
 		const fields = {
 			name: '',
 			description: '',
-			price: 100,
+			price: '100',
 			kind: 'armchair'
 		};
 
 		// eslint-disable-next-line no-async-promise-executor
-		await new Promise<void>(async (resolve, reject) => {
+		const buffer = await new Promise<Buffer>(async (resolve, reject) => {
 			try {
 				const bb = busboy({
 					headers: {
@@ -29,16 +27,15 @@ export const actions: Actions = {
 				});
 				bb.on('file', async (name, file, info) => {
 					// const { filename, encoding, mimeType } = info;
-					buffer = await streamToBuffer(file);
-					resolve();
+					resolve(await streamToBuffer(file));
 				});
 				bb.on('field', (name, val) => {
 					if (name in fields) {
-						fields[name] = val;
+						fields[name as keyof typeof fields] = val;
 					}
 				});
 
-				await pipeline(request.body as any, bb, () => {});
+				await pipeline(request.body as unknown as AsyncIterable<Buffer>, bb);
 			} catch (err) {
 				reject(err);
 			}
