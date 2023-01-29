@@ -61,7 +61,7 @@
 			{#if product.stock}
 				<form action="post">
 					{#if product.stock > 1}
-						<div>
+						<div class="mt-4">
 							<button
 								type="button"
 								class="btn bg-gray-700 rounded-md"
