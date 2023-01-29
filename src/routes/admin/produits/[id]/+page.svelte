@@ -26,7 +26,6 @@
 			<select name="state" value={data.product.state} class="block input">
 				<option value="draft" selected={data.product.state === 'draft'}>Privé</option>
 				<option value="published" selected={data.product.state === 'published'}>Public</option>
-				<option value="retired" selected={data.product.state === 'retired'}>Vendu</option>
 			</select>
 		</label>
 		<label class="block w-full mt-4 leading-8">
