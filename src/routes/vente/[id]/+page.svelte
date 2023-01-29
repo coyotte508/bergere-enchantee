@@ -8,6 +8,7 @@
 
 	const product = data.product;
 	let photoIndex = 0;
+	let toBuy = 1;
 
 	function submit() {
 		alert(
@@ -46,21 +47,52 @@
 			<h1 class="text-oxford text-4xl">{product.name}</h1>
 
 			<div class="mt-4 flex items-center">
-				<span class="font-bold text-2xl mr-2">{product.price} €</span> (+ frais de livraison hors Finistère)
+				<span class="font-bold text-2xl mr-2" class:line-through={product.stock === 0}
+					>{product.price} €</span
+				>
+				{#if product.stock}(+ frais de livraison hors Finistère){:else}<span class="text-red-500"
+						>Produit épuisé!</span
+					>{/if}
 			</div>
 			<div class="marked leading-6">
 				{@html marked(product.description)}
 			</div>
 
-			<form action="post">
-				<button
-					type="submit"
-					on:click|preventDefault={submit}
-					class="mt-4 text-xl leading-6 py-3 px-6 bg-oxford border-0 shadow text-white rounded-md cursor-pointer"
-				>
-					Acheter
-				</button>
-			</form>
+			{#if product.stock}
+				<form action="post">
+					{#if product.stock > 1}
+						<div>
+							<button
+								type="button"
+								class="btn bg-gray-700 rounded-md"
+								class:bg-gray-400!={toBuy <= 1}
+								disabled={toBuy <= 1}
+								class:cursor-default!={toBuy <= 1}
+								on:click={() => --toBuy}>-</button
+							>
+							<span
+								class="text-xl text-sunray mx-2 font-bold inline-block text-center"
+								style="width: 1rem">{toBuy}</span
+							>
+							<button
+								type="button"
+								class="btn bg-gray-700 rounded-md"
+								class:bg-gray-400!={toBuy >= product.stock}
+								disabled={toBuy >= product.stock}
+								on:click={() => ++toBuy}>+</button
+							>
+						</div>
+					{/if}
+					<button
+						type="submit"
+						on:click|preventDefault={submit}
+						class="mt-4 text-xl leading-6 py-3 px-6 bg-oxford border-0 shadow text-white rounded-md cursor-pointer"
+					>
+						Acheter
+					</button>
+					<div class="flex-grow" />
+				</form>
+			{/if}
 		</div>
 	</article>
 </Container>

@@ -34,16 +34,48 @@
 	<Masonry>
 		{#each published as product}
 			<a href="/vente/{product._id}" class="product">
-				<div class="overflow-hidden">
+				<div class="overflow-hidden rounded relative">
+					{#if product.stock > 1}
+						<div
+							class="absolute z-1 right-0 p-4 bg-sunray text-white font-bold rounded-bl-lg"
+							style="font-family: 'Riot Squad', sans-serif;"
+						>
+							x {product.stock}
+						</div>
+					{/if}
 					<Picture
 						picture={product.photos[0]}
 						minStorage={1}
-						class="picture mx-auto max-w-full hover-zoom"
+						class="picture mx-auto max-w-full h-full hover-zoom rounded"
 					/>
 				</div>
-				<div class="flex">
-					<span class="name">{product.name}</span>
-					<span class="price ml-auto">{product.price} €</span>
+				<div class="flex items-center">
+					<span class="name text-lg">{product.name}</span>
+					<span class="price ml-auto text-oxford font-bold">{product.price} €</span>
+				</div>
+			</a>
+		{/each}
+		<!-- In case there is only one product. We don't want a product to take full row in desktop mode -->
+		<div />
+	</Masonry>
+</Container>
+
+<Container class="mb-4">
+	<h2 class="text-4xl text-oxford my-4" id="produits">Produits épuisés</h2>
+
+	<Masonry>
+		{#each retired as product}
+			<a href="/vente/{product._id}" class="product">
+				<div class="overflow-hidden rounded relative">
+					<Picture
+						picture={product.photos[0]}
+						minStorage={1}
+						class="picture mx-auto max-w-full h-full hover-zoom rounded"
+					/>
+				</div>
+				<div class="flex items-center">
+					<span class="name text-lg">{product.name}</span>
+					<span class="price ml-auto text-oxford font-bold line-through">{product.price} €</span>
 				</div>
 			</a>
 		{/each}
