@@ -9,6 +9,6 @@ export const GET: RequestHandler = async ({ params }) => {
 		throw error(404, 'Image non trouvée');
 	}
 	return new Response(new Uint8Array(fs.data.buffer, 0, fs.data.buffer.byteLength), {
-		headers: { 'Content-Type': 'image/webp' }
+		headers: { 'Content-Type': 'image/webp', 'Cache-Control': 'max-age=604800' }
 	});
 };
