@@ -11,11 +11,12 @@ export const load: PageServerLoad = async () => {
 	const byId = Object.fromEntries(products.map((p) => [p._id, p]));
 
 	for (const picture of pictures) {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		byId[picture.productId!].photos = [...(byId[picture.productId!].photos || []), picture];
 	}
 
 	return {
-		published: products.filter((p) => p.state === 'published'),
-		retired: products.filter((p) => p.state === 'retired')
+		published: products.filter((p) => p.state === 'published' && p.stock),
+		retired: products.filter((p) => p.state === 'published' && !p.stock)
 	};
 };

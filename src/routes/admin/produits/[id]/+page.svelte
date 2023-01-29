@@ -18,6 +18,10 @@
 			<input type="number" name="price" class="input block" value={data.product.price} />
 		</label>
 		<label class="block w-full mt-4 leading-8">
+			Stock
+			<input type="number" name="stock" class="input block" value={data.product.stock} />
+		</label>
+		<label class="block w-full mt-4 leading-8">
 			Etat
 			<select name="state" value={data.product.state} class="block input">
 				<option value="draft" selected={data.product.state === 'draft'}>Privé</option>
