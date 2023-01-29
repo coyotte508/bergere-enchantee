@@ -21,7 +21,9 @@ export const load: PageServerLoad = async (input) => {
 		product,
 		title: `${product.name} - ${product.price} €`,
 		description: product.description,
-		pictures: product.photos,
+		page: {
+			pictures: product.photos
+		},
 		type: 'og:product',
 		price: product.price
 	};
