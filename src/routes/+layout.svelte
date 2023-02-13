@@ -10,9 +10,8 @@
 
 	export let data: LayoutData;
 
-	// See https://github.com/sveltejs/kit/issues/8272 for the reason why we can't just $page.data?.pictures
-	$: pictures = ($page.data?.page?.pictures as typeof data.pictures) ?? data.pictures;
-	$: shownPicture = pictures.find((p) => p.storage[0].width >= p.storage[0].height) ?? pictures[0];
+	$: shownPicture =
+		data.pictures.find((p) => p.storage[0].width >= p.storage[0].height) ?? data.pictures[0];
 
 	let menuOpen = false;
 	let date = new Date();
