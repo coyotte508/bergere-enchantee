@@ -11,6 +11,7 @@ export function createUserCollection(db: Db, client: MongoClient): Collection<Us
 					email: 1
 				},
 				{
+					unique: true,
 					collation: {
 						locale: 'en',
 						strength: 1
