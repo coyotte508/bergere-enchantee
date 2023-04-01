@@ -33,11 +33,14 @@ export const actions: Actions = {
 	delete: async function ({ params }) {
 		let picture: Picture | null = null;
 
-		await client.withSession(async (session) => {
-			picture = (await collections.pictures.findOneAndDelete({ _id: params.id }, { session }))
-				.value;
-			await collections.picturesFs.deleteMany({ picture: params.id }, { session });
-		});
+		await client.withSession(
+			async (session) =>
+				await session.withTransaction(async (session) => {
+					picture = (await collections.pictures.findOneAndDelete({ _id: params.id }, { session }))
+						.value;
+					await collections.picturesFs.deleteMany({ picture: params.id }, { session });
+				})
+		);
 
 		if (!picture) {
 			throw error(404);
