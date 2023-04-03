@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { client, collections } from '$lib/server/db';
+import { collections, withTransaction } from '$lib/server/db';
 import { generateId } from '$lib/utils/generateId';
 import type { ClientSession } from 'mongodb';
 import { error } from '@sveltejs/kit';
@@ -44,43 +44,40 @@ export async function generatePicture(
 
 	const _id = generateId(name);
 
-	await client.withSession(
-		async (session) =>
-			await session.withTransaction(async (session) => {
-				await collections.pictures.insertOne(
-					{
-						_id,
-						name,
-						storage: formats.map((format) => ({
-							_id: `${_id}-${format.width}x${format.height}`,
-							width: format.width,
-							height: format.height,
-							size: format.data.length
-						})),
-						...(opts?.productId && { productId: opts.productId }),
-						createdAt: new Date(),
-						updatedAt: new Date()
-					},
-					{ session }
-				);
+	await withTransaction(async (session) => {
+		await collections.pictures.insertOne(
+			{
+				_id,
+				name,
+				storage: formats.map((format) => ({
+					_id: `${_id}-${format.width}x${format.height}`,
+					width: format.width,
+					height: format.height,
+					size: format.data.length
+				})),
+				...(opts?.productId && { productId: opts.productId }),
+				createdAt: new Date(),
+				updatedAt: new Date()
+			},
+			{ session }
+		);
 
-				await collections.picturesFs.insertMany(
-					formats.map(
-						(format) => ({
-							_id: `${_id}-${format.width}x${format.height}`,
-							createdAt: new Date(),
-							updatedAt: new Date(),
-							size: format.data.length,
-							data: format.data,
-							picture: _id
-						}),
-						{ session }
-					)
-				);
+		await collections.picturesFs.insertMany(
+			formats.map(
+				(format) => ({
+					_id: `${_id}-${format.width}x${format.height}`,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+					size: format.data.length,
+					data: format.data,
+					picture: _id
+				}),
+				{ session }
+			)
+		);
 
-				if (opts?.cb) {
-					await opts.cb(session);
-				}
-			})
-	);
+		if (opts?.cb) {
+			await opts.cb(session);
+		}
+	});
 }

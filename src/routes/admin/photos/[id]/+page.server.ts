@@ -1,5 +1,4 @@
-import type { Picture } from '$lib/types/Picture';
-import { client, collections } from '$lib/server/db';
+import { collections, withTransaction } from '$lib/server/db';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
@@ -31,16 +30,17 @@ export const actions: Actions = {
 		return {};
 	},
 	delete: async function ({ params }) {
-		let picture: Picture | null = null;
+		const picture = await collections.pictures.findOne({ _id: params.id });
 
-		await client.withSession(
-			async (session) =>
-				await session.withTransaction(async (session) => {
-					picture = (await collections.pictures.findOneAndDelete({ _id: params.id }, { session }))
-						.value;
-					await collections.picturesFs.deleteMany({ picture: params.id }, { session });
-				})
-		);
+		await withTransaction(async (session) => {
+			const res = await collections.pictures.deleteOne({ _id: params.id }, { session });
+
+			if (!res.deletedCount) {
+				throw new Error('Conflict during picture deletion');
+			}
+
+			await collections.picturesFs.deleteMany({ picture: params.id }, { session });
+		});
 
 		if (!picture) {
 			throw error(404);

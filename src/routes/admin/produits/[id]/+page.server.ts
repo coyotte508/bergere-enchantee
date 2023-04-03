@@ -1,4 +1,4 @@
-import { client, collections } from '$lib/server/db';
+import { client, collections, withTransaction } from '$lib/server/db';
 import type { Product } from '$lib/types/Product';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -51,31 +51,28 @@ export const actions: Actions = {
 	},
 
 	delete: async ({ params }) => {
-		await client.withSession(
-			async (session) =>
-				await session.withTransaction(async (session) => {
-					const product = await collections.products.findOneAndDelete({ _id: params.id });
+		await withTransaction(async (session) => {
+			const product = await collections.products.findOneAndDelete({ _id: params.id });
 
-					if (!product.value) {
-						throw error(404);
-					}
+			if (!product.value) {
+				throw error(404);
+			}
 
-					const pictures = await collections.pictures
-						.find({ productId: params.id }, { session })
-						.toArray();
+			const pictures = await collections.pictures
+				.find({ productId: params.id }, { session })
+				.toArray();
 
-					await collections.pictures.deleteMany(
-						{ _id: { $in: pictures.map((p) => p._id) } },
-						{ session }
-					);
-					await collections.picturesFs.deleteMany(
-						{
-							_id: { $in: pictures.flatMap((p) => p.storage.map((s) => s._id)) }
-						},
-						{ session }
-					);
-				})
-		);
+			await collections.pictures.deleteMany(
+				{ _id: { $in: pictures.map((p) => p._id) } },
+				{ session }
+			);
+			await collections.picturesFs.deleteMany(
+				{
+					_id: { $in: pictures.flatMap((p) => p.storage.map((s) => s._id)) }
+				},
+				{ session }
+			);
+		});
 
 		throw redirect(303, '/admin/produits');
 	}

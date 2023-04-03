@@ -1,5 +1,5 @@
 import { MONGODB_URL } from '$env/static/private';
-import { MongoClient } from 'mongodb';
+import { MongoClient, type WithSessionCallback } from 'mongodb';
 import { createPageCollection } from './page';
 import { createPictureCollections } from './picture';
 import { createProductCollection } from './product';
@@ -20,3 +20,7 @@ const { pictures, picturesFs } = createPictureCollections(db);
 
 export { client, db };
 export const collections = { products, pictures, pages, users, picturesFs };
+
+export async function withTransaction(cb: WithSessionCallback) {
+	await client.withSession((session) => session.withTransaction(cb));
+}
