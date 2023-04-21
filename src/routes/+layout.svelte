@@ -48,7 +48,7 @@
 	<meta property="og:url" content="{$page.url.protocol}//{$page.url.host}{path}" />
 	{#if $page.data.price}
 		<meta property="product:price:amount" content={$page.data.price} />
-		<meta property="product:price:currency" content="€" />
+		<meta property="product:price:currency" content="EUR" />
 	{/if}
 </svelte:head>
 
