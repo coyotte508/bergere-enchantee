@@ -16,6 +16,7 @@
 <div class="h-full-without-banner w-full relative">
 	<Picture
 		picture={pictures.find((p) => p._id === pageData.pictures.background)}
+		sizes="100vw"
 		class="h-full w-full object-cover absolute top-0 bottom-0 left-0 right-0 bg-brunswick text-white"
 		style="z-index: -1"
 	/>
@@ -45,7 +46,7 @@
 					{/if}
 					<Picture
 						picture={product.photos[0]}
-						minStorage={1}
+						sizes="(min-width: 1024px) 33vw, (min-width: 675px) 50vw, 100vw"
 						class="picture mx-auto max-w-full h-full hover-zoom rounded"
 					/>
 				</div>
@@ -69,7 +70,7 @@
 				<div class="overflow-hidden rounded relative">
 					<Picture
 						picture={product.photos[0]}
-						minStorage={1}
+						sizes="(min-width: 1024px) 33vw, (min-width: 675px) 50vw, 100vw"
 						class="picture mx-auto max-w-full h-full hover-zoom rounded"
 					/>
 				</div>

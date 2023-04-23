@@ -19,7 +19,7 @@
 				data-title={picture.name}
 			>
 				<Picture
-					minStorage={1}
+					sizes="(min-width: 1024px) 33vw, (min-width: 675px) 50vw, 100vw"
 					{picture}
 					class="max-w-full {picture.loaded ? 'loaded' : ''}"
 					loading="lazy"

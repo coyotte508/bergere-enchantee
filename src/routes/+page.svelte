@@ -91,6 +91,7 @@
 					picture={pic}
 					class="rounded-3xl object-contain"
 					style="max-width: 100%; max-height: 100%"
+					sizes="(min-width: 650px) 50vw, 95vw"
 				/>
 			</div>
 		{/each}
@@ -101,6 +102,7 @@
 	<section class="h-xl rounded-3xl bg-oxford overflow-hidden flex mb-12">
 		<Picture
 			class="w-2/6 h-full object-cover"
+			sizes="(min-width: 1200px) 400px, 33vw"
 			picture={pictures.find((p) => p._id === pageData.pictures['e-shop'])}
 		/>
 		<div class="w-4/6 h-full px-6 py-12 text-white flex flex-col box-border">

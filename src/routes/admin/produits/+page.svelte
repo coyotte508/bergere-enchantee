@@ -13,7 +13,7 @@
 	{#each data.products as product}
 		<div class="flex flex-col text-center">
 			<a href="/admin/produits/{product._id}" class="flex flex-col items-center">
-				<Picture picture={product.photos[0]} class="h-36 block" style="object-fit: scale-down;" />
+				<Picture picture={product.photos[0]} class="h-36 block" />
 				<span class="mt-2">{product.name}</span>
 			</a>
 		</div>

@@ -24,6 +24,7 @@
 			<a href="/photos/raw/{product.photos[photoIndex].storage[0]._id}" target="_blank">
 				<Picture
 					picture={product.photos[photoIndex]}
+					sizes="(min-width: 1152px) 576px, (max-width: 1024px) 100vw, 50vw"
 					title="Cliquez pour voir la photo entière"
 					class="max-w-full max-h-md lg:max-h-xl rounded-3xl"
 				/>
