@@ -44,7 +44,10 @@
 						};
 					}}
 				>
-					<div class="w-[138px] h-[138px] min-w-[138px] min-h-[138px] rounded flex items-center">
+					<a
+						class="w-[138px] h-[138px] min-w-[138px] min-h-[138px] rounded flex items-center"
+						href="/e-shop/{item.productId}"
+					>
 						{#if item.picture}
 							<Picture
 								picture={item.picture}
@@ -52,25 +55,43 @@
 								sizes="138px"
 							/>
 						{/if}
-					</div>
+					</a>
 					<div class="flex flex-col gap-2">
-						<h2 class="text-2xl text-gray-850">{item.product.name}</h2>
+						<h2 class="text-2xl ">{item.product.name}</h2>
 						<!--<p class="text-sm text-gray-600">{item.product.shortDescription}</p>-->
-						<div class="grow" />
+						<div class="grow whitespace-break-spaces line-clamp-3">{item.product.description}</div>
 
 						<button
 							formaction="/e-shop/panier/{item.productId}/?/remove"
-							class="mt-auto mr-auto hover:underline text-blue text-base cursor-pointer font-light"
+							class="mt-auto mr-auto hover:underline text-oxford text-base cursor-pointer font-light"
 						>
 							Supprimer
 						</button>
 					</div>
 					<div class="self-center">
-						Quantité: {item.quantity}
+						<input type="hidden" name="quantity" value={item.quantity} />
+						{#if item.product.stock > 1 || item.quantity > 1}
+							<button
+								type="submit"
+								class="btn bg-gray-700 rounded-md"
+								formaction="/e-shop/panier/{item.productId}/?/decrease">-</button
+							>
+							<span
+								class="text-xl text-sunray mx-2 font-bold inline-block text-center"
+								style="width: 1rem">{item.quantity}</span
+							>
+							<button
+								type="submit"
+								class="btn bg-gray-700 rounded-md"
+								formaction="/e-shop/panier/{item.productId}/?/increase"
+								class:!bg-gray-400={item.quantity >= item.product.stock}
+								disabled={item.quantity >= item.product.stock}>+</button
+							>
+						{/if}
 					</div>
 
 					<div class="flex flex-col items-end justify-center">
-						<span class="text-2xl text-gray-800">
+						<span class="text-2xl text-oxford">
 							{(item.product.price * item.quantity).toLocaleString('fr', {
 								currency: 'EUR',
 								style: 'currency'

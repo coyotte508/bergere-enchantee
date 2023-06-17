@@ -31,7 +31,7 @@
 							picture={photo}
 							style="border-color: #865716"
 							class="w-16 h-16 object-cover cursor-pointer box-border {i === photoIndex
-								? 'border border-4'
+								? 'border-4'
 								: ''} rounded-md"
 							on:click={() => (photoIndex = i)}
 						/>
@@ -61,7 +61,7 @@
 							<button
 								type="button"
 								class="btn bg-gray-700 rounded-md"
-								class:bg-gray-400!={toBuy <= 1}
+								class:!bg-gray-400={toBuy <= 1}
 								disabled={toBuy <= 1}
 								class:cursor-default!={toBuy <= 1}
 								on:click={() => --toBuy}>-</button
@@ -73,7 +73,7 @@
 							<button
 								type="button"
 								class="btn bg-gray-700 rounded-md"
-								class:bg-gray-400!={toBuy >= product.stock}
+								class:!bg-gray-400={toBuy >= product.stock}
 								disabled={toBuy >= product.stock}
 								on:click={() => ++toBuy}>+</button
 							>

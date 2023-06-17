@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /admin/
+Disallow: /e-shop/panier
+Disallow: /e-shop/commander

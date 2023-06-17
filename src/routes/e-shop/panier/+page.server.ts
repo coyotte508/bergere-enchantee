@@ -30,13 +30,16 @@ export async function load(event) {
 	);
 
 	return {
+		title: "Panier d'achat",
 		items:
 			cart.items.map((item) => ({
 				...item,
 				picture: pictureByProductId[item.productId],
 				product: {
 					name: productById[item.productId].name,
-					price: productById[item.productId].price
+					price: productById[item.productId].price,
+					stock: productById[item.productId].stock,
+					description: productById[item.productId].description
 				}
 			})) || []
 	};
