@@ -3,6 +3,7 @@
 	import Picture from '$lib/components/Picture.svelte';
 	import Masonry from '$lib/components/Masonry.svelte';
 	import type { PageData } from './$types';
+	import { pictureLink } from '$lib/picture';
 
 	export let data: PageData;
 
@@ -13,11 +14,7 @@
 	<h1 class="text-4xl text-oxford mb-3">Tissus et finitions</h1>
 	<Masonry>
 		{#each pictures as picture}
-			<a
-				href="/photos/raw/{picture.storage[0]._id}"
-				class="relative picture-link"
-				data-title={picture.name}
-			>
+			<a href={pictureLink(picture)} class="relative picture-link" data-title={picture.name}>
 				<Picture
 					sizes="(min-width: 1024px) 33vw, (min-width: 675px) 50vw, 100vw"
 					{picture}

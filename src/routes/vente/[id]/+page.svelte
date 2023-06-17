@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Container from '$lib/components/Container.svelte';
 	import Picture from '$lib/components/Picture.svelte';
+	import { pictureLink } from '$lib/picture';
 	import type { PageData } from './$types';
 	import { marked } from 'marked';
 
@@ -21,7 +22,7 @@
 	<article class="flex my-8 lg:my-16 flex-wrap lg:flex-nowrap">
 		<div class="grow lg:basis-0 justify-center items-center flex flex-col">
 			<!-- svelte-ignore security-anchor-rel-noreferrer -->
-			<a href="/photos/raw/{product.photos[photoIndex].storage[0]._id}" target="_blank">
+			<a href={pictureLink(product.photos[photoIndex])} target="_blank">
 				<Picture
 					picture={product.photos[photoIndex]}
 					sizes="(min-width: 1152px) 576px, (max-width: 1024px) 100vw, 50vw"

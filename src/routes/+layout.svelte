@@ -11,7 +11,11 @@
 	export let data: LayoutData;
 
 	$: shownPicture =
-		data.pictures.find((p) => p.storage[0].width >= p.storage[0].height) ?? data.pictures[0];
+		data.pictures.find((p) => p.storage.formats[0].width >= p.storage.formats[0].height) ??
+		data.pictures[0];
+
+	$: shownPictureFormat =
+		shownPicture?.storage.formats.find((f) => f.width <= 1024 && f.height <= 1024) ?? null;
 
 	let menuOpen = false;
 	let date = new Date();
@@ -33,15 +37,16 @@
 		<meta property="twitter:description" content={description} />
 	{/if}
 	<meta property="og:type" content={$page.data.type || 'website'} />
-	{#if shownPicture}
+	{#if shownPicture && shownPictureFormat}
 		<meta
 			property="og:image"
-			content="{$page.url.protocol}//{$page.url.host}/photos/raw/{shownPicture.storage.slice(-2)[0]
-				._id}"
+			content="{$page.url.protocol}//{$page.url
+				.host}/photos/raw/{shownPicture._id}/format/{shownPictureFormat.width}"
 		/>
 		<meta
 			name="twitter:image"
-			content="{$page.url.protocol}//{$page.url.host}/photos/raw/{shownPicture.storage[0]._id}"
+			content="{$page.url.protocol}//{$page.url
+				.host}/photos/raw/{shownPicture._id}/format/{shownPictureFormat.width}"
 		/>
 		<meta name="twitter:card" content="summary_large_image" />
 	{/if}

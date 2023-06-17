@@ -5,17 +5,15 @@ export interface Picture extends Timestamps {
 	productId?: string;
 	name: string;
 
-	storage: Array<{
-		_id: string;
-		width: number;
-		height: number;
-		size: number;
-	}>;
+	storage: {
+		original: ImageData;
+		formats: ImageData[];
+	};
 }
 
-export interface PictureFs extends Timestamps {
-	_id: string;
-	data: Buffer;
+export interface ImageData {
+	key: string;
+	width: number;
+	height: number;
 	size: number;
-	picture: string;
 }

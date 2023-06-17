@@ -1,6 +1,6 @@
 import type { LayoutServerLoad } from './$types';
 import '$lib/server/db';
-import { pages } from '$lib/server/db/page';
+import { pages } from '$lib/server/db/page-collection';
 import type { Picture } from '$lib/types/Picture';
 import { filterNullish } from '$lib/utils/filterNullish';
 import { collections } from '$lib/server/db';

@@ -30,7 +30,7 @@
 			computedWidth = null;
 		} else if (matchedHeight !== null && picture) {
 			computedWidth = Math.round(
-				(matchedHeight / picture.storage[0].height) * picture.storage[0].width
+				(matchedHeight / picture.storage.original.height) * picture.storage.original.width
 			);
 		} else {
 			computedWidth = null;
@@ -42,7 +42,7 @@
 			computedHeight = null;
 		} else if (matchedWidth !== null && picture) {
 			computedHeight = Math.round(
-				(matchedWidth / picture.storage[0].width) * picture.storage[0].height
+				(matchedWidth / picture.storage.original.width) * picture.storage.original.height
 			);
 		} else {
 			computedHeight = null;
@@ -57,8 +57,8 @@
 {#if picture}
 	<img
 		alt={picture.name}
-		srcset={picture.storage
-			.map((format) => `/photos/raw/${format._id} ${format.width}w`)
+		srcset={picture.storage.formats
+			.map((format) => `/photos/raw/${picture?._id}/format/${format.width} ${format.width}w`)
 			.join(', ')}
 		sizes={matchedWidth ?? computedWidth !== null ? `${matchedWidth ?? computedWidth}px` : `100vw`}
 		class={className}

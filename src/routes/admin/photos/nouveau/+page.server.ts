@@ -1,18 +1,17 @@
 import type { Actions } from './$types';
 import busboy from 'busboy';
-import { pipeline } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 import { streamToBuffer } from '$lib/server/utils/streamToBuffer';
 import { generatePicture } from '$lib/server/photo';
 import { redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	default: async (input) => {
-		let buffer: Buffer;
 		let name = '';
 		let productId = '';
 
 		// eslint-disable-next-line no-async-promise-executor
-		await new Promise<void>(async (resolve, reject) => {
+		const buffer = await new Promise<Buffer>(async (resolve, reject) => {
 			try {
 				const bb = busboy({
 					headers: {
@@ -21,8 +20,7 @@ export const actions: Actions = {
 				});
 				bb.on('file', async (name, file, info) => {
 					// const { filename, encoding, mimeType } = info;
-					buffer = await streamToBuffer(file);
-					resolve();
+					resolve(await streamToBuffer(file));
 				});
 				bb.on('field', (_name, val) => {
 					if (_name === 'name') {
@@ -32,7 +30,7 @@ export const actions: Actions = {
 					}
 				});
 
-				await pipeline(input.request.body as any, bb, () => {});
+				await pipeline(input.request.body as any, bb);
 			} catch (err) {
 				reject(err);
 			}
