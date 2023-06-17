@@ -6,7 +6,7 @@
 	$: user = data.user!;
 </script>
 
-<Container>
+<Container class="flex flex-col gap-6">
 	<p>
 		Bienvenue, {user.email}!
 	</p>
@@ -15,7 +15,7 @@
 		<p><a href="/admin" class="link">Admin</a></p>
 	{/if}
 
-	<form action="/deconnexion" method="post" class="text-sunray text-3xl inline-block">
+	<form action="/deconnexion" method="post" class="text-sunray inline-block">
 		<input type="submit" value="Déconnexion" class="btn" />
 	</form>
 </Container>

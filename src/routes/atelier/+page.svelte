@@ -5,6 +5,8 @@
 	import { marked } from 'marked';
 	import type { PageData } from './$types';
 	import type { WorkshopPage } from '$lib/types/Page';
+	import IconShipping from '~icons/ant-design/inbox-outlined';
+	import IconLocation from '~icons/ant-design/environment-outlined';
 
 	export let data: PageData;
 
@@ -13,7 +15,7 @@
 </script>
 
 <Container>
-	<section class="relative h-xl mt-12 flex">
+	<section class="relative h-[36rem] mt-12 flex">
 		<img
 			src="/triangles.svg"
 			alt="Triangles"
@@ -24,11 +26,11 @@
 			<h2 class="text-oxford text-7xl" style="mix-blend-mode: color-burn;">L'atelier</h2>
 			<ul class="text-oxford">
 				<li class="flex items-center">
-					<div class="i-il-pin inline-block mr-2" />
+					<IconLocation class="inline-block mr-2" />
 					<div class="inline-block">39 route de l'Argoat, <br />29460 Logonna Daoulas</div>
 				</li>
 				<li class="flex items-center mt-1">
-					<div class="i-ant-design-inbox-outlined inline-block mr-2" />
+					<IconShipping class="inline-block mr-2" />
 					(dépôt et retrait uniquement)
 				</li>
 			</ul>
@@ -43,7 +45,7 @@
 	</section>
 
 	<section class="md:min-h-[24rem] md:max-h-[40rem] mt-16 flex flex-wrap md:mb-16">
-		<div class="w-full md:w-3/6 h-sm md:h-auto md:max-h-[40rem]">
+		<div class="w-full md:w-[50%] h-[24rem] md:h-auto md:max-h-[40rem]">
 			<div class="md:pr-12 h-full">
 				<div class="w-full h-full relative">
 					<div
@@ -62,7 +64,7 @@
 			<h2 class="text-oxford text-4xl mt-16 md:mt-6 lg:mt-12">
 				L'atelier, mon endroit de <span class="text-sunray">création</span>
 			</h2>
-			<div class="grow flex flex-col justify-center marked">
+			<div class="grow justify-center marked">
 				{@html marked(pageData.text['texte-1'])}
 			</div>
 		</div>
@@ -73,7 +75,7 @@
 	<h2 class="text-4xl text-oxford mb-12"><span class="text-sunray">Mon</span> atelier</h2>
 	<PictureComponent
 		picture={pictures.find((p) => p._id === pageData.pictures['photo-3'])}
-		class="h-lg w-full object-cover"
+		class="h-[32rem] w-full object-cover"
 	/>
 </section>
 
@@ -81,6 +83,6 @@
 	{@html marked(pageData.text['texte-2'])}
 
 	<div class="my-12 mb-20 text-center">
-		<a href="/e-shop" class="btn-sunray">e-shop</a>
+		<a href="/e-shop" class="btn-sunray text-xl">e-shop</a>
 	</div>
 </Container>

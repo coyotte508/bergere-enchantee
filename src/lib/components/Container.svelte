@@ -3,7 +3,7 @@
 	let className = '';
 	export { className as class };
 
-	$: classes = noPadding ? className : className + ' pa-3 ';
+	$: classes = noPadding ? className : className + ' p-3 ';
 </script>
 
 <div class="max-w-6xl w-full mx-auto overflow-hidden box-border {classes}" {...$$restProps}>

@@ -29,7 +29,7 @@
 			<article
 				class="{i % 2
 					? 'bg-oxford'
-					: 'bg-sunray'} text-white text-lg md:h-xl my-16 flex flex-wrap md:flex-no-wrap rounded-3xl overflow-hidden"
+					: 'bg-sunray'} text-white text-lg md:h-[36rem] my-16 flex flex-wrap md:flex-no-wrap rounded-3xl overflow-hidden"
 			>
 				<div class="grow h-full w-full md:w-3/6 basis-auto md:basis-0" class:md:order-last={i % 2}>
 					<PictureComponent
@@ -39,7 +39,7 @@
 					/>
 				</div>
 				<div class="grow basis-0 flex flex-col relative justify-center">
-					<div class="px-4 py-6">
+					<div class="px-4 py-6 marked">
 						{@html marked(pageData.text[picKey] || '')}
 						<!-- svelte-ignore security-anchor-rel-noreferrer -->
 						<a href={pictureLink(picture)} class="underline" target="_blank">Photo entière</a>

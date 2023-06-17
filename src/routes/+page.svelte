@@ -21,7 +21,7 @@
 </script>
 
 <Container>
-	<section class="h-xl relative mt-12">
+	<section class="h-[36rem] relative mt-12">
 		<img
 			src="/triangles.svg"
 			alt="Triangles"
@@ -46,7 +46,7 @@
 		>
 	</section>
 
-	<section class="h-sm mt-16 flex mb-16">
+	<section class="h-[24rem] mt-16 flex mb-16">
 		<div class="grow basis-0 h-full">
 			<div class="pr-12 h-full">
 				<div class="w-full h-full relative">
@@ -74,7 +74,7 @@
 		</div>
 	</section>
 
-	<section style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+	<section class="marked" style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
 		{@html marked(pageData.text['presentation'])}
 	</section>
 </Container>
@@ -84,7 +84,7 @@
 	<a href="/realisations" class="text-white bg-sunray px-4 py-2 rounded-3xl font-bold mt-4"
 		>voir plus</a
 	>
-	<Carousel class="w-full mt-12 h-xl sm:h-2xl">
+	<Carousel class="w-full mt-12 h-[36rem] sm:h-2xl">
 		{#each showcasePics as pic}
 			<div class="w-full h-full flex items-center justify-around">
 				<Picture
@@ -99,7 +99,7 @@
 </section>
 
 <Container>
-	<section class="h-xl rounded-3xl bg-oxford overflow-hidden flex mb-12">
+	<section class="h-[36rem] rounded-3xl bg-oxford overflow-hidden flex mb-12">
 		<Picture
 			class="w-2/6 h-full object-cover"
 			sizes="(min-width: 1200px) 400px, 33vw"
@@ -111,7 +111,7 @@
 			</h2>
 			{@html marked(pageData.text['eshop-description'])}
 			<div class="mt-auto text-center">
-				<a href="/e-shop" class="text-white bg-sunray px-4 py-2 rounded-3xl font-bold">e-shop</a>
+				<a href="/e-shop" class="btn-sunray">e-shop</a>
 			</div>
 		</div>
 	</section>

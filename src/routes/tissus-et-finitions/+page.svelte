@@ -41,7 +41,7 @@
 		color: white;
 		text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		font-size: 2rem;
-		opacity: 0.4;
+		opacity: 0.5;
 		transition-duration: 400ms;
 	}
 

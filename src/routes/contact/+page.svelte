@@ -5,6 +5,9 @@
 	import Picture from '$lib/components/Picture.svelte';
 	import type { ActionData, PageData } from './$types';
 	import { enhance } from '$app/forms';
+	import IconPhone from '~icons/ant-design/phone-outlined';
+	import IconMail from '~icons/ant-design/mail-outlined';
+	import IconClock from '~icons/ant-design/clock-circle-outlined';
 
 	export let data: PageData;
 
@@ -15,7 +18,7 @@
 </script>
 
 <Container class="mb-6">
-	<section class="relative lg:h-xl mt-12 flex">
+	<section class="relative lg:h-[36rem] mt-12 flex">
 		<img
 			src="/triangles.svg"
 			alt="Triangles"
@@ -34,27 +37,27 @@
 			<h2 class="text-oxford text-7xl mb-7 lg:mb-0" style="mix-blend-mode: color-burn;">Contact</h2>
 			<ul class="text-oxford">
 				<li class="flex items-center">
-					<div class="i-ant-design-phone-outlined inline-block mr-2" />
+					<IconPhone class="inline-block mr-2" />
 					<a rel="external" href="tel:+33774521115">07 74 52 11 15</a>
 				</li>
 				<li class="flex items-center mt-2">
-					<div class="i-ant-design-mail-outlined inline-block mr-2" />
+					<IconMail class="inline-block mr-2" />
 					<a rel="external" href="mailto:contact@bergereenchantee.fr">contact@bergereenchantee.fr</a
 					>
 				</li>
 				<li class="flex mt-2">
-					<div class="i-ant-design-clock-circle-outlined inline-block mr-2 lg:mt-1" />
-					le lundi mardi jeudi vendredi de 9h à 17h30 et le mercredi de 9h à 12h
+					<IconClock class="inline-block mr-2" />
+					Le lundi mardi jeudi vendredi de 9h à 17h30 et le mercredi de 9h à 12h
 				</li>
 			</ul>
 		</div>
 	</section>
-	<div class="pt-3">
+	<div class="pt-3 marked">
 		{@html marked(pageData.text.description)}
 	</div>
 
 	{#if form?.success}
-		<div class="border border-blue-500 bg-blue-300 rounded-lg pa-2">
+		<div class="border border-blue-500 bg-blue-300 rounded-lg p-2">
 			Votre message a bien été envoyé. <br /><br /> Daphné vous répondra rapidement.
 		</div>
 	{:else}

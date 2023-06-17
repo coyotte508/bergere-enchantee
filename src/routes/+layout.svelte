@@ -1,11 +1,18 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
-	import '@unocss/reset/normalize.css';
-	import 'uno.css';
+	import '../app.css';
+	import '@fontsource/aileron/400.css';
+	import '@fontsource/aileron/700.css';
 	import type { LayoutData } from './$types';
 	import { upperFirst } from '$lib/utils/upperFirst';
-	import { text } from '@sveltejs/kit';
+	import IconLogin from '~icons/ant-design/login-outlined';
+	import IconUser from '~icons/ant-design/user-outlined';
+	import IconCart from '~icons/ant-design/shopping-cart-outlined';
+	import IconFacebook from '~icons/ant-design/facebook-filled';
+	import IconInstagram from '~icons/ant-design/instagram-outlined';
+	import IconEmail from '~icons/ant-design/mail-outlined';
+	import IconMenu from '~icons/ant-design/holder-outlined';
 
 	$: path = $page.route?.id ?? '';
 
@@ -58,7 +65,7 @@
 	{/if}
 </svelte:head>
 
-<header class="bg-oxford py-2 flex items-center" style="font-family: Aileron">
+<header class="bg-oxford py-2 flex items-center font-aileron">
 	<nav
 		class="bg-oxford text-xl font-bold flex grow px-2 sm:px-0 sm:text-center items-center text-white"
 	>
@@ -67,7 +74,7 @@
 				src="/logo.svg"
 				alt="Logo"
 				title="Accueil"
-				class="h-14 w-14 sm:h-18 sm:w-18 md:h-24 md:w-24 lg:h-32 lg:w-32"
+				class="h-14 w-14 sm:h-18 sm:w-18 md:h-24 md:w-24 lg:h-32 lg:w-32 inline"
 			/></a
 		>
 		<a
@@ -83,7 +90,7 @@
 		<a
 			href="/e-shop"
 			class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
-			class="hidden sm:inline py-4 grow hover:text-sunray">e-shop</a
+			class="hidden sm:inline py-4 grow hover:text-sunray">E-shop</a
 		>
 		<a
 			href="/tissus-et-finitions"
@@ -97,15 +104,15 @@
 		>
 		<div class="grow text-sunray text-3xl flex gap-4 items-center">
 			<a href="/e-shop/panier" class="hidden sm:flex items-center" title="Panier">
-				<div class="inline-block i-il-cart" />
+				<IconCart />
 			</a>
 			{#if data.user}
 				<a href="/compte" class="hidden sm:flex items-center" title="Espace client">
-					<div class="inline-block i-ant-design-user-outlined" />
+					<IconUser />
 				</a>
 			{:else}
 				<a href="/connexion" class="hidden sm:flex items-center" title="Connexion">
-					<div class="inline-block i-ant-design-login-outlined" />
+					<IconLogin />
 				</a>
 			{/if}
 		</div>
@@ -116,7 +123,7 @@
 			class:rotate-90={menuOpen}
 			on:click={() => (menuOpen = !menuOpen)}
 		>
-			<div class="inline-block i-ant-design-holder-outlined" />
+			<IconMenu />
 		</button>
 	</nav>
 </header>
@@ -139,7 +146,7 @@
 			<a
 				href="/e-shop"
 				class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
-				class="my-2 hover:text-sunray">e-shop</a
+				class="my-2 hover:text-sunray">E-shop</a
 			>
 			<a
 				href="/tissus-et-finitions"
@@ -155,7 +162,7 @@
 				class:text-sunray={path === '/e-shop/panier'}
 				class="my-2 hover:text-sunray flex items-center justify-center"
 			>
-				<div class="inline-block  mr-2 i-il-cart" />
+				<IconCart class="inline-block mr-2" />
 				Panier
 			</a>
 			{#if data.user}
@@ -164,7 +171,7 @@
 					title="Espace client"
 					class="my-2 hover:text-sunray flex items-center justify-center"
 				>
-					<div class="inline-block mr-2 i-ant-design-user-outlined" />
+					<IconUser class="inline-block mr-2" />
 					Espace client
 				</a>
 			{:else}
@@ -173,7 +180,7 @@
 					title="Connexion"
 					class="my-2 hover:text-sunray flex items-center justify-center"
 				>
-					<div class="inline-block mr-2 i-ant-design-login-outlined" />
+					<IconLogin class="inline-block mr-2" />
 					Connexion
 				</a>
 			{/if}
@@ -184,7 +191,9 @@
 </main>
 
 {#if !path.startsWith('/admin/')}
-	<footer class="bg-oxford w-full h-sm relative overflow-x-hidden flex items-center justify-center">
+	<footer
+		class="bg-oxford w-full h-[24rem] relative overflow-x-hidden flex items-center justify-center"
+	>
 		<img
 			src="/logo-no-chair.svg"
 			alt="Logo sans fauteuil"
@@ -203,26 +212,28 @@
 				<a
 					rel="external"
 					href="https://facebook.com/bergereenchantee"
-					class="opacity-80 hover:opacity-100 bg-sunray rounded-full box-border inline-block mx-10"
+					title="Facebook: bergereenchantee"
+					class="opacity-80 hover:opacity-100 bg-sunray rounded-full box-border inline-flex items-center mx-10"
 					style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem"
 				>
-					<div class="i-il-facebook inline-block text-oxford w-full h-full">bergereenchantee</div>
+					<IconFacebook class="inline-block text-oxford w-full h-full" />
 				</a>
 				<a
 					rel="external"
 					href="https://instagram.com/bergereenchantee"
-					class="opacity-80 hover:opacity-100 bg-sunray rounded-full inline-block box-border mx-10"
+					title="Instagram: bergereenchantee"
+					class="opacity-80 hover:opacity-100 bg-sunray rounded-full inline-flex items-center box-border mx-10"
 					style="width: 2rem; height: 2rem; padding: 0.35rem; padding-bottom: 0.25rem; padding-right: 0.3rem"
 				>
-					<div class="i-il-instagram inline-block text-oxford w-full h-full">bergereenchantee</div>
+					<IconInstagram class="inline-block text-oxford w-full h-full" />
 				</a>
 				<a
 					rel="external"
 					href="mailto:contact@bergereenchantee.fr"
-					class="opacity-80 hover:opacity-100 bg-sunray rounded-full inline-block box-border mx-10"
+					class="opacity-80 hover:opacity-100 bg-sunray rounded-full inline-flex items-center box-border mx-10"
 					style="width: 2rem; height: 2rem; padding: 0.35rem;  padding-right: 0.3rem"
 				>
-					<div class="i-ant-design-mail-outlined inline-block text-oxford w-full h-full" />
+					<IconEmail class="inline-block text-oxford w-full h-full" />
 				</a>
 			</div>
 			<div class="my-14">
@@ -263,127 +274,3 @@
 		</div>
 	</footer>
 {/if}
-
-<style global>
-	body,
-	html {
-		margin: 0;
-		padding: 0;
-		height: 100%;
-		font-family: 'Gotham', sans-serif;
-		scroll-behavior: smooth;
-
-		--sunray: #d3a95a;
-	}
-
-	body {
-		display: grid;
-		grid-template-rows: min-content 1fr min-content;
-	}
-
-	a {
-		color: unset;
-		text-decoration: none;
-	}
-
-	h1,
-	h2,
-	h3 {
-		font-family: 'RiotSquad', serif;
-		margin: 0;
-	}
-
-	nav {
-		font-family: 'Aileron', sans-serif;
-		margin: 0;
-	}
-
-	ol,
-	ul {
-		padding: 0;
-		margin: 0;
-	}
-
-	li {
-		list-style-type: none;
-	}
-
-	@font-face {
-		font-family: 'Aileron';
-		src: url(/Ailerons-Typeface.otf) format('opentype');
-	}
-
-	@font-face {
-		font-family: 'RiotSquad';
-		src: url('/RIOTSQUA.ttf') format('truetype');
-		font-weight: normal;
-		font-style: normal;
-	}
-
-	/*
-@font-face {
-  font-family: "Raleway";
-  src: url(/Raleway-VariableFont_wght.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Raleway";
-  font-style: italic;
-  src: url(/Raleway-Italic-VariableFont_wght.ttf) format("truetype");
-}
-*/
-
-	@font-face {
-		font-family: 'Gotham';
-		font-weight: 400;
-		src: url(/GothamBook.ttf) format('truetype');
-	}
-
-	@font-face {
-		font-family: 'Gotham';
-		font-weight: 700;
-		src: url(/GothamBold.ttf) format('truetype');
-	}
-
-	.drop-white {
-		filter: drop-shadow(2px 2px 2px white);
-	}
-
-	.marked ul li {
-		margin-left: 1.5rem;
-		list-style-type: disc;
-	}
-
-	.h-full-without-banner {
-		height: calc(100vh - 1rem - (14rem / 4));
-	}
-
-	@media (min-width: 640px) {
-		.h-full-without-banner {
-			height: calc(100vh - 1rem - (18rem / 4));
-		}
-	}
-	@media (min-width: 768px) {
-		.h-full-without-banner {
-			height: calc(100vh - 1rem - (24rem / 4));
-		}
-	}
-	@media (min-width: 1024px) {
-		.h-full-without-banner {
-			height: calc(100vh - 1rem - (32rem / 4));
-		}
-	}
-
-	select.input {
-		cursor: pointer;
-	}
-
-	textarea.input {
-		max-width: calc(100% - 1rem);
-	}
-
-	/*
-@media (min-width: 1280px) { ... }
-@media (min-width: 1536px) { ... }
-*/
-</style>

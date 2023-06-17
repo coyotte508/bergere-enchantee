@@ -13,7 +13,7 @@
 </script>
 
 <Container class="my-6 flex flex-col gap-6">
-	<h1>Mon panier</h1>
+	<h1 class="text-3xl">Mon panier</h1>
 
 	{#if data.items.length}
 		<div class="grid gap-x-4 gap-y-6" style="grid-template-columns: auto 1fr auto auto">
@@ -84,7 +84,7 @@
 		<p>Votre panier est vide</p>
 	{/if}
 
-	<div class="border border-blue-500 bg-blue-300 rounded-lg pa-2">
+	<div class="border border-blue-500 bg-blue-300 rounded-lg p-2">
 		Le processus de vente à travers le site n'est pas achevé. Contactez Daphné directement pour
 		passer commande.
 	</div>
