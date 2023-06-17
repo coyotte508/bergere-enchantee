@@ -10,12 +10,6 @@
 	const product = data.product;
 	let photoIndex = 0;
 	let toBuy = 1;
-
-	function submit() {
-		alert(
-			"Cette partie de l'e-shop n'est pas encore implémentée. Veuillez prendre contact par mail (contact@bergereenchantee.fr), téléphone (07 74 52 11 15) ou instagram."
-		);
-	}
 </script>
 
 <Container>
@@ -61,7 +55,7 @@
 			</div>
 
 			{#if product.stock}
-				<form action="post">
+				<form method="post" action="?/addToCart">
 					{#if product.stock > 1}
 						<div class="mt-4">
 							<button
@@ -87,7 +81,6 @@
 					{/if}
 					<button
 						type="submit"
-						on:click|preventDefault={submit}
 						class="mt-4 text-xl leading-6 py-3 px-6 bg-oxford border-0 shadow text-white rounded-md cursor-pointer"
 					>
 						Acheter

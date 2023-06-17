@@ -34,7 +34,7 @@
 
 	<Masonry>
 		{#each published as product}
-			<a href="/vente/{product._id}" class="product">
+			<a href="/e-shop/{product._id}" class="product">
 				<div class="overflow-hidden rounded relative">
 					{#if product.stock > 1}
 						<div
@@ -66,7 +66,7 @@
 
 	<Masonry>
 		{#each retired as product}
-			<a href="/vente/{product._id}" class="product">
+			<a href="/e-shop/{product._id}" class="product">
 				<div class="overflow-hidden rounded relative">
 					<Picture
 						picture={product.photos[0]}

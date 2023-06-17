@@ -111,7 +111,7 @@
 			</h2>
 			{@html marked(pageData.text['eshop-description'])}
 			<div class="mt-auto text-center">
-				<a href="/vente" class="text-white bg-sunray px-4 py-2 rounded-3xl font-bold">e-shop</a>
+				<a href="/e-shop" class="text-white bg-sunray px-4 py-2 rounded-3xl font-bold">e-shop</a>
 			</div>
 		</div>
 	</section>

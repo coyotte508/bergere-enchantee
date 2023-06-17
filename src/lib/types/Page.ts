@@ -84,7 +84,7 @@ export interface WorkshopPage extends Page {
 }
 
 export interface EshopPage extends Page {
-	_id: '/vente';
+	_id: '/e-shop';
 	name: 'E-shop';
 	text: {
 		'search-engine-description': string;

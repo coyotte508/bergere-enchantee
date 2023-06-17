@@ -5,6 +5,7 @@
 	import 'uno.css';
 	import type { LayoutData } from './$types';
 	import { upperFirst } from '$lib/utils/upperFirst';
+	import { text } from '@sveltejs/kit';
 
 	$: path = $page.route?.id ?? '';
 
@@ -80,8 +81,8 @@
 			class="hidden sm:inline py-4 grow hover:text-sunray">Réalisations</a
 		>
 		<a
-			href="/vente"
-			class:text-sunray={path === '/vente'}
+			href="/e-shop"
+			class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
 			class="hidden sm:inline py-4 grow hover:text-sunray">e-shop</a
 		>
 		<a
@@ -94,19 +95,20 @@
 			class:text-sunray={path === '/contact'}
 			class="hidden sm:inline py-4 grow hover:text-sunray">Contact</a
 		>
-		{#if data.user}
-			<a href="/compte" title="Espace client" class="hidden sm:inline grow text-sunray text-3xl">
-				<div class="inline-block i-ant-design-user-outlined" />
+		<div class="grow text-sunray text-3xl flex gap-4 items-center">
+			<a href="/e-shop/panier" class="hidden sm:flex items-center" title="Panier">
+				<div class="inline-block i-il-cart" />
 			</a>
-		{:else}
-			<a
-				href="/connexion"
-				title="Connexion"
-				class="hidden sm:inline grow text-sunray text-3xl inline-block"
-			>
-				<div class="inline-block i-ant-design-login-outlined" />
-			</a>
-		{/if}
+			{#if data.user}
+				<a href="/compte" class="hidden sm:flex items-center" title="Espace client">
+					<div class="inline-block i-ant-design-user-outlined" />
+				</a>
+			{:else}
+				<a href="/connexion" class="hidden sm:flex items-center" title="Connexion">
+					<div class="inline-block i-ant-design-login-outlined" />
+				</a>
+			{/if}
+		</div>
 		<button
 			class="inline-flex flex-col justify-center sm:hidden cursor-pointer text-4xl transition"
 			class:text-white={!menuOpen}
@@ -134,8 +136,10 @@
 				class:text-sunray={path === '/realisations'}
 				class="my-2 hover:text-sunray">Réalisations</a
 			>
-			<a href="/vente" class:text-sunray={path === '/vente'} class="my-2 hover:text-sunray"
-				>e-shop</a
+			<a
+				href="/e-shop"
+				class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
+				class="my-2 hover:text-sunray">e-shop</a
 			>
 			<a
 				href="/tissus-et-finitions"
@@ -145,6 +149,15 @@
 			<a href="/contact" class:text-sunray={path === '/contact'} class="my-2 hover:text-sunray"
 				>Contact</a
 			>
+			<a
+				href="/e-shop/panier"
+				title="Panier"
+				class:text-sunray={path === '/e-shop/panier'}
+				class="my-2 hover:text-sunray flex items-center justify-center"
+			>
+				<div class="inline-block  mr-2 i-il-cart" />
+				Panier
+			</a>
 			{#if data.user}
 				<a
 					href="/compte"
@@ -224,7 +237,11 @@
 					class="hover:text-sunray">Réalisations</a
 				>
 				|
-				<a href="/vente" class:text-sunray={path === '/vente'} class="hover:text-sunray">E-shop</a>
+				<a
+					href="/e-shop"
+					class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
+					class="hover:text-sunray">E-shop</a
+				>
 				|
 				<a
 					href="/tissus-et-finitions"

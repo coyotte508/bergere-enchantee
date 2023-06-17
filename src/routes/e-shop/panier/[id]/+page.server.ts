@@ -27,7 +27,7 @@ export const actions = {
 			{ $set: { items: cart.items, updatedAt: new Date() } }
 		);
 
-		throw redirect(303, request.headers.get('referer') || '/panier');
+		throw redirect(303, request.headers.get('referer') || '/e-shop/panier');
 	},
 	increase: async ({ locals, params, request }) => {
 		const cart = await collections.carts.findOne({ sessionId: locals.sessionId });
@@ -42,7 +42,10 @@ export const actions = {
 			throw error(404, PRODUCT_NOT_IN_CART);
 		}
 
-		const product = await collections.products.findOne({ _id: item.productId });
+		const product = await collections.products.findOne({
+			_id: item.productId,
+			state: { $ne: 'draft' }
+		});
 
 		if (!product) {
 			await collections.carts.updateOne({ _id: cart._id }, { $pull: { items: item } });
@@ -71,7 +74,7 @@ export const actions = {
 			{ $set: { items: cart.items, updatedAt: new Date() } }
 		);
 
-		throw redirect(303, request.headers.get('referer') || '/panier');
+		throw redirect(303, request.headers.get('referer') || '/e-shop/panier');
 	},
 	decrease: async ({ request, locals, params }) => {
 		const cart = await collections.carts.findOne({ sessionId: locals.sessionId });
@@ -86,7 +89,10 @@ export const actions = {
 			throw error(404, PRODUCT_NOT_IN_CART);
 		}
 
-		const product = await collections.products.findOne({ _id: item.productId });
+		const product = await collections.products.findOne({
+			_id: item.productId,
+			state: { $ne: 'draft' }
+		});
 
 		if (!product) {
 			await collections.carts.updateOne({ _id: cart._id }, { $pull: { items: item } });
@@ -113,6 +119,6 @@ export const actions = {
 			{ $set: { items: cart.items, updatedAt: new Date() } }
 		);
 
-		throw redirect(303, request.headers.get('referer') || '/panier');
+		throw redirect(303, request.headers.get('referer') || '/e-shop/panier');
 	}
 };

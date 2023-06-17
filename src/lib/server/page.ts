@@ -155,8 +155,8 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 				"Découvrez les finitions et tissus utilisés par Daphné, tapissière d'ameublement de la Bergère Enchantée"
 		}
 	} as FabricsPage,
-	'/vente': {
-		_id: '/vente',
+	'/e-shop': {
+		_id: '/e-shop',
 		name: 'E-shop',
 		text: {
 			'search-engine-description':

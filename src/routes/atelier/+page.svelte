@@ -81,6 +81,6 @@
 	{@html marked(pageData.text['texte-2'])}
 
 	<div class="my-12 mb-20 text-center">
-		<a href="/vente" class="btn-sunray">e-shop</a>
+		<a href="/e-shop" class="btn-sunray">e-shop</a>
 	</div>
 </Container>

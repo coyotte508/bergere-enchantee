@@ -173,3 +173,19 @@ export async function deletePicture(pictureId: Picture['_id']) {
 export function picturePrefix(productId?: string) {
 	return productId ? `produits/${productId}/` : `photos/`;
 }
+
+export function picturesForProducts(productIds: string[]): Promise<Picture[]> {
+	return collections.pictures
+		.aggregate<Picture>([
+			{ $match: { productId: { $in: productIds } } },
+			{ $sort: { createdAt: 1 } },
+			{
+				$group: {
+					_id: '$productId',
+					value: { $first: '$$ROOT' }
+				}
+			},
+			{ $replaceRoot: { newRoot: '$value' } }
+		])
+		.toArray();
+}
