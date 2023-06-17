@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { collections, withTransaction } from '$lib/server/db';
+import { collections, withTransaction } from '$lib/server/database';
 import { generateId } from '$lib/utils/generateId';
 import type { ClientSession } from 'mongodb';
 import { error } from '@sveltejs/kit';

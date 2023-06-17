@@ -1,13 +1,6 @@
-import type {
-	ContactPage,
-	CreationsPage,
-	EshopPage,
-	FabricsPage,
-	HomePage,
-	Page
-} from '$lib/types/Page';
+import type { ContactPage, CreationsPage, EshopPage, FabricsPage, HomePage } from '$lib/types/Page';
 import _ from 'lodash';
-import type { Collection, Db, MongoClient } from 'mongodb';
+import { collections } from './database';
 
 export const defaultPages = {
 	'/': {
@@ -177,21 +170,13 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 
 export let pages = defaultPages;
 
-async function refreshPages(coll: Collection<Page>) {
-	const dbPages = _.keyBy(await coll.find({}).toArray(), '_id');
+async function refreshPages() {
+	const dbPages = _.keyBy(await collections.pages.find({}).toArray(), '_id');
 	pages = _.merge({}, defaultPages, dbPages);
 }
 
-export function createPageCollection(db: Db, client: MongoClient): Collection<Page> {
-	const coll = db.collection<Page>('pages');
+export const initPagesPromise = refreshPages().catch(console.error);
 
-	client.on('open', () => {
-		refreshPages(coll).catch(console.error);
-
-		coll.watch().on('change', () => {
-			refreshPages(coll).catch(console.error);
-		});
-	});
-
-	return coll;
-}
+collections.pages.watch().on('change', () => {
+	refreshPages().catch(console.error);
+});

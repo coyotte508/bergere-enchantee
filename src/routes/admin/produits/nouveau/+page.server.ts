@@ -1,4 +1,4 @@
-import { collections } from '$lib/server/db';
+import { collections } from '$lib/server/database';
 import { generatePicture } from '$lib/server/photo';
 import type { Product } from '$lib/types/Product';
 import { generateId } from '$lib/utils/generateId';

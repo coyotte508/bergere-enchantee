@@ -2,17 +2,17 @@ import { error, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 import type { Actions } from './$types';
 import { addYears } from 'date-fns';
-import { collections } from '$lib/server/db';
+import { collections } from '$lib/server/database';
+import { z } from 'zod';
 
 export const actions: Actions = {
 	default: async (event) => {
-		const data = await event.request.formData();
-
-		if (!data || !data.get('email') || !data.get('password')) {
-			throw error(400, 'Pas de login renseigné');
-		}
-
-		const email = data.get('email')!.toString().trim();
+		const { password, email } = z
+			.object({
+				password: z.string().trim(),
+				email: z.string().trim().email()
+			})
+			.parse(Object.fromEntries(await event.request.formData()));
 
 		const user = await collections.users.findOne(
 			{ email },
@@ -22,8 +22,6 @@ export const actions: Actions = {
 		if (!user) {
 			throw error(404, "Utilisateur non trouvé pour l'email: " + email);
 		}
-
-		const password = data.get('password')!.toString().trim();
 
 		if (!(await bcrypt.compare(password as string, user.hash))) {
 			throw error(401, 'Mauvais mot de passe');
@@ -41,11 +39,12 @@ export const actions: Actions = {
 			sameSite: 'lax',
 			secure: true,
 			httpOnly: true,
-			expires: addYears(new Date(), 3)
+			expires: addYears(new Date(), 1)
 		});
 
-		if (event.url.searchParams.get('suivant')) {
-			throw redirect(303, event.url.searchParams.get('suivant')!);
+		const next = event.url.searchParams.get('suivant');
+		if (next) {
+			throw redirect(303, next);
 		}
 
 		return { success: true };

@@ -8,6 +8,8 @@ declare global {
 	declare namespace App {
 		interface Locals {
 			user: null | User;
+			sessionId: string;
+			status?: number;
 		}
 		// interface PageData {}
 		// interface Error {}

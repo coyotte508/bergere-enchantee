@@ -1,4 +1,4 @@
-import { collections, withTransaction } from '$lib/server/db';
+import { collections, withTransaction } from '$lib/server/database';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 

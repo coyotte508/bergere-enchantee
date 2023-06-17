@@ -1,5 +1,5 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { collections } from '$lib/server/db';
+import { collections } from '$lib/server/database';
 import { picturePrefix } from '$lib/server/photo';
 import { s3client } from '$lib/server/s3';
 import { S3_BUCKET } from '$env/static/private';

@@ -1,5 +1,5 @@
-import { collections } from '$lib/server/db';
-import { pages } from '$lib/server/db/page-collection';
+import { collections } from '$lib/server/database';
+import { pages } from '$lib/server/page';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
