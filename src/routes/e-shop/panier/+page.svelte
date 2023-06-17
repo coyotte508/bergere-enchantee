@@ -45,7 +45,7 @@
 					}}
 				>
 					<a
-						class="w-[138px] h-[138px] min-w-[138px] min-h-[138px] rounded flex items-center"
+						class="w-[90px] h-[90px] min-w-[90px] min-h-[90px] sm:w-[138px] sm:h-[138px] sm:min-w-[138px] sm:min-h-[138px] rounded flex items-center self-center"
 						href="/e-shop/{item.productId}"
 					>
 						{#if item.picture}
@@ -59,7 +59,9 @@
 					<div class="flex flex-col gap-2">
 						<h2 class="text-2xl ">{item.product.name}</h2>
 						<!--<p class="text-sm text-gray-600">{item.product.shortDescription}</p>-->
-						<div class="grow whitespace-break-spaces line-clamp-3">{item.product.description}</div>
+						<div class="grow whitespace-break-spaces sm:line-clamp-3 hidden">
+							{item.product.description}
+						</div>
 
 						<button
 							formaction="/e-shop/panier/{item.productId}/?/remove"
