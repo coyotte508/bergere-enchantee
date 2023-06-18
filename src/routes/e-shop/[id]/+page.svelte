@@ -14,10 +14,11 @@
 
 <Container>
 	<article class="flex my-8 lg:my-16 flex-wrap lg:flex-nowrap">
-		<div class="grow lg:basis-0 justify-center items-center flex flex-col">
+		<div class="grow lg:basis-0 justify-start items-center flex flex-col">
 			<!-- svelte-ignore security-anchor-rel-noreferrer -->
 			<a href={pictureLink(product.photos[photoIndex])} target="_blank">
 				<Picture
+					ratioHint
 					picture={product.photos[photoIndex]}
 					sizes="(min-width: 1152px) 576px, (max-width: 1024px) 100vw, 50vw"
 					title="Cliquez pour voir la photo entière"
@@ -39,8 +40,8 @@
 				</div>
 			{/if}
 		</div>
-		<div class="grow lg:basis-0 lg:px-8 mt-6 lg:m-t0">
-			<h1 class="text-oxford text-4xl">{product.name}</h1>
+		<div class="grow lg:basis-0 lg:px-8 mt-6 lg:mt-0">
+			<h1>{product.name}</h1>
 
 			<div class="mt-4 flex items-center">
 				<span class="font-bold text-2xl mr-2" class:line-through={product.stock === 0}

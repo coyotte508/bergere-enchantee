@@ -20,7 +20,7 @@
 </script>
 
 <Container>
-	<h1 class="text-4xl text-oxford mt-4">Nos réalisations</h1>
+	<h1 class="mt-4">Nos réalisations</h1>
 
 	{#each picKeys as picKey, i}
 		{@const picture = pictures.find((p) => p._id === pageData.pictures[picKey])}

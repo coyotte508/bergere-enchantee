@@ -7,52 +7,52 @@
 
 <h1 class="text-sunray">Modifier un produit</h1>
 
-<div class="flex flex-col">
-	<form method="post" action="?/update">
-		<label class="block w-full mt-4 leading-8">
-			Nom
-			<input type="text" name="name" class="input block" value={data.product.name} />
-		</label>
-		<label class="block w-full mt-4 leading-8">
-			Prix
-			<input type="number" name="price" class="input block" value={data.product.price} />
-		</label>
-		<label class="block w-full mt-4 leading-8">
-			Stock
-			<input type="number" name="stock" class="input block" value={data.product.stock} />
-		</label>
-		<label class="block w-full mt-4 leading-8">
-			Etat
-			<select name="state" value={data.product.state} class="block input">
-				<option value="draft" selected={data.product.state === 'draft'}>Privé</option>
-				<option value="published" selected={data.product.state === 'published'}>Public</option>
-			</select>
-		</label>
-		<label class="block w-full mt-4 leading-8">
-			Type
+<form method="post" action="?/update" class="flex flex-col gap-4">
+	<label class="form-label">
+		Nom
+		<input type="text" name="name" class="form-input" value={data.product.name} />
+	</label>
+	<label class="form-label">
+		Prix
+		<input type="number" name="price" class="form-input" value={data.product.price} />
+	</label>
+	<label class="form-label">
+		Stock
+		<input type="number" name="stock" class="form-input" value={data.product.stock} />
+	</label>
+	<label class="form-label">
+		Etat
+		<select name="state" value={data.product.state} class="form-input">
+			<option value="draft" selected={data.product.state === 'draft'}>Privé</option>
+			<option value="published" selected={data.product.state === 'published'}>Public</option>
+		</select>
+	</label>
+	<label class="form-label">
+		Type
 
-			<select name="kind" value={data.product.kind} class="block input">
-				<option value="armchair" selected={data.product.kind === 'armchair'}>Fauteuil</option>
-				<option value="chair" selected={data.product.kind === 'chair'}>Chaise</option>
-				<option value="couch" selected={data.product.kind === 'couch'}>Canapé</option>
-				<option value="cushion" selected={data.product.kind === 'cushion'}>Coussin</option>
-				<option value="tufting" selected={data.product.kind === 'tufting'}>Tufting</option>
-			</select>
-		</label>
+		<select name="kind" value={data.product.kind} class="form-input">
+			<option value="armchair" selected={data.product.kind === 'armchair'}>Fauteuil</option>
+			<option value="chair" selected={data.product.kind === 'chair'}>Chaise</option>
+			<option value="couch" selected={data.product.kind === 'couch'}>Canapé</option>
+			<option value="cushion" selected={data.product.kind === 'cushion'}>Coussin</option>
+			<option value="tufting" selected={data.product.kind === 'tufting'}>Tufting</option>
+		</select>
+	</label>
 
-		<label class="block my-4 w-full">
-			Description
-			<textarea name="description" cols="30" rows="10" class="block input"
-				>{data.product.description}</textarea
-			>
-		</label>
+	<label class="form-label">
+		Description
+		<textarea name="description" cols="30" rows="10" class="block form-input"
+			>{data.product.description}</textarea
+		>
+	</label>
 
-		<button type="submit" class="mt-4 btn">Valider</button>
-		<button type="submit" class="mt-4 btn-red float-right" formaction="?/delete">Supprimer</button>
-	</form>
-</div>
+	<div class="flex justify-between">
+		<button type="submit" class="btn">Valider</button>
+		<button type="submit" class="btn-red" formaction="?/delete">Supprimer</button>
+	</div>
+</form>
 
-<h2 class="text-sunray my-4">Photos</h2>
+<h2 class="text-sunray text-2xl mt-6">Photos</h2>
 
 <a href="/admin/photos/nouveau?productId={data.product._id}" class="link">Nouvelle photo</a>
 

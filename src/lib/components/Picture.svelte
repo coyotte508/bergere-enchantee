@@ -6,6 +6,7 @@
 	let className = '';
 	export { className as class };
 	export let style = '';
+	export let ratioHint = false;
 
 	let matchedWidth: number | null = null;
 	let matchedHeight: number | null = null;
@@ -63,6 +64,9 @@
 		sizes={matchedWidth ?? computedWidth !== null ? `${matchedWidth ?? computedWidth}px` : `100vw`}
 		class={className}
 		style={computedStyle}
+		{...ratioHint
+			? { width: picture.storage.original.width, height: picture.storage.original.height }
+			: {}}
 		{...$$restProps}
 		on:keydown
 		on:keypress

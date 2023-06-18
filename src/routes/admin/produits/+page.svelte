@@ -5,11 +5,9 @@
 	export let data: PageData;
 </script>
 
-<a href="/admin/produits/nouveau" class="link">Nouveau produit</a>
+<h1 class="text-sunray">Liste des produits</h1>
 
-<h1 class="text-sunray mt-10">Liste des produits</h1>
-
-<div class="flex flex-row flex-wrap gap-6 mt-6">
+<div class="flex flex-row flex-wrap gap-6">
 	{#each data.products as product}
 		<div class="flex flex-col text-center">
 			<a href="/admin/produits/{product._id}" class="flex flex-col items-center">
@@ -19,3 +17,5 @@
 		</div>
 	{/each}
 </div>
+
+<a href="/admin/produits/nouveau" class="link">Nouveau produit</a>

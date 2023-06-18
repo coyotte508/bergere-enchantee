@@ -6,7 +6,7 @@
 	body,
 	html {
 		height: 100%;
-		font-family: 'Gotham', sans-serif;
+		@apply font-gotham;
 		scroll-behavior: smooth;
 
 		--sunray: #d3a95a;
@@ -23,13 +23,17 @@
 	}
 
 	h1 {
-		font-size: 2em;
+		@apply text-4xl text-oxford;
+	}
+
+	h2 {
+		@apply text-2xl;
 	}
 
 	h1,
 	h2,
 	h3 {
-		font-family: 'RiotSquad', serif;
+		@apply font-riot;
 	}
 
 	nav {
@@ -72,6 +76,28 @@
 		font-weight: 700;
 		src: url(/GothamBold.ttf) format('truetype');
 	}
+}
+
+@layer utilities {
+	.h-full-without-banner {
+		height: calc(100vh - 1rem - (14rem / 4));
+	}
+
+	@media (min-width: 640px) {
+		.h-full-without-banner {
+			height: calc(100vh - 1rem - (18rem / 4));
+		}
+	}
+	@media (min-width: 768px) {
+		.h-full-without-banner {
+			height: calc(100vh - 1rem - (24rem / 4));
+		}
+	}
+	@media (min-width: 1024px) {
+		.h-full-without-banner {
+			height: calc(100vh - 1rem - (32rem / 4));
+		}
+	}
 
 	.drop-white {
 		filter: drop-shadow(2px 2px 2px white);
@@ -95,43 +121,19 @@
 	.marked ul li:not(:last-child) {
 		margin-bottom: 1rem;
 	}
-
-	.h-full-without-banner {
-		height: calc(100vh - 1rem - (14rem / 4));
-	}
-
-	@media (min-width: 640px) {
-		.h-full-without-banner {
-			height: calc(100vh - 1rem - (18rem / 4));
-		}
-	}
-	@media (min-width: 768px) {
-		.h-full-without-banner {
-			height: calc(100vh - 1rem - (24rem / 4));
-		}
-	}
-	@media (min-width: 1024px) {
-		.h-full-without-banner {
-			height: calc(100vh - 1rem - (32rem / 4));
-		}
-	}
-
-	select.input {
-		cursor: pointer;
-	}
-
-	textarea.input {
-		max-width: calc(100% - 1rem);
-	}
-}
-
-@layer utilities {
 }
 
 @layer components {
-	.input {
-		@apply w-full max-w-[20rem] text-lg pl-2 border-solid border-2 rounded-xl;
+	.form-label {
+		@apply text-oxford font-semibold text-lg;
 	}
+	.form-input {
+		@apply w-full font-normal text-black text-lg pl-2 border-solid border-2 rounded-xl;
+	}
+	select.form-input {
+		@apply cursor-pointer;
+	}
+
 	.link {
 		@apply underline text-brunswick;
 	}
@@ -143,5 +145,8 @@
 	}
 	.btn-sunray {
 		@apply text-white bg-sunray px-4 text-base py-2 rounded-3xl font-bold border-0 cursor-pointer;
+	}
+	.info-bubble {
+		@apply border border-blue-500 bg-blue-300 rounded-lg p-2;
 	}
 }

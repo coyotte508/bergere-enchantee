@@ -1,29 +1,29 @@
 <h1 class="text-sunray">Ajouter un produit</h1>
 
-<form method="post" enctype="multipart/form-data">
-	<label class="block my-4 leading-8">
+<form method="post" enctype="multipart/form-data" class="flex gap-4 flex-col">
+	<label class="form-label">
 		Nom du produit
-		<input class="input block" type="text" name="name" placeholder="Nom définitif" required />
+		<input class="form-input" type="text" name="name" placeholder="Nom définitif" required />
 	</label>
 
-	<label class="block my-4 leading-8">
+	<label class="form-label">
 		Prix
-		<input class="input block" type="number" name="price" placeholder="Prix (€)" required />
+		<input class="form-input" type="number" name="price" placeholder="Prix (€)" required />
 	</label>
 
-	<label class="block w-full mt-4">
+	<label class="form-label">
 		Description
-		<textarea name="description" cols="30" rows="10" class="block w-full" />
+		<textarea name="description" cols="30" rows="10" class="form-input" />
 	</label>
 
-	<label class="block my-4 leading-8">
+	<label class="form-label">
 		Photo de garde
-		<input type="file" name="photo" accept="image/jpeg" class="block" required />
+		<input type="file" name="photo" accept="image/jpeg" class="form-input" required />
 	</label>
 
-	<label class="block my-4 leading-8">
+	<label class="form-label">
 		Type
-		<select name="kind" class="input">
+		<select name="kind" class="form-input">
 			<option value="armchair">Fauteuil</option>
 			<option value="chair">Chaise</option>
 			<option value="couch">Canapé</option>
@@ -32,5 +32,5 @@
 		</select>
 	</label>
 
-	<input type="submit" class="btn" />
+	<input type="submit" class="btn self-start mt-2" />
 </form>

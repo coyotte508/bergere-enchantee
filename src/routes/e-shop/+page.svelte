@@ -38,13 +38,13 @@
 				<div class="overflow-hidden rounded relative">
 					{#if product.stock > 1}
 						<div
-							class="absolute z-1 right-0 p-4 bg-sunray text-white font-bold rounded-bl-lg"
-							style="font-family: 'Riot Squad', sans-serif;"
+							class="absolute z-10 right-0 p-4 bg-sunray text-white font-bold rounded-bl-lg font-riot"
 						>
 							x {product.stock}
 						</div>
 					{/if}
 					<Picture
+						ratioHint
 						picture={product.photos[0]}
 						sizes="(min-width: 1024px) 33vw, (min-width: 675px) 50vw, 100vw"
 						class="picture mx-auto max-w-full h-full hover-zoom rounded"

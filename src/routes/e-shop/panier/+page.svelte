@@ -13,11 +13,11 @@
 </script>
 
 <Container class="my-6 flex flex-col gap-6">
-	<h1 class="text-3xl">Mon panier</h1>
+	<h1>Mon panier</h1>
 
-	{#if data.items.length}
+	{#if items.length}
 		<div class="grid gap-x-4 gap-y-6" style="grid-template-columns: auto 1fr auto auto">
-			{#each data.items as item}
+			{#each items as item}
 				<form
 					class="contents"
 					method="post"
@@ -45,14 +45,14 @@
 					}}
 				>
 					<a
-						class="w-[90px] h-[90px] min-w-[90px] min-h-[90px] sm:w-[138px] sm:h-[138px] sm:min-w-[138px] sm:min-h-[138px] rounded flex items-center self-center"
+						class="w-[90px] h-[90px] min-w-[90px] min-h-[90px] sm:w-[138px] sm:h-[138px] sm:min-w-[138px] sm:min-h-[138px] overflow-hidden rounded flex items-center self-center"
 						href="/e-shop/{item.productId}"
 					>
 						{#if item.picture}
 							<Picture
 								picture={item.picture}
-								class="rounded grow object-cover h-full w-full"
-								sizes="138px"
+								class="rounded grow object-cover h-full w-full max-w-full max-h-full hover-zoom"
+								sizes="(max-width: 1024px) 90px, 138px"
 							/>
 						{/if}
 					</a>
@@ -107,7 +107,7 @@
 		<p>Votre panier est vide</p>
 	{/if}
 
-	<div class="border border-blue-500 bg-blue-300 rounded-lg p-2">
+	<div class="info-bubble">
 		Le processus de vente à travers le site n'est pas achevé. Contactez Daphné directement pour
 		passer commande.
 	</div>

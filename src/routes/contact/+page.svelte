@@ -57,59 +57,55 @@
 	</div>
 
 	{#if form?.success}
-		<div class="border border-blue-500 bg-blue-300 rounded-lg p-2">
+		<div class="info-bubble">
 			Votre message a bien été envoyé. <br /><br /> Daphné vous répondra rapidement.
 		</div>
 	{:else}
-		<form method="post" class="text-oxford font-semibold text-lg" use:enhance>
+		<form method="post" use:enhance>
 			<div class="mt-4">
-				<label for="lastName" class="block">Nom</label>
+				<label for="lastName" class="form-label">Nom</label>
 				<input
 					type="text"
 					name="lastName"
 					id="lastName"
 					placeholder="Nom"
-					class="input box-border"
-					style="max-width: 100% !important"
+					class="form-input"
 					required
 				/>
 			</div>
 
 			<div class="mt-4">
-				<label for="firstName" class="block">Prénom</label>
+				<label for="firstName" class="form-label">Prénom</label>
 				<input
 					type="text"
 					name="firstName"
 					id="firstName"
 					placeholder="Prénom"
-					class="input box-border"
-					style="max-width: 100% !important"
+					class="form-input"
 					required
 				/>
 			</div>
 
 			<div class="mt-4">
-				<label for="email" class="block">Mail</label>
+				<label for="email" class="form-label">Mail</label>
 				<input
 					type="email"
 					name="email"
 					id="email"
 					placeholder="Adresse mail"
-					class="input box-border"
-					style="max-width: 100% !important"
+					class="form-input"
 					required
 				/>
 			</div>
 
 			<div class="mt-4">
-				<label for="message" class="block">Message</label>
+				<label for="message" class="form-label">Message</label>
 				<textarea
 					name="message"
 					id="message"
 					cols="30"
 					rows="5"
-					class="input box-border"
-					style="max-width: 100% !important"
+					class="form-input"
 					placeholder="Votre message"
 					required
 				/>

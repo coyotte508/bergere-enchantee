@@ -6,13 +6,13 @@
 	export let data: PageData;
 </script>
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center gap-6">
 	<form method="post" action="?/update" use:enhance>
-		<input type="text" name="name" class="input" value={data.photo.name} />
+		<input type="text" name="name" class="form-input" value={data.photo.name} />
 		<input type="submit" hidden />
 	</form>
-	<PictureComponent picture={data.photo} class="mt-2 max-w-full" style="max-height: 500px" />
+	<PictureComponent picture={data.photo} class="mt-2 max-w-full max-h-[500px]" />
 	<form method="post" action="?/delete" use:enhance>
-		<input type="submit" value="Supprimer" class="mt-2" />
+		<input type="submit" value="Supprimer" class="mt-2 btn-red" />
 	</form>
 </div>

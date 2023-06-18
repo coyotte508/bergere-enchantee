@@ -6,15 +6,15 @@
 
 <h1 class="text-sunray">Ajouter une photo</h1>
 
-<form method="post" enctype="multipart/form-data">
-	<label class="block my-4 leading-8">
+<form method="post" enctype="multipart/form-data" class="flex flex-col gap-6">
+	<label class="form-label">
 		Nom de la photo
-		<input class="input block" type="text" name="name" placeholder="Nom définitif" required />
+		<input class="form-input" type="text" name="name" placeholder="Nom définitif" required />
 	</label>
 
-	<label class="block my-4 leading-8">
+	<label class="form-label">
 		Fichier JPEG
-		<input type="file" name="photo" accept="image/jpeg" class="block required" />
+		<input type="file" name="photo" accept="image/jpeg" class="form-input" required />
 	</label>
 
 	{#if productId}
@@ -23,5 +23,5 @@
 
 	<input type="hidden" name="productId" value={productId || ''} />
 
-	<input type="submit" hidden />
+	<input type="submit" class="btn self-start" />
 </form>

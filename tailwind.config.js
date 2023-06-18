@@ -13,7 +13,9 @@ module.exports = {
 			brunswick: '#1e4832'
 		},
 		fontFamily: {
-			aileron: ['Aileron', 'ui-sans-serif']
+			aileron: ['Aileron', 'ui-sans-serif'],
+			riot: ['RiotSquad', 'ui-serif'],
+			gotham: ['Gotham', 'ui-sans-serif']
 		}
 		// fontFamily: {
 		// 	display: ['Gloock', 'ui-serif'],

@@ -22,33 +22,34 @@
 </script>
 
 {#each data.pages as page}
-	<section class="mb-6">
-		<h1>{page.name} ({page._id})</h1>
+	<section class="flex flex-col gap-4">
+		<h1 class="text-sunray">{page.name} ({page._id})</h1>
 
-		<h2 class="mt-4">Textes</h2>
+		<h2>Textes</h2>
 
 		{#each Object.keys(page.text) as key}
-			<label class="block w-full mt-4">
-				<h3>{key}</h3>
+			<label class="form-label">
+				{key}
 				<textarea
 					name="{page._id}_text_{key}"
 					cols="30"
 					rows="10"
-					class="block w-full"
+					class="form-input"
 					value={page.text[key]}
 					on:blur={(event) => updateText(page, key, event.currentTarget.value)}
 				/>
 			</label>
 		{/each}
 
-		<h2 class="mt-4">Images</h2>
+		<h2>Images</h2>
 
 		{#each Object.keys(page.pictures) as key}
-			<label class="block w-full mt-4">
-				<h3>{key}</h3>
+			<label class="form-label">
+				{key}
 				<select
 					name="{page._id}_picture_{key}"
 					value={page.pictures[key]}
+					class="form-input"
 					on:change={(event) => updatePicture(page, key, event.currentTarget.value)}
 				>
 					{#each data.photos as photo}
