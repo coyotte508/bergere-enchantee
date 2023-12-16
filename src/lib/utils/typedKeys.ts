@@ -1,3 +1,3 @@
-export function typedKeys<K extends string>(x: Record<K, any>): K[] {
-	return Object.keys(x) as K[];
+export function typedKeys<K extends string>(obj: { [k in K]?: unknown }): K[] {
+	return Object.keys(obj) as K[];
 }

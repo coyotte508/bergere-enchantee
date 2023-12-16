@@ -31,7 +31,7 @@ export interface CreationsPage extends Page {
 	pictures: Partial<Record<`realisation-${number}`, string | null>>;
 }
 
-export interface FabricsPage {
+export interface FabricsPage extends Page {
 	_id: '/tissus-et-finitions';
 	name: 'Tissus et finitions';
 	text: {

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Page } from '$lib/types/Page';
+	import { typedKeys } from '$lib/utils/typedKeys';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -27,7 +28,7 @@
 
 		<h2>Textes</h2>
 
-		{#each Object.keys(page.text) as key}
+		{#each typedKeys(page.text) as key}
 			<label class="form-label">
 				{key}
 				<textarea
@@ -43,7 +44,7 @@
 
 		<h2>Images</h2>
 
-		{#each Object.keys(page.pictures) as key}
+		{#each typedKeys(page.pictures) as key}
 			<label class="form-label">
 				{key}
 				<select

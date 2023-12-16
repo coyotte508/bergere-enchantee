@@ -1,4 +1,11 @@
-import type { ContactPage, CreationsPage, EshopPage, FabricsPage, HomePage } from '$lib/types/Page';
+import type {
+	ContactPage,
+	CreationsPage,
+	EshopPage,
+	FabricsPage,
+	HomePage,
+	WorkshopPage
+} from '$lib/types/Page';
 import _ from 'lodash';
 import { collections } from './database';
 
@@ -77,7 +84,7 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 			'photo-2': null,
 			'photo-3': null
 		}
-	},
+	} as WorkshopPage,
 	'/realisations': {
 		_id: '/realisations',
 		name: 'Réalisations',
