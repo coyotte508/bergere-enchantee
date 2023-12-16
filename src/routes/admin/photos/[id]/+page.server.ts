@@ -1,6 +1,8 @@
 import { collections, withTransaction } from '$lib/server/database';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
+import { s3client } from '$lib/server/s3';
+import { S3_BUCKET } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const picture = await collections.pictures.findOne({ _id: params.id });
@@ -32,6 +34,10 @@ export const actions: Actions = {
 	delete: async function ({ params }) {
 		const picture = await collections.pictures.findOne({ _id: params.id });
 
+		if (!picture) {
+			throw error(404);
+		}
+
 		await withTransaction(async (session) => {
 			const res = await collections.pictures.deleteOne({ _id: params.id }, { session });
 
@@ -39,12 +45,13 @@ export const actions: Actions = {
 				throw new Error('Conflict during picture deletion');
 			}
 
-			await collections.picturesFs.deleteMany({ picture: params.id }, { session });
+			for (const key of [
+				picture.storage.original.key,
+				...picture.storage.formats.map((s) => s.key)
+			]) {
+				await s3client.deleteObject({ Key: key, Bucket: S3_BUCKET });
+			}
 		});
-
-		if (!picture) {
-			throw error(404);
-		}
 
 		throw redirect(
 			303,

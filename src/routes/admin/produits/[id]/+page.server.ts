@@ -2,6 +2,8 @@ import { client, collections, withTransaction } from '$lib/server/database';
 import type { Product } from '$lib/types/Product';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { s3client } from '$lib/server/s3';
+import { S3_BUCKET } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const product = await collections.products.findOne({ _id: params.id });
@@ -66,12 +68,12 @@ export const actions: Actions = {
 				{ _id: { $in: pictures.map((p) => p._id) } },
 				{ session }
 			);
-			await collections.picturesFs.deleteMany(
-				{
-					_id: { $in: pictures.flatMap((p) => p.storage.map((s) => s._id)) }
-				},
-				{ session }
-			);
+			for (const key of pictures.flatMap((p) => [
+				p.storage.original.key,
+				...p.storage.formats.map((s) => s.key)
+			])) {
+				await s3client.deleteObject({ Key: key, Bucket: S3_BUCKET });
+			}
 		});
 
 		throw redirect(303, '/admin/produits');
