@@ -23,6 +23,15 @@ export const actions: Actions = {
 		const message = body.get('message')!.toString().trim();
 		const email = body.get('email')!.toString().trim();
 
+		const split = `${firstName} ${lastName}`.trim().split(/\s+/);
+
+		if (split.length > 2 && split[0] === split[1]) {
+			// Spammers seem to have this problem :shrug:
+			return {
+				success: true
+			};
+		}
+
 		await mg.messages.create('mails.bergereenchantee.fr', {
 			from: 'Formulaire de contact <contact@mails.bergereenchantee.fr>',
 			to: ['contact@bergereenchantee.fr'],
