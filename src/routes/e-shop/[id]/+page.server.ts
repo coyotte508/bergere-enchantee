@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb';
 export const load: PageServerLoad = async (input) => {
 	const product = await collections.products.findOne({
 		_id: input.params.id,
-		state: { $ne: 'draft' }
+		state: { $ne: 'draft' },
 	});
 
 	if (!product) {
@@ -25,7 +25,7 @@ export const load: PageServerLoad = async (input) => {
 		description: product.description,
 		pictures: product.photos,
 		type: 'og:product',
-		price: product.price
+		price: product.price,
 	};
 };
 
@@ -39,10 +39,10 @@ async function addToCart({ params, request, locals }: RequestEvent) {
 	const formData = await request.formData();
 	const { quantity } = z
 		.object({
-			quantity: z.number({ coerce: true }).int().min(1).max(product.stock)
+			quantity: z.number({ coerce: true }).int().min(1).max(product.stock),
 		})
 		.parse({
-			quantity: formData.get('quantity') || '1'
+			quantity: formData.get('quantity') || '1',
 		});
 
 	let cart = await collections.carts.findOne({ sessionId: locals.sessionId });
@@ -53,7 +53,7 @@ async function addToCart({ params, request, locals }: RequestEvent) {
 			sessionId: locals.sessionId,
 			items: [],
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
 		};
 	}
 
@@ -64,7 +64,7 @@ async function addToCart({ params, request, locals }: RequestEvent) {
 	} else {
 		cart.items.push({
 			productId: params.id,
-			quantity
+			quantity,
 		});
 	}
 
@@ -73,12 +73,12 @@ async function addToCart({ params, request, locals }: RequestEvent) {
 		{
 			$set: {
 				items: cart.items,
-				updatedAt: new Date()
+				updatedAt: new Date(),
 			},
 			$setOnInsert: {
 				createdAt: new Date(),
-				sessionId: locals.sessionId
-			}
+				sessionId: locals.sessionId,
+			},
 		},
 		{ upsert: true }
 	);
@@ -95,5 +95,5 @@ export const actions = {
 		await addToCart(params);
 
 		throw redirect(303, '/e-shop/panier');
-	}
+	},
 };

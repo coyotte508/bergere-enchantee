@@ -53,6 +53,7 @@
 		</div>
 	</section>
 	<div class="pt-3 marked">
+		<!-- eslint-disable svelte/no-at-html-tags -->
 		{@html marked(pageData.text.description)}
 	</div>
 

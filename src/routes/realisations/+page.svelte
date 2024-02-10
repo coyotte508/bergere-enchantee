@@ -40,8 +40,8 @@
 				</div>
 				<div class="grow basis-0 flex flex-col relative justify-center">
 					<div class="px-4 py-6 marked">
+						<!-- eslint-disable svelte/no-at-html-tags -->
 						{@html marked(pageData.text[picKey] || '')}
-						<!-- svelte-ignore security-anchor-rel-noreferrer -->
 						<a href={pictureLink(picture)} class="underline" target="_blank">Photo entière</a>
 					</div>
 				</div>

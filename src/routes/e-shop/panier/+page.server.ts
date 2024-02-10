@@ -3,19 +3,19 @@ import { picturesForProducts } from '$lib/server/photo.js';
 
 export async function load(event) {
 	const cart = await collections.carts.findOne({
-		sessionId: event.locals.sessionId
+		sessionId: event.locals.sessionId,
 	});
 
 	if (!cart?.items.length) {
 		return {
-			items: []
+			items: [],
 		};
 	}
 
 	const products = await collections.products
 		.find({
 			_id: { $in: cart.items.map((item) => item.productId) || [] },
-			state: { $ne: 'draft' }
+			state: { $ne: 'draft' },
 		})
 		.toArray();
 
@@ -39,8 +39,8 @@ export async function load(event) {
 					name: productById[item.productId].name,
 					price: productById[item.productId].price,
 					stock: productById[item.productId].stock,
-					description: productById[item.productId].description
-				}
-			})) || []
+					description: productById[item.productId].description,
+				},
+			})) || [],
 	};
 }

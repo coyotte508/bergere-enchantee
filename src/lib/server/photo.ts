@@ -51,7 +51,7 @@ export async function generatePicture(
 			Bucket: S3_BUCKET,
 			Key: path,
 			Body: buffer,
-			ContentType: mime
+			ContentType: mime,
 		})
 	);
 	uploadedKeys.push(path);
@@ -60,7 +60,7 @@ export async function generatePicture(
 		key: path,
 		width,
 		height,
-		size: buffer.length
+		size: buffer.length,
 	};
 
 	const formats: ImageData[] = [];
@@ -74,7 +74,7 @@ export async function generatePicture(
 					Bucket: S3_BUCKET,
 					Key: key,
 					Body: buffer,
-					ContentType: 'image/webp'
+					ContentType: 'image/webp',
 				})
 			);
 
@@ -84,7 +84,7 @@ export async function generatePicture(
 				width,
 				height,
 				key,
-				size: buffer.length
+				size: buffer.length,
 			});
 		}
 
@@ -108,7 +108,7 @@ export async function generatePicture(
 						Bucket: S3_BUCKET,
 						Key: key,
 						Body: buffer,
-						ContentType: 'image/webp'
+						ContentType: 'image/webp',
 					})
 				);
 
@@ -118,7 +118,7 @@ export async function generatePicture(
 					width: newWidth,
 					height: newHeight,
 					key,
-					size: buffer.length
+					size: buffer.length,
 				});
 			}
 		}
@@ -130,11 +130,11 @@ export async function generatePicture(
 					name,
 					storage: {
 						original,
-						formats
+						formats,
 					},
 					...(opts?.productId && { productId: opts.productId }),
 					createdAt: new Date(),
-					updatedAt: new Date()
+					updatedAt: new Date(),
 				},
 				{ session }
 			);
@@ -182,10 +182,10 @@ export function picturesForProducts(productIds: string[]): Promise<Picture[]> {
 			{
 				$group: {
 					_id: '$productId',
-					value: { $first: '$$ROOT' }
-				}
+					value: { $first: '$$ROOT' },
+				},
 			},
-			{ $replaceRoot: { newRoot: '$value' } }
+			{ $replaceRoot: { newRoot: '$value' } },
 		])
 		.toArray();
 }

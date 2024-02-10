@@ -17,6 +17,6 @@ export const load: PageServerLoad = async () => {
 
 	return {
 		published: products.filter((p) => p.state === 'published' && p.stock),
-		retired: products.filter((p) => p.state === 'published' && !p.stock)
+		retired: products.filter((p) => p.state === 'published' && !p.stock),
 	};
 };

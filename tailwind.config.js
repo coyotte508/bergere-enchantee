@@ -10,13 +10,13 @@ module.exports = {
 			...colors,
 			oxford: '#0a274c',
 			sunray: '#d3a95a',
-			brunswick: '#1e4832'
+			brunswick: '#1e4832',
 		},
 		fontFamily: {
 			aileron: ['Aileron', 'ui-sans-serif'],
 			riot: ['RiotSquad', 'ui-serif'],
-			gotham: ['Gotham', 'ui-sans-serif']
-		}
+			gotham: ['Gotham', 'ui-sans-serif'],
+		},
 		// fontFamily: {
 		// 	display: ['Gloock', 'ui-serif'],
 		// 	body: ['Outfit', 'ui-sans-serif'],
@@ -24,5 +24,5 @@ module.exports = {
 		// }
 	},
 	/* To style checkboxes with form-checkbox */
-	plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
+	plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

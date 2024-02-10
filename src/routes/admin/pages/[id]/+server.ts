@@ -25,11 +25,11 @@ export const POST: RequestHandler = async (input) => {
 		{
 			$set: {
 				[`${type}.${body.key}`]: String(body.value).replaceAll('\r', ''),
-				updatedAt: new Date()
+				updatedAt: new Date(),
 			},
 			$setOnInsert: {
-				createdAt: new Date()
-			}
+				createdAt: new Date(),
+			},
 		},
 		{ upsert: true }
 	);

@@ -9,7 +9,7 @@ import { S3_BUCKET } from '$env/static/private';
 export const GET: RequestHandler = async ({ params }) => {
 	const picture = await collections.pictures.findOne({
 		_id: params.id,
-		'storage.formats.width': +params.width
+		'storage.formats.width': +params.width,
 	});
 
 	if (!picture) {
@@ -29,7 +29,7 @@ export const GET: RequestHandler = async ({ params }) => {
 				s3client,
 				new GetObjectCommand({
 					Bucket: S3_BUCKET,
-					Key: format.key
+					Key: format.key,
 				}),
 				{ expiresIn: 24 * 3600 }
 			)

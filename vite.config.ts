@@ -6,9 +6,9 @@ const config: UserConfig = {
 	plugins: [
 		sveltekit(),
 		Icons({
-			compiler: 'svelte'
-		})
-	]
+			compiler: 'svelte',
+		}),
+	],
 };
 
 export default config;

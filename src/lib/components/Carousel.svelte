@@ -18,7 +18,7 @@
 		dots = carouselContent.children.length;
 
 		for (let i = 0; i < dots; i++) {
-			carouselContent.children.item(i)?.addEventListener('click', (item) => (currentIndex = i));
+			carouselContent.children.item(i)?.addEventListener('click', () => (currentIndex = i));
 		}
 
 		// So the dots have time to populate
@@ -40,12 +40,14 @@
 		const TinyGesture = (await import('tinygesture')).default;
 
 		const gesture = new TinyGesture(carousel);
-		gesture.on('swipeleft', () => (currentIndex = (currentIndex + 1) % dots));
-		gesture.on('swiperight', () => (currentIndex = (currentIndex + dots - 1) % dots));
+		const swipeLeft = () => (currentIndex = (currentIndex + 1) % dots);
+		const swipeRight = () => (currentIndex = (currentIndex + dots - 1) % dots);
+		gesture.on('swipeleft', swipeLeft);
+		gesture.on('swiperight', () => swipeRight());
 
 		destroyCb = () => {
-			gesture.off('swiperight');
-			gesture.off('swipeleft');
+			gesture.off('swiperight', swipeRight);
+			gesture.off('swipeleft', swipeLeft);
 			gesture.destroy();
 		};
 	});
@@ -85,6 +87,7 @@
 	>
 		{#each Array(dots) as dot, i}
 			<button
+				data-dot={dot}
 				style="width: 1rem; height: 1rem"
 				class="rounded-full mx-1 bg-sunray"
 				on:click={() => (currentIndex = i)}

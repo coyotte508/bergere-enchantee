@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	}
 
 	return {
-		photo: picture
+		photo: picture,
 	};
 };
 
@@ -24,8 +24,8 @@ export const actions: Actions = {
 			{
 				$set: {
 					name,
-					updatedAt: new Date()
-				}
+					updatedAt: new Date(),
+				},
 			}
 		);
 
@@ -47,7 +47,7 @@ export const actions: Actions = {
 
 			for (const key of [
 				picture.storage.original.key,
-				...picture.storage.formats.map((s) => s.key)
+				...picture.storage.formats.map((s) => s.key),
 			]) {
 				await s3client.deleteObject({ Key: key, Bucket: S3_BUCKET });
 			}
@@ -57,5 +57,5 @@ export const actions: Actions = {
 			303,
 			picture?.productId ? '/admin/produits/' + picture.productId : '/admin/photos'
 		);
-	}
+	},
 };

@@ -65,6 +65,7 @@
 				L'atelier, mon endroit de <span class="text-sunray">création</span>
 			</h2>
 			<div class="grow justify-center marked">
+				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html marked(pageData.text['texte-1'])}
 			</div>
 		</div>
@@ -80,6 +81,7 @@
 </section>
 
 <Container class="marked">
+	<!-- eslint-disable svelte/no-at-html-tags -->
 	{@html marked(pageData.text['texte-2'])}
 
 	<div class="my-12 mb-20 text-center">

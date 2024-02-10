@@ -10,7 +10,7 @@ export const actions: Actions = {
 		const { password, email } = z
 			.object({
 				password: z.string().trim(),
-				email: z.string().trim().email()
+				email: z.string().trim().email(),
 			})
 			.parse(Object.fromEntries(await event.request.formData()));
 
@@ -39,7 +39,7 @@ export const actions: Actions = {
 			sameSite: 'lax',
 			secure: true,
 			httpOnly: true,
-			expires: addYears(new Date(), 1)
+			expires: addYears(new Date(), 1),
 		});
 
 		const next = event.url.searchParams.get('suivant');
@@ -48,5 +48,5 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
-	}
+	},
 };

@@ -44,7 +44,7 @@ export const actions = {
 
 		const product = await collections.products.findOne({
 			_id: item.productId,
-			state: { $ne: 'draft' }
+			state: { $ne: 'draft' },
 		});
 
 		if (!product) {
@@ -61,10 +61,10 @@ export const actions = {
 
 		const { quantity } = z
 			.object({
-				quantity: z.number({ coerce: true }).int().min(1)
+				quantity: z.number({ coerce: true }).int().min(1),
 			})
 			.parse({
-				quantity: formData.get('quantity')
+				quantity: formData.get('quantity'),
 			});
 
 		item.quantity = Math.min(quantity + 1, product.stock);
@@ -91,7 +91,7 @@ export const actions = {
 
 		const product = await collections.products.findOne({
 			_id: item.productId,
-			state: { $ne: 'draft' }
+			state: { $ne: 'draft' },
 		});
 
 		if (!product) {
@@ -102,10 +102,10 @@ export const actions = {
 		const formData = await request.formData();
 		const { quantity } = z
 			.object({
-				quantity: z.number({ coerce: true }).int().min(1)
+				quantity: z.number({ coerce: true }).int().min(1),
 			})
 			.parse({
-				quantity: formData.get('quantity')
+				quantity: formData.get('quantity'),
 			});
 
 		item.quantity = Math.min(quantity - 1, product.stock);
@@ -120,5 +120,5 @@ export const actions = {
 		);
 
 		throw redirect(303, request.headers.get('referer') || '/e-shop/panier');
-	}
+	},
 };

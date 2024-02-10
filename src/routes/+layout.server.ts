@@ -20,9 +20,9 @@ export const load: LayoutServerLoad = async (input) => {
 			user: input.locals.user
 				? {
 						email: input.locals.user.email,
-						admin: input.locals.user.authority === 'admin'
-				  }
-				: null
+						admin: input.locals.user.authority === 'admin',
+					}
+				: null,
 		};
 	}
 
@@ -32,8 +32,8 @@ export const load: LayoutServerLoad = async (input) => {
 		user: input.locals.user
 			? {
 					email: input.locals.user.email,
-					admin: input.locals.user.authority === 'admin'
-			  }
-			: null
+					admin: input.locals.user.authority === 'admin',
+				}
+			: null,
 	};
 };

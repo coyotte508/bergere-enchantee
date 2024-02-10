@@ -2,34 +2,55 @@
 	import type { Picture } from '$lib/types/Picture';
 
 	export let picture: Picture | undefined;
-
 	let className = '';
 	export { className as class };
 	export let style = '';
-	export let ratioHint = false;
 
 	let matchedWidth: number | null = null;
+	let maxWidth: boolean;
 	let matchedHeight: number | null = null;
+	let maxHeight: boolean;
 
-	$: if (/(\s|^)w-(\d+)(\s|$)/.test(className)) {
-		matchedWidth = parseInt(className.match(/(\s|^)w-(\d+)(\s|$)/)![2]) * 4;
-	} else {
-		matchedWidth = null;
+	$: {
+		const match4px = className.match(/(\s|^)(max-)?w-(\d+)(\s|$)/);
+		if (match4px) {
+			matchedWidth = parseInt(match4px[3]) * 4;
+			maxWidth = match4px[2] === 'max-';
+		} else {
+			const matchPx = className.match(/(\s|^)(max-)?w-\[(\d+)px](\s|$)/);
+			if (matchPx) {
+				matchedWidth = parseInt(matchPx[3]);
+				maxWidth = matchPx[2] === 'max-';
+			} else {
+				matchedWidth = null;
+			}
+		}
 	}
 
-	$: if (/(\s|^)h-(\d+)(\s|$)/.test(className)) {
-		matchedHeight = parseInt(className.match(/(\s|^)h-(\d+)(\s|$)/)![2]) * 4;
-	} else {
-		matchedHeight = null;
+	$: {
+		const match4px = className.match(/(\s|^)(max-)?h-(\d+)(\s|$)/);
+		if (match4px) {
+			matchedHeight = parseInt(match4px[3]) * 4;
+			maxHeight = match4px[2] === 'max-';
+		} else {
+			const matchPx = className.match(/(\s|^)(max-)?h-\[(\d+)px](\s|$)/);
+			if (matchPx) {
+				matchedHeight = parseInt(matchPx[3]);
+				maxHeight = matchPx[2] === 'max-';
+			} else {
+				matchedHeight = null;
+			}
+		}
 	}
 
 	let computedWidth: number | null = null;
 	let computedHeight: number | null = null;
+	let maxComputedWidth: number | null = null;
 
 	$: {
-		if (matchedWidth !== null) {
+		if (matchedWidth !== null && !maxWidth) {
 			computedWidth = null;
-		} else if (matchedHeight !== null && picture) {
+		} else if (matchedHeight !== null && !maxHeight && picture) {
 			computedWidth = Math.round(
 				(matchedHeight / picture.storage.original.height) * picture.storage.original.width
 			);
@@ -39,9 +60,9 @@
 	}
 
 	$: {
-		if (matchedHeight !== null) {
+		if (matchedHeight !== null && !maxHeight) {
 			computedHeight = null;
-		} else if (matchedWidth !== null && picture) {
+		} else if (matchedWidth !== null && !maxWidth && picture) {
 			computedHeight = Math.round(
 				(matchedWidth / picture.storage.original.width) * picture.storage.original.height
 			);
@@ -50,23 +71,46 @@
 		}
 	}
 
+	// If max width or max hegiht is set, while width/height are not set. Use the more restrictive computed width.
+	$: {
+		if ((matchedWidth !== null && !maxWidth) || (matchedHeight !== null && !maxHeight)) {
+			maxComputedWidth = null;
+		} else {
+			let max1: number | null = null;
+			let max2: number | null = matchedWidth;
+
+			if (matchedHeight !== null && picture) {
+				max1 = Math.round(
+					(matchedHeight / picture.storage.original.height) * picture.storage.original.width
+				);
+			}
+			if (max1 !== null || max2 !== null) {
+				maxComputedWidth = Math.min(max1 ?? Infinity, max2 ?? Infinity);
+			} else {
+				maxComputedWidth = null;
+			}
+		}
+	}
+
 	$: computedStyle = `${computedWidth !== null ? `width: ${computedWidth}px;` : ''} ${
 		computedHeight !== null ? `height: ${computedHeight}px;` : ''
-	} ${style}`;
+	} ${style};`;
+	$: sizeHint =
+		matchedWidth !== null && !maxWidth ? matchedWidth : computedWidth ?? maxComputedWidth;
 </script>
 
 {#if picture}
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<img
 		alt={picture.name}
+		width={picture.storage.formats[0].width}
+		height={picture.storage.formats[0].height}
 		srcset={picture.storage.formats
-			.map((format) => `/photos/raw/${picture?._id}/format/${format.width} ${format.width}w`)
+			.map((format) => `/picture/raw/${picture?._id}/format/${format.width} ${format.width}w`)
 			.join(', ')}
-		sizes={matchedWidth ?? computedWidth !== null ? `${matchedWidth ?? computedWidth}px` : `100vw`}
+		sizes={sizeHint !== null ? `${sizeHint}px` : undefined}
 		class={className}
 		style={computedStyle}
-		{...ratioHint
-			? { width: picture.storage.original.width, height: picture.storage.original.height }
-			: {}}
 		{...$$restProps}
 		on:keydown
 		on:keypress

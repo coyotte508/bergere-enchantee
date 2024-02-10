@@ -15,10 +15,10 @@ export const actions: Actions = {
 			try {
 				const bb = busboy({
 					headers: {
-						'content-type': input.request.headers.get('content-type') ?? undefined
-					}
+						'content-type': input.request.headers.get('content-type') ?? undefined,
+					},
 				});
-				bb.on('file', async (name, file, info) => {
+				bb.on('file', async (name, file) => {
 					// const { filename, encoding, mimeType } = info;
 					resolve(await streamToBuffer(file));
 				});
@@ -30,6 +30,7 @@ export const actions: Actions = {
 					}
 				});
 
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				await pipeline(input.request.body as any, bb);
 			} catch (err) {
 				reject(err);
@@ -43,5 +44,5 @@ export const actions: Actions = {
 		}
 
 		throw redirect(303, '/admin/photos');
-	}
+	},
 };

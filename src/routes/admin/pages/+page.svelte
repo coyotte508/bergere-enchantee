@@ -9,7 +9,7 @@
 		fetch('/admin/pages/' + encodeURIComponent(page._id), {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({ type: 'picture', key, value })
+			body: JSON.stringify({ type: 'picture', key, value }),
 		});
 	}
 
@@ -17,7 +17,7 @@
 		fetch('/admin/pages/' + encodeURIComponent(page._id), {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({ type: 'text', key, value })
+			body: JSON.stringify({ type: 'text', key, value }),
 		});
 	}
 </script>

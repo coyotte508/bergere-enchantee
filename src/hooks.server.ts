@@ -13,7 +13,7 @@ export const handleError = (({ error, event }) => {
 				_id: new ObjectId(),
 				url: event.url.href,
 				method: event.request.method,
-				...error
+				...error,
 			})
 			.catch();
 	}
@@ -35,7 +35,7 @@ export const handleError = (({ error, event }) => {
 				})
 				.filter(Boolean)
 				.join(', '),
-			status: 422
+			status: 422,
 		};
 	}
 }) satisfies HandleServerError;
@@ -53,7 +53,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		sameSite: 'lax',
 		secure: true,
 		httpOnly: true,
-		expires: addYears(new Date(), 1)
+		expires: addYears(new Date(), 1),
 	});
 
 	if (token) {
@@ -63,7 +63,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (event.url.pathname.startsWith('/admin') && event.locals.user?.authority !== 'admin') {
 		return new Response('', {
 			status: 303,
-			headers: { location: `${event.url.protocol}//${event.url.host}` }
+			headers: { location: `${event.url.protocol}//${event.url.host}` },
 		});
 	}
 
@@ -77,9 +77,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 			...response,
 			headers: {
 				...Object.fromEntries(response.headers.entries()),
-				'content-type': contentType?.includes('html') ? contentType : 'application/json'
+				'content-type': contentType?.includes('html') ? contentType : 'application/json',
 			},
-			status
+			status,
 		});
 	}
 

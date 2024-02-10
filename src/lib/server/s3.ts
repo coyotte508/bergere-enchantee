@@ -4,7 +4,7 @@ import * as AWS from '@aws-sdk/client-s3';
 const s3client = new AWS.S3({
 	endpoint: S3_ENDPOINT_URL,
 	region: S3_REGION,
-	credentials: { accessKeyId: S3_KEY, secretAccessKey: S3_SECRET }
+	credentials: { accessKeyId: S3_KEY, secretAccessKey: S3_SECRET },
 });
 
 await s3client
@@ -18,10 +18,10 @@ await s3client
 						// todo: change to production domain
 						AllowedOrigins: ['*'],
 						AllowedHeaders: ['*'],
-						ID: 'CORSRule1'
-					}
-				]
-			}
+						ID: 'CORSRule1',
+					},
+				],
+			},
 		})
 	)
 	.catch((err) => console.error('S3 CORS error: ', err));

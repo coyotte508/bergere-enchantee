@@ -7,7 +7,7 @@ import type { Picture } from '$lib/types/Picture';
 import type { Cart } from '$lib/types/Cart';
 
 const client = new MongoClient(MONGODB_URL, {
-	directConnection: true
+	directConnection: true,
 });
 
 export const connectPromise = client.connect().catch(console.error);
@@ -28,7 +28,7 @@ client.on('open', () => {
 			{ email: 1 },
 			{
 				unique: true,
-				collation: { locale: 'en', strength: 1 }
+				collation: { locale: 'en', strength: 1 },
 			}
 		)
 		.catch(console.error);

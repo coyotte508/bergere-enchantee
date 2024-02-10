@@ -57,7 +57,7 @@
 						{/if}
 					</a>
 					<div class="flex flex-col gap-2">
-						<h2 class="text-2xl ">{item.product.name}</h2>
+						<h2 class="text-2xl">{item.product.name}</h2>
 						<!--<p class="text-sm text-gray-600">{item.product.shortDescription}</p>-->
 						<div class="grow whitespace-break-spaces sm:line-clamp-3 hidden">
 							{item.product.description}
@@ -96,7 +96,7 @@
 						<span class="text-2xl text-oxford">
 							{(item.product.price * item.quantity).toLocaleString('fr', {
 								currency: 'EUR',
-								style: 'currency'
+								style: 'currency',
 							})}
 						</span>
 					</div>

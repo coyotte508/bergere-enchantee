@@ -14,7 +14,7 @@ export const actions: Actions = {
 			name: '',
 			description: '',
 			price: '100',
-			kind: 'armchair'
+			kind: 'armchair',
 		};
 
 		// eslint-disable-next-line no-async-promise-executor
@@ -22,10 +22,10 @@ export const actions: Actions = {
 			try {
 				const bb = busboy({
 					headers: {
-						'content-type': request.headers.get('content-type') ?? undefined
-					}
+						'content-type': request.headers.get('content-type') ?? undefined,
+					},
 				});
-				bb.on('file', async (name, file, info) => {
+				bb.on('file', async (name, file) => {
 					// const { filename, encoding, mimeType } = info;
 					resolve(await streamToBuffer(file));
 				});
@@ -57,13 +57,13 @@ export const actions: Actions = {
 						price: +fields.price,
 						photos: [],
 						stock: 1,
-						state: 'draft'
+						state: 'draft',
 					},
 					{ session }
 				);
-			}
+			},
 		});
 
 		throw redirect(303, '/admin/produits/' + productId);
-	}
+	},
 };

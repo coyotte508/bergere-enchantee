@@ -4,7 +4,7 @@ import type {
 	EshopPage,
 	FabricsPage,
 	HomePage,
-	WorkshopPage
+	WorkshopPage,
 } from '$lib/types/Page';
 import _ from 'lodash';
 import { collections } from './database';
@@ -30,7 +30,7 @@ Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, 
 			'eshop-description': "description de l'eshop",
 			'search-engine-description': `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
 
-Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs.`
+Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs.`,
 		},
 		pictures: {
 			discover: null,
@@ -45,10 +45,10 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
 			'realisation-7': null,
 			'realisation-8': null,
 			'realisation-9': null,
-			'realisation-10': null
+			'realisation-10': null,
 		},
 		createdAt: new Date(),
-		updatedAt: new Date()
+		updatedAt: new Date(),
 	} as HomePage,
 	'/contact': {
 		_id: '/contact',
@@ -56,13 +56,13 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
 		text: {
 			'search-engine-description':
 				'Je me déplace à votre domicile dans le Finistère sur rendez-vous.',
-			description: 'Je me déplace à votre domicile dans le Finistère sur rendez-vous.'
+			description: 'Je me déplace à votre domicile dans le Finistère sur rendez-vous.',
 		},
 		pictures: {
-			'photo-garde': null
+			'photo-garde': null,
 		},
 		createdAt: new Date(),
-		updatedAt: new Date()
+		updatedAt: new Date(),
 	} as ContactPage,
 	'/atelier': {
 		_id: '/atelier',
@@ -77,13 +77,13 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
 
 Nous proposons à la vente également des assises déjà refectionnées dans la partie E-shop.`,
 			'search-engine-description':
-				"À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins."
+				"À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins.",
 		},
 		pictures: {
 			'photo-1': null,
 			'photo-2': null,
-			'photo-3': null
-		}
+			'photo-3': null,
+		},
 	} as WorkshopPage,
 	'/realisations': {
 		_id: '/realisations',
@@ -110,7 +110,7 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 			'realisation-17': '',
 			'realisation-18': '',
 			'realisation-19': '',
-			'realisation-20': ''
+			'realisation-20': '',
 		},
 		pictures: {
 			'realisation-1': null,
@@ -132,10 +132,10 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 			'realisation-17': null,
 			'realisation-18': null,
 			'realisation-19': null,
-			'realisation-20': null
+			'realisation-20': null,
 		},
 		createdAt: new Date(),
-		updatedAt: new Date()
+		updatedAt: new Date(),
 	} as CreationsPage,
 	'/tissus-et-finitions': {
 		_id: '/tissus-et-finitions',
@@ -155,24 +155,24 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 			'photo-12': null,
 			'photo-13': null,
 			'photo-14': null,
-			'photo-15': null
+			'photo-15': null,
 		},
 		text: {
 			'search-engine-description':
-				"Découvrez les finitions et tissus utilisés par Daphné, tapissière d'ameublement de la Bergère Enchantée"
-		}
+				"Découvrez les finitions et tissus utilisés par Daphné, tapissière d'ameublement de la Bergère Enchantée",
+		},
 	} as FabricsPage,
 	'/e-shop': {
 		_id: '/e-shop',
 		name: 'E-shop',
 		text: {
 			'search-engine-description':
-				'Liste des fauteuils, chaises, coussins... réalisés par Daphné et disponibles à la vente'
+				'Liste des fauteuils, chaises, coussins... réalisés par Daphné et disponibles à la vente',
 		},
 		pictures: {
-			background: null
-		}
-	} as EshopPage
+			background: null,
+		},
+	} as EshopPage,
 };
 
 export let pages = defaultPages;

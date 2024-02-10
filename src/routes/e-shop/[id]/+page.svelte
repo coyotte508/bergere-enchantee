@@ -15,10 +15,8 @@
 <Container>
 	<article class="flex my-8 lg:my-16 flex-wrap lg:flex-nowrap">
 		<div class="grow lg:basis-0 justify-start items-center flex flex-col">
-			<!-- svelte-ignore security-anchor-rel-noreferrer -->
 			<a href={pictureLink(product.photos[photoIndex])} target="_blank">
 				<Picture
-					ratioHint
 					picture={product.photos[photoIndex]}
 					sizes="(min-width: 1152px) 576px, (max-width: 1024px) 100vw, 50vw"
 					title="Cliquez pour voir la photo entière"
@@ -52,6 +50,7 @@
 					>{/if}
 			</div>
 			<div class="marked leading-6">
+				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html marked(product.description)}
 			</div>
 

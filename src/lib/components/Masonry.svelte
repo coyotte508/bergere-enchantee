@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	export let items: any[] = []; // pass in data if it's dynamically updated
+	export let items: unknown[] = []; // pass in data if it's dynamically updated
 
 	type GridItem = {
 		_el: HTMLElement;
@@ -66,7 +66,7 @@
 						(c) => c.nodeType === 1 && +getComputedStyle(c).gridColumnEnd !== -1
 					),
 					ncol: 0,
-					mod: 0
+					mod: 0,
 				};
 			});
 			refreshLayout(); /* initial load */

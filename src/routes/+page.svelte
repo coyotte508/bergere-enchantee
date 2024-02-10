@@ -75,6 +75,7 @@
 	</section>
 
 	<section class="marked" style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+		<!-- eslint-disable svelte/no-at-html-tags -->
 		{@html marked(pageData.text['presentation'])}
 	</section>
 </Container>
@@ -109,6 +110,7 @@
 			<h2 class="text-4xl mb-10">
 				Notre <span class="text-sunray">e-shop</span> n'attend plus que vous
 			</h2>
+			<!-- eslint-disable svelte/no-at-html-tags -->
 			{@html marked(pageData.text['eshop-description'])}
 			<div class="mt-auto text-center">
 				<a href="/e-shop" class="btn-sunray">e-shop</a>

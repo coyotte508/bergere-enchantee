@@ -1,4 +1,4 @@
-import { client, collections, withTransaction } from '$lib/server/database';
+import { collections, withTransaction } from '$lib/server/database';
 import type { Product } from '$lib/types/Product';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	product.photos = pictures;
 
 	return {
-		product
+		product,
 	};
 };
 
@@ -32,11 +32,11 @@ export const actions: Actions = {
 			...(formData.get('state') && { state: formData.get('state') as Product['state'] }),
 			...(formData.get('kind') && { kind: formData.get('kind') as Product['kind'] }),
 			...(formData.get('description') && {
-				description: (formData.get('description') as string).replaceAll('\r', '')
+				description: (formData.get('description') as string).replaceAll('\r', ''),
 			}),
 			...(formData.get('price') && { price: Number(formData.get('price')) }),
 			...(formData.get('stock') && { stock: Number(formData.get('stock')) }),
-			updatedAt: new Date()
+			updatedAt: new Date(),
 		};
 
 		const product = await collections.products.findOneAndUpdate(
@@ -70,12 +70,12 @@ export const actions: Actions = {
 			);
 			for (const key of pictures.flatMap((p) => [
 				p.storage.original.key,
-				...p.storage.formats.map((s) => s.key)
+				...p.storage.formats.map((s) => s.key),
 			])) {
 				await s3client.deleteObject({ Key: key, Bucket: S3_BUCKET });
 			}
 		});
 
 		throw redirect(303, '/admin/produits');
-	}
+	},
 };
