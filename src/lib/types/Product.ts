@@ -6,9 +6,12 @@ export interface Product extends Timestamps {
 	name: string;
 	description: string;
 	price: number;
-	kind: 'armchair' | 'cushion' | 'chair' | 'couch' | 'tufting';
+	kind: ProductKind;
 	state: 'draft' | 'published';
 	stock: number;
 
 	photos: Picture[];
 }
+
+export const PRODUCT_KINDS = ['armchair', 'cushion', 'chair', 'couch', 'tufting'] as const;
+export type ProductKind = (typeof PRODUCT_KINDS)[number];

@@ -19,7 +19,6 @@
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/bcryptjs": "^2.4.2",
-		"@types/busboy": "^1.5.0",
 		"@types/lodash": "^4.14.188",
 		"@types/marked": "^4.0.7",
 		"@types/mime-types": "^2.1.1",
@@ -52,7 +51,6 @@
 		"@aws-sdk/s3-request-presigner": "^3.354.0",
 		"@fontsource/aileron": "^5.0.3",
 		"bcryptjs": "^2.4.3",
-		"busboy": "^1.6.0",
 		"date-fns": "^2.29.3",
 		"form-data": "^4.0.0",
 		"lodash": "^4.17.21",
@@ -61,7 +59,7 @@
 		"mime-types": "^2.1.35",
 		"mongodb": "^4.11.0",
 		"nanoid": "^4.0.0",
-		"sharp": "^0.31.2",
+		"sharp": "^0.33.2",
 		"zod": "^3.21.4"
 	}
 }

@@ -1,49 +1,28 @@
 import { collections } from '$lib/server/database';
 import { generatePicture } from '$lib/server/photo';
-import type { Product } from '$lib/types/Product';
+import { PRODUCT_KINDS } from '$lib/types/Product';
 import { generateId } from '$lib/utils/generateId';
+import { z } from 'zod';
 import type { Actions } from './$types';
-import { pipeline } from 'node:stream/promises';
-import busboy from 'busboy';
-import { streamToBuffer } from '$lib/server/utils/streamToBuffer';
 import { redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	default: async ({ request }) => {
-		const fields = {
-			name: '',
-			description: '',
-			price: '100',
-			kind: 'armchair',
-		};
+		const formData = await request.formData();
 
-		// eslint-disable-next-line no-async-promise-executor
-		const buffer = await new Promise<Buffer>(async (resolve, reject) => {
-			try {
-				const bb = busboy({
-					headers: {
-						'content-type': request.headers.get('content-type') ?? undefined,
-					},
-				});
-				bb.on('file', async (name, file) => {
-					// const { filename, encoding, mimeType } = info;
-					resolve(await streamToBuffer(file));
-				});
-				bb.on('field', (name, val) => {
-					if (name in fields) {
-						fields[name as keyof typeof fields] = val;
-					}
-				});
+		const { name, description, kind, price, file } = z
+			.object({
+				description: z.string().trim(),
+				kind: z.enum([PRODUCT_KINDS[0], ...PRODUCT_KINDS.slice(1)]),
+				name: z.string().min(1),
+				price: z.number({ coerce: true }).int().positive(),
+				file: z.instanceof(File),
+			})
+			.parse(Object.fromEntries(formData));
 
-				await pipeline(request.body as unknown as AsyncIterable<Buffer>, bb);
-			} catch (err) {
-				reject(err);
-			}
-		});
+		const productId = generateId(name);
 
-		const productId = generateId(fields.name);
-
-		await generatePicture(buffer, fields.name, {
+		await generatePicture(Buffer.from(await file.arrayBuffer()), name, {
 			productId,
 			cb: async (session) => {
 				await collections.products.insertOne(
@@ -51,10 +30,10 @@ export const actions: Actions = {
 						_id: productId,
 						createdAt: new Date(),
 						updatedAt: new Date(),
-						description: fields.description.replaceAll('\r', ''),
-						kind: fields.kind as Product['kind'],
-						name: fields.name,
-						price: +fields.price,
+						description: description.replaceAll('\r', ''),
+						kind,
+						name,
+						price,
 						photos: [],
 						stock: 1,
 						state: 'draft',
