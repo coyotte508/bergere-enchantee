@@ -7,11 +7,15 @@ export const actions: Actions = {
 	default: async (input) => {
 		const formData = await input.request.formData();
 
-		const { productId, name, file } = z
+		const {
+			productId,
+			name,
+			photo: file,
+		} = z
 			.object({
 				productId: z.string().optional(),
 				name: z.string(),
-				file: z.instanceof(File),
+				photo: z.instanceof(File),
 			})
 			.parse(Object.fromEntries(formData));
 
