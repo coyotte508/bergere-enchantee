@@ -21,7 +21,12 @@
 		style="z-index: -1; filter: brightness(0.7)"
 	/>
 	<Container class="text-center flex flex-col gap-10">
-		<h2 style="color: wheat;">Changement de tissu uniquement</h2>
+		<h2
+			class="text-oxford text-3xl font-aileron"
+			style="filter: drop-shadow(white 1px 1px 0.15rem) drop-shadow(white -1px -1px 0.15rem)"
+		>
+			Changement de tissu uniquement
+		</h2>
 		<div
 			class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2 justify-center"
 		>
@@ -45,7 +50,12 @@
 		style="z-index: -1; filter: brightness(0.7)"
 	/>
 	<Container class="text-center flex flex-col gap-10">
-		<h2 style="color: wheat;">Réfèction complète</h2>
+		<h2
+			class="text-oxford text-3xl font-aileron"
+			style="filter: drop-shadow(white 1px 1px 0.15rem) drop-shadow(white -1px -1px 0.15rem)"
+		>
+			Réfèction complète
+		</h2>
 		<div class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2">
 			{#each array as i}
 				{#if pageData.text[`refection-complete-${i}-titre`] && pageData.text[`refection-complete-${i}-prix`]}
@@ -67,7 +77,12 @@
 		style="z-index: -1; filter: brightness(0.7)"
 	/>
 	<Container class="text-center flex flex-col gap-10">
-		<h2 style="color: wheat;">Coussins</h2>
+		<h2
+			class="text-oxford text-3xl font-aileron"
+			style="filter: drop-shadow(white 1px 1px 0.15rem) drop-shadow(white -1px -1px 0.15rem)"
+		>
+			Coussins
+		</h2>
 		<div class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2">
 			{#each array as i}
 				{#if pageData.text[`coussin-${i}-titre`] && pageData.text[`coussin-${i}-prix`]}
