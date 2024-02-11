@@ -28,19 +28,34 @@
 
 		<h2>Textes</h2>
 
-		{#each typedKeys(page.text) as key}
+		{#each typedKeys(page.text).filter((k) => !k.endsWith('-prix') && !k.endsWith('-titre')) as key}
 			<label class="form-label">
 				{key}
 				<textarea
 					name="{page._id}_text_{key}"
 					cols="30"
-					rows="10"
+					rows="3"
 					class="form-input"
 					value={page.text[key]}
 					on:blur={(event) => updateText(page, key, event.currentTarget.value)}
 				/>
 			</label>
 		{/each}
+
+		<div class="grid grid-cols-2 gap-4">
+			{#each typedKeys(page.text).filter((k) => k.endsWith('-prix') || k.endsWith('-titre')) as key}
+				<label class="form-label">
+					{key}
+					<input
+						type="text"
+						name="{page._id}_text_{key}"
+						class="form-input"
+						value={page.text[key]}
+						on:blur={(event) => updateText(page, key, event.currentTarget.value)}
+					/>
+				</label>
+			{/each}
+		</div>
 
 		<h2>Images</h2>
 
