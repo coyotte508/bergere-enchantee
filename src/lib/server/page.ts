@@ -4,6 +4,7 @@ import type {
 	EshopPage,
 	FabricsPage,
 	HomePage,
+	PricingPage,
 	WorkshopPage,
 } from '$lib/types/Page';
 import _ from 'lodash';
@@ -173,6 +174,35 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 			background: null,
 		},
 	} as EshopPage,
+	'/tarifs': {
+		_id: '/tarifs',
+		name: 'Tarifs',
+		text: {
+			'search-engine-description':
+				"Consultez les tarifs de Daphné, tapissière d'ameublement de la Bergère Enchantée",
+			...Object.fromEntries(
+				new Array(12)
+					.fill(0)
+					.flatMap((_, i) => [
+						[
+							`remplacement-tissu-${i + 1}-titre`,
+							`remplacement-tissu-${i + 1}-prix`,
+							`refection-complete-${i + 1}-titre`,
+							`refection-complete-${i + 1}-prix`,
+							`coussin-${i + 1}-titre`,
+							`coussin-${i + 1}-prix`,
+						].map((key) => [key, '']),
+					])
+			),
+		},
+		pictures: {
+			'remplacement-tissu': null,
+			'refection-complete': null,
+			coussin: null,
+		},
+		createdAt: new Date(),
+		updatedAt: new Date(),
+	} as PricingPage,
 };
 
 export let pages = defaultPages;

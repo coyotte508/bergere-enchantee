@@ -83,6 +83,24 @@ export interface WorkshopPage extends Page {
 	};
 }
 
+export interface PricingPage extends Page {
+	_id: '/tarifs';
+	name: 'Tarifs';
+	text: {
+		'search-engine-description': string;
+	} & Partial<
+		Record<
+			`${'remplacement-tissu' | 'refection-complete' | 'coussin'}-${number}-${'prix' | 'titre'}`,
+			string
+		>
+	>;
+	pictures: {
+		'remplacement-tissu': string | null;
+		'refection-complete': string | null;
+		coussin: string | null;
+	};
+}
+
 export interface EshopPage extends Page {
 	_id: '/e-shop';
 	name: 'E-shop';
