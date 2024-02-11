@@ -13,14 +13,12 @@ jobs:
         with:
           # to download fonts
           lfs: true
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7.33.1
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'pnpm'
       - run: |
+          corepack enable
           pnpm install --frozen-lockfile
           echo $DOT_ENV > .env.local
           pnpm build
