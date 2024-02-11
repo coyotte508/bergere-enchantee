@@ -9,16 +9,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # to download fonts
           lfs: true
-      - uses: actions/setup-node@v3
+      - run: corepack enable
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
       - run: |
-          corepack enable
           pnpm install --frozen-lockfile
           echo $DOT_ENV > .env.local
           pnpm build
