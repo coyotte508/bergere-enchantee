@@ -183,7 +183,7 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 			...Object.fromEntries(
 				new Array(12)
 					.fill(0)
-					.flatMap((_, i) => [
+					.map((_, i) => [
 						[
 							`remplacement-tissu-${i + 1}-titre`,
 							`remplacement-tissu-${i + 1}-prix`,

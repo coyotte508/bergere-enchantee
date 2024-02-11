@@ -3,9 +3,8 @@
 	import Masonry from '$lib/components/Masonry.svelte';
 	import Picture from '$lib/components/Picture.svelte';
 	import type { EshopPage } from '$lib/types/Page';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
+	export let data;
 
 	const pictures = data.pictures;
 	const pageData = data.pageData as EshopPage;

@@ -67,7 +67,7 @@
 
 <header class="bg-oxford py-2 flex items-center font-aileron">
 	<nav
-		class="bg-oxford text-xl font-bold flex grow px-2 sm:px-0 sm:text-center items-center text-white"
+		class="bg-oxford text-xl font-bold flex grow px-2 md:px-0 md:text-center items-center text-white"
 	>
 		<a href="/" style="line-height: 0;" class="grow"
 			><img
@@ -80,44 +80,49 @@
 		<a
 			href="/atelier"
 			class:text-sunray={path === '/atelier'}
-			class="hidden sm:inline py-4 grow hover:text-sunray">L'atelier</a
+			class="hidden md:inline py-4 grow hover:text-sunray">L'atelier</a
 		>
 		<a
 			href="/realisations"
 			class:text-sunray={path === '/realisations'}
-			class="hidden sm:inline py-4 grow hover:text-sunray">Réalisations</a
+			class="hidden md:inline py-4 grow hover:text-sunray">Réalisations</a
 		>
 		<a
 			href="/e-shop"
 			class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
-			class="hidden sm:inline py-4 grow hover:text-sunray">E-shop</a
+			class="hidden md:inline py-4 grow hover:text-sunray">E-shop</a
 		>
 		<a
 			href="/tissus-et-finitions"
 			class:text-sunray={path === '/tissus-et-finitions'}
-			class="hidden py-4 sm:inline grow hover:text-sunray">Tissus / Finitions</a
+			class="hidden py-4 md:inline grow hover:text-sunray">Tissus / Finitions</a
+		>
+		<a
+			href="/tarifs"
+			class:text-sunray={path === '/tarifs'}
+			class="hidden md:inline py-4 grow hover:text-sunray">Tarifs</a
 		>
 		<a
 			href="/contact"
 			class:text-sunray={path === '/contact'}
-			class="hidden sm:inline py-4 grow hover:text-sunray">Contact</a
+			class="hidden md:inline py-4 grow hover:text-sunray">Contact</a
 		>
 		<div class="grow text-sunray text-3xl flex gap-4 items-center">
-			<a href="/e-shop/panier" class="hidden sm:flex items-center" title="Panier">
+			<a href="/e-shop/panier" class="hidden md:flex items-center" title="Panier">
 				<IconCart />
 			</a>
 			{#if data.user}
-				<a href="/compte" class="hidden sm:flex items-center" title="Espace client">
+				<a href="/compte" class="hidden md:flex items-center" title="Espace client">
 					<IconUser />
 				</a>
 			{:else}
-				<a href="/connexion" class="hidden sm:flex items-center" title="Connexion">
+				<a href="/connexion" class="hidden md:flex items-center" title="Connexion">
 					<IconLogin />
 				</a>
 			{/if}
 		</div>
 		<button
-			class="inline-flex flex-col justify-center sm:hidden cursor-pointer text-4xl transition"
+			class="inline-flex flex-col justify-center md:hidden cursor-pointer text-4xl transition"
 			class:text-white={!menuOpen}
 			class:text-sunray={menuOpen}
 			class:rotate-90={menuOpen}
@@ -132,7 +137,7 @@
 	{#if menuOpen}
 		<nav
 			transition:slide
-			class="bg-oxford flex flex-col sm:hidden text-xl border-x-0 border-b-0 border-opacity-25 border-t-1 border-white font-bold items-center text-white"
+			class="bg-oxford flex flex-col md:hidden text-xl border-x-0 border-b-0 border-opacity-25 border-t-1 border-white font-bold items-center text-white"
 		>
 			<a href="/" class:text-sunray={path === '/'} class="my-2 hover:text-sunray">Accueil</a>
 			<a href="/atelier" class:text-sunray={path === '/atelier'} class="my-2 hover:text-sunray"
@@ -153,6 +158,9 @@
 				class:text-sunray={path === '/tissus'}
 				class="my-2 hover:text-sunray">Tissus / Finitions</a
 			>
+			<a href="/tarifs" class:text-sunray={path === '/tarifs'} class="my-2 hover:text-sunray">
+				Tarifs
+			</a>
 			<a href="/contact" class:text-sunray={path === '/contact'} class="my-2 hover:text-sunray"
 				>Contact</a
 			>
