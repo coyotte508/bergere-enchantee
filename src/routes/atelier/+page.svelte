@@ -31,7 +31,7 @@
 				</li>
 				<li class="flex items-center mt-1">
 					<IconShipping class="inline-block mr-2" />
-					(dépôt et retrait uniquement)
+					Atelier showroom
 				</li>
 			</ul>
 		</div>
