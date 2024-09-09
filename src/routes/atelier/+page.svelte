@@ -27,7 +27,7 @@
 			<ul class="text-oxford">
 				<li class="flex items-center">
 					<IconLocation class="inline-block mr-2" />
-					<div class="inline-block">39 route de l'Argoat, <br />29460 Logonna Daoulas</div>
+					<div class="inline-block">29 rue Traverse, <br />29200 Brest</div>
 				</li>
 				<li class="flex items-center mt-1">
 					<IconShipping class="inline-block mr-2" />
