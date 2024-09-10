@@ -22,21 +22,35 @@ export const GET: RequestHandler = async ({ params }) => {
 		throw error(500, "Impossible de trouver le format d'image demandé");
 	}
 
-	return new Response(null, {
-		status: 302,
-		headers: {
-			'Content-Type': 'image/jpeg',
-			'Cache-Control': 'public, max-age=31536000, immutable',
-			location: secureDownloadLink(
-				await getSignedUrl(
-					s3client,
-					new GetObjectCommand({
-						Bucket: S3_BUCKET,
-						Key: format.key,
-						ResponseCacheControl: 'public, max-age=31536000, immutable',
-					})
-				)
-			),
-		},
-	});
+	const s3Url = await getSignedUrl(
+		s3client,
+		new GetObjectCommand({
+			Bucket: S3_BUCKET,
+			Key: format.key,
+			ResponseCacheControl: 'public, max-age=31536000, immutable',
+		})
+	);
+
+	const passThrough: boolean = true;
+	if (passThrough) {
+		const res = await fetch(s3Url);
+
+		// Until we handle/store ETag properly
+		const headers = new Headers(
+			[...res.headers.entries()].filter(([k]) => !['content-encoding', 'etag'].includes(k))
+		);
+
+		return new Response(res.body, {
+			status: res.status,
+			headers,
+		});
+	} else {
+		return new Response(null, {
+			status: 302,
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				location: secureDownloadLink(s3Url),
+			},
+		});
+	}
 };
