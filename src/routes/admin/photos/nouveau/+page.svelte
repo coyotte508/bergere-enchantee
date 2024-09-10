@@ -29,11 +29,12 @@
 					name,
 					mimeType: file.type,
 					file: fileInput?.files?.[0],
+					size: file.size,
 				}),
 			});
 
 			if (!response.ok) {
-				alert("Erreur lors de l'envoi du fichier");
+				alert("Erreur lors de l'envoi du fichier" + (await response.text()));
 				loading = false;
 				return;
 			}
@@ -46,7 +47,7 @@
 			});
 
 			if (!response2.ok) {
-				alert("Erreur lors de l'envoi du fichier");
+				alert("Erreur lors de l'envoi du fichier" + (await response2.text()));
 				loading = false;
 				return;
 			}
