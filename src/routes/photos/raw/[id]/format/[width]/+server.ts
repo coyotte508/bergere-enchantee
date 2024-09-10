@@ -31,24 +31,23 @@ export const GET: RequestHandler = async ({ params }) => {
 		})
 	);
 
-	const passThrough: boolean = false;
+	const passThrough: boolean = true;
 	if (passThrough) {
 		const res = await fetch(s3Url);
 
 		// Until we handle/store ETag properly
-		const headers = new Headers(
-			[...res.headers.entries()].filter(([k]) => !['content-encoding', 'etag'].includes(k))
-		);
+		const headers = new Headers([...res.headers.entries()].filter(([k]) => k !== 'etag'));
 
 		return new Response(res.body, {
 			status: res.status,
 			headers,
 		});
 	} else {
+		// Doesn't cache on Firefox
 		return new Response(null, {
 			status: 302,
 			headers: {
-				// 'Cache-Control': 'public, max-age=31536000, immutable',
+				'Cache-Control': 'public, max-age=31536000, immutable',
 				location: secureDownloadLink(s3Url),
 			},
 		});
