@@ -1,13 +1,13 @@
 import sharp from 'sharp';
 import { collections, withTransaction } from '$lib/server/database';
-import { generateId } from '$lib/utils/generateId';
 import type { ClientSession } from 'mongodb';
 import { error } from '@sveltejs/kit';
 import { s3client } from './s3';
-import { DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3_BUCKET } from '$env/static/private';
 import * as mimeTypes from 'mime-types';
 import type { ImageData, Picture } from '$lib/types/Picture';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 /**
  * Upload picture to S3 under different formats, and create a document in db.pictures.
@@ -16,10 +16,38 @@ import type { ImageData, Picture } from '$lib/types/Picture';
  * will cancel everything (remove from DB and S3)
  */
 export async function generatePicture(
-	buffer: Buffer | ArrayBuffer,
-	name: string,
+	photoId: string,
 	opts?: { productId?: string; cb?: (session: ClientSession) => Promise<void> }
 ): Promise<void> {
+	const pendingUpload = await collections.pendingUploads.findOne({ _id: photoId });
+
+	if (!pendingUpload) {
+		throw error(404, 'Fichier non trouvé');
+	}
+
+	const url = await getSignedUrl(
+		s3client,
+		new GetObjectCommand({
+			Bucket: pendingUpload.storage.bucket,
+			Key: pendingUpload.storage.key,
+		})
+	);
+
+	const res = await fetch(url);
+
+	if (!res.ok) {
+		throw error(500, 'Erreur lors de la récupération du fichier');
+	}
+
+	const buffer = Buffer.from(await res.arrayBuffer());
+
+	await s3client.send(
+		new DeleteObjectCommand({
+			Bucket: pendingUpload.storage.bucket,
+			Key: pendingUpload.storage.key,
+		})
+	);
+
 	const image = sharp(buffer);
 	const { width, height, format } = await image.metadata();
 
@@ -37,14 +65,13 @@ export async function generatePicture(
 		throw error(400, 'Invalid image format: ' + format);
 	}
 
-	const _id = generateId(name);
 	const extension = '.' + mimeTypes.extension(mime);
 
 	const uploadedKeys: string[] = [];
 
 	const pathPrefix = picturePrefix(opts?.productId);
 
-	const path = `${pathPrefix}${_id}${extension}`;
+	const path = `${pathPrefix}${photoId}${extension}`;
 
 	await s3client.send(
 		new PutObjectCommand({
@@ -67,7 +94,7 @@ export async function generatePicture(
 
 	try {
 		if (width <= 2048 && height <= 2048) {
-			const key = `${pathPrefix}${_id}-${width}x${height}.webp`;
+			const key = `${pathPrefix}${photoId}-${width}x${height}.webp`;
 			const buffer = await image.toFormat('webp').toBuffer();
 			await s3client.send(
 				new PutObjectCommand({
@@ -102,7 +129,7 @@ export async function generatePicture(
 					throw error(500, 'Could not get resized width and height');
 				}
 
-				const key = `${pathPrefix}${_id}-${newWidth}x${newHeight}.webp`;
+				const key = `${pathPrefix}${photoId}-${newWidth}x${newHeight}.webp`;
 				await s3client.send(
 					new PutObjectCommand({
 						Bucket: S3_BUCKET,
@@ -126,8 +153,8 @@ export async function generatePicture(
 		await withTransaction(async (session) => {
 			await collections.pictures.insertOne(
 				{
-					_id,
-					name,
+					_id: photoId,
+					name: pendingUpload.name,
 					storage: {
 						original,
 						formats,

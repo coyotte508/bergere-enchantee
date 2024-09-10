@@ -10,25 +10,19 @@ export const actions: Actions = {
 	default: async ({ request }) => {
 		const formData = await request.formData();
 
-		const {
-			name,
-			description,
-			kind,
-			price,
-			photo: file,
-		} = z
+		const { name, description, kind, price, photoId } = z
 			.object({
 				description: z.string().trim(),
 				kind: z.enum([PRODUCT_KINDS[0], ...PRODUCT_KINDS.slice(1)]),
 				name: z.string().min(1),
 				price: z.number({ coerce: true }).int().positive(),
-				photo: z.instanceof(File),
+				photoId: z.string(),
 			})
 			.parse(Object.fromEntries(formData));
 
 		const productId = generateId(name);
 
-		await generatePicture(Buffer.from(await file.arrayBuffer()), name, {
+		await generatePicture(photoId, {
 			productId,
 			cb: async (session) => {
 				await collections.products.insertOne(
