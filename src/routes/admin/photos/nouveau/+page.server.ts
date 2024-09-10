@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { collections } from '$lib/server/database';
 import { s3client } from '$lib/server/s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { GetObjectCommand } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 
 export const actions: Actions = {
 	default: async (input) => {
@@ -38,7 +38,18 @@ export const actions: Actions = {
 			throw error(500, 'Erreur lors de la récupération du fichier');
 		}
 
-		await generatePicture(Buffer.from(await res.arrayBuffer()), pendingUpload.name, {
+		const buffer = Buffer.from(await res.arrayBuffer());
+
+		await s3client.send(
+			new DeleteObjectCommand({
+				Bucket: pendingUpload.storage.bucket,
+				Key: pendingUpload.storage.key,
+			})
+		);
+
+		await collections.pendingUploads.deleteOne({ _id: photoId });
+
+		await generatePicture(buffer, pendingUpload.name, {
 			productId: productId || undefined,
 		});
 
