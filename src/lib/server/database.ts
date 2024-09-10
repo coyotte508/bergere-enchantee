@@ -5,6 +5,7 @@ import type { User } from '$lib/types/User';
 import type { Product } from '$lib/types/Product';
 import type { Picture } from '$lib/types/Picture';
 import type { Cart } from '$lib/types/Cart';
+import type { PendingUpload } from '$lib/types/PendingUpload';
 
 const client = new MongoClient(MONGODB_URL, {
 	directConnection: true,
@@ -18,6 +19,7 @@ const pages = db.collection<Page>('pages');
 const users = db.collection<User>('users');
 const products = db.collection<Product>('products');
 const pictures = db.collection<Picture>('pictures');
+const pendingUploads = db.collection<PendingUpload>('pendingUploads');
 const carts = db.collection<Cart>('carts');
 const errors = db.collection<unknown & { _id: ObjectId; url: string; method: string }>('errors');
 
@@ -35,7 +37,7 @@ client.on('open', () => {
 });
 
 export { client, db };
-export const collections = { products, pictures, pages, users, carts, errors };
+export const collections = { products, pictures, pages, users, carts, errors, pendingUploads };
 
 export async function withTransaction(cb: WithSessionCallback) {
 	await client.withSession((session) => session.withTransaction(cb));
