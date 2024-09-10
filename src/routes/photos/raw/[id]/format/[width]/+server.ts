@@ -31,7 +31,7 @@ export const GET: RequestHandler = async ({ params }) => {
 		})
 	);
 
-	const passThrough: boolean = false;
+	const passThrough: boolean = true;
 	if (passThrough) {
 		const res = await fetch(s3Url);
 
