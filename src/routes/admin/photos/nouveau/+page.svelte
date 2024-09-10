@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { tick } from 'svelte';
 
 	const productId = $page.url.searchParams.get('productId');
 
@@ -55,6 +56,8 @@
 			if (photoIdInput) {
 				photoIdInput.value = _id;
 			}
+
+			await tick();
 
 			formInput?.submit();
 		} finally {

@@ -3,6 +3,11 @@ import type { PageServerLoad } from './types';
 
 export const load: PageServerLoad = async () => {
 	return {
-		photos: await collections.pictures.find({ productId: { $exists: false } }).toArray(),
+		photos: await collections.pictures
+			.find({ productId: { $exists: false } })
+			.sort({
+				createdAt: -1,
+			})
+			.toArray(),
 	};
 };

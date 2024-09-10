@@ -1,3 +1,4 @@
+import { IndexDescription } from 'mongodb';
 import type { Timestamps } from './Timestamps';
 
 export interface Picture extends Timestamps {
@@ -10,6 +11,12 @@ export interface Picture extends Timestamps {
 		formats: ImageData[];
 	};
 }
+
+export const pictureIndexes: IndexDescription[] = [
+	{
+		key: { productId: 1, createdAt: -1 },
+	},
+];
 
 export interface ImageData {
 	key: string;

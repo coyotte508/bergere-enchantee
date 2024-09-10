@@ -140,6 +140,9 @@
 	.btn {
 		@apply text-white bg-oxford px-4 text-base py-2 rounded-3xl font-bold border-0 cursor-pointer;
 	}
+	.btn[disabled] {
+		@apply bg-gray-300 cursor-not-allowed;
+	}
 	.btn-red {
 		@apply text-white bg-red-500 px-4 text-base py-2 rounded-3xl font-bold border-0 cursor-pointer;
 	}

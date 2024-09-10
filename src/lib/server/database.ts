@@ -3,7 +3,7 @@ import { MongoClient, ObjectId, type WithSessionCallback } from 'mongodb';
 import type { Page } from '$lib/types/Page';
 import type { User } from '$lib/types/User';
 import type { Product } from '$lib/types/Product';
-import type { Picture } from '$lib/types/Picture';
+import { pictureIndexes, type Picture } from '$lib/types/Picture';
 import type { Cart } from '$lib/types/Cart';
 import type { PendingUpload } from '$lib/types/PendingUpload';
 
@@ -34,6 +34,7 @@ client.on('open', () => {
 			}
 		)
 		.catch(console.error);
+	pictures.createIndexes(pictureIndexes).catch(console.error);
 });
 
 export { client, db };
