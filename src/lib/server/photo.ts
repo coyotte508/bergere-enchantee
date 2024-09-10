@@ -16,7 +16,7 @@ import type { ImageData, Picture } from '$lib/types/Picture';
  * will cancel everything (remove from DB and S3)
  */
 export async function generatePicture(
-	buffer: Buffer,
+	buffer: Buffer | ArrayBuffer,
 	name: string,
 	opts?: { productId?: string; cb?: (session: ClientSession) => Promise<void> }
 ): Promise<void> {
