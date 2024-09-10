@@ -48,7 +48,7 @@ export const GET: RequestHandler = async ({ params }) => {
 		return new Response(null, {
 			status: 302,
 			headers: {
-				'Cache-Control': 'public, max-age=31536000, immutable',
+				// 'Cache-Control': 'public, max-age=31536000, immutable',
 				location: secureDownloadLink(s3Url),
 			},
 		});
