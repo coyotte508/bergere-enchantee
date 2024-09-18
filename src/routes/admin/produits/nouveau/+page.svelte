@@ -6,6 +6,7 @@
 	let photoIdInput: HTMLInputElement | null = null;
 
 	let loading = false;
+	let name = '';
 
 	async function submit(event: Event) {
 		event.preventDefault();
@@ -72,7 +73,14 @@
 >
 	<label class="form-label">
 		Nom du produit
-		<input class="form-input" type="text" name="name" placeholder="Nom définitif" required />
+		<input
+			class="form-input"
+			type="text"
+			name="name"
+			bind:value={name}
+			placeholder="Nom définitif"
+			required
+		/>
 	</label>
 
 	<label class="form-label">
