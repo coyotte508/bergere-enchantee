@@ -66,7 +66,6 @@
 
 <form
 	method="post"
-	enctype="multipart/form-data"
 	class="flex gap-4 flex-col"
 	bind:this={formInput}
 	on:submit|preventDefault={submit}
@@ -95,14 +94,7 @@
 
 	<label class="form-label">
 		Photo de garde
-		<input
-			type="file"
-			name="photo"
-			accept="image/jpeg"
-			class="form-input"
-			bind:this={fileInput}
-			required
-		/>
+		<input type="file" accept="image/jpeg" class="form-input" bind:this={fileInput} required />
 	</label>
 
 	<input type="hidden" name="photoId" bind:this={photoIdInput} />
