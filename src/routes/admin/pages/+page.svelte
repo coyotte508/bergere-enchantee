@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import type { Page } from '$lib/types/Page';
 	import { typedKeys } from '$lib/utils/typedKeys';
 	import type { PageData } from './$types';
@@ -22,7 +23,15 @@
 	}
 </script>
 
-{#each data.pages as page}
+<ul class="list-disc">
+	{#each data.pages as page}
+		<li>
+			<a href="/admin/pages?pageId={page._id}"><span class="link">{page._id}</span> - {page.name}</a
+			>
+		</li>
+	{/each}
+</ul>
+{#each data.pages.filter((p) => p._id === $page.url.searchParams.get('pageId')) as page}
 	<section class="flex flex-col gap-4">
 		<h1 class="text-sunray">{page.name} ({page._id})</h1>
 

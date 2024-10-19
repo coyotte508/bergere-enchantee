@@ -220,6 +220,7 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 		pictures: {
 			'remplacement-tissu': null,
 			'refection-complete': null,
+			'refection-partielle': null,
 			coussin: null,
 		},
 		createdAt: new Date(),
