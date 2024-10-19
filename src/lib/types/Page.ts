@@ -90,13 +90,14 @@ export interface PricingPage extends Page {
 		'search-engine-description': string;
 	} & Partial<
 		Record<
-			`${'remplacement-tissu' | 'refection-complete' | 'coussin'}-${number}-${'prix' | 'titre'}`,
+			`${'remplacement-tissu' | 'refection-complete' | 'coussin' | 'refection-partielle'}-${number}-${'prix' | 'titre'}`,
 			string
 		>
 	>;
 	pictures: {
 		'remplacement-tissu': string | null;
 		'refection-complete': string | null;
+		'refection-partielle': string | null;
 		coussin: string | null;
 	};
 }

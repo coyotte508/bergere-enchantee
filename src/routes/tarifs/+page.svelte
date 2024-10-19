@@ -54,7 +54,7 @@
 			class="text-oxford text-3xl font-aileron"
 			style="filter: drop-shadow(white 1px 1px 0.15rem) drop-shadow(white -1px -1px 0.15rem)"
 		>
-			Réfèction complète
+			Réfection complète
 		</h2>
 		<div class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2">
 			{#each array as i}
@@ -62,6 +62,33 @@
 					<article class="item">
 						<p class="text-white text-xl">{pageData.text[`refection-complete-${i}-titre`]}</p>
 						<p class="text-gray-300">{pageData.text[`refection-complete-${i}-prix`]}</p>
+					</article>
+				{/if}
+			{/each}
+		</div>
+		<a href="/contact" class="btn-sunray self-center">Contactez moi</a>
+	</Container>
+</section>
+<section class="relative py-12">
+	<Picture
+		picture={pictures.find((p) => p._id === pageData.pictures['refection-partielle'])}
+		sizes="100vw"
+		class="h-full w-full object-cover absolute top-0 bottom-0 left-0 right-0 bg-brunswick"
+		style="z-index: -1; filter: brightness(0.7)"
+	/>
+	<Container class="text-center flex flex-col gap-10">
+		<h2
+			class="text-oxford text-3xl font-aileron"
+			style="filter: drop-shadow(white 1px 1px 0.15rem) drop-shadow(white -1px -1px 0.15rem)"
+		>
+			Réfection partielle
+		</h2>
+		<div class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2">
+			{#each array as i}
+				{#if pageData.text[`refection-partielle-${i}-titre`] && pageData.text[`refection-partielle-${i}-prix`]}
+					<article class="item">
+						<p class="text-white text-xl">{pageData.text[`refection-partielle-${i}-titre`]}</p>
+						<p class="text-gray-300">{pageData.text[`refection-partielle-${i}-prix`]}</p>
 					</article>
 				{/if}
 			{/each}
