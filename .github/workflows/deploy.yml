@@ -21,6 +21,8 @@ jobs:
       - run: |
           pnpm install --frozen-lockfile
           echo $DOT_ENV > .env.local
+          # show file size of .env.local
+          ls -lsah | grep .env.local
           pnpm build
         env:
           DOT_ENV: ${{ secrets.DOT_ENV }}
