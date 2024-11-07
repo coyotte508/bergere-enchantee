@@ -15,3 +15,5 @@ pnpm install
 ```
 pnpm dev
 ```
+
+:)
