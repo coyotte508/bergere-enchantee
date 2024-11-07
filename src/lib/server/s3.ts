@@ -1,5 +1,8 @@
+import { env } from '$env/dynamic/private';
 import { S3_KEY, S3_REGION, S3_SECRET, S3_ENDPOINT_URL, S3_BUCKET } from '$env/static/private';
 import * as AWS from '@aws-sdk/client-s3';
+
+console.log('region', S3_REGION, '..', env.S3_REGION);
 
 const s3client = new AWS.S3({
 	endpoint: S3_ENDPOINT_URL,
