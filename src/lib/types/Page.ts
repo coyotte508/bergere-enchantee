@@ -53,6 +53,21 @@ export interface FabricsPage extends Page {
 		'photo-13': string | null;
 		'photo-14': string | null;
 		'photo-15': string | null;
+		'photo-16': string | null;
+		'photo-17': string | null;
+		'photo-18': string | null;
+		'photo-19': string | null;
+		'photo-20': string | null;
+		'photo-21': string | null;
+		'photo-22': string | null;
+		'photo-23': string | null;
+		'photo-24': string | null;
+		'photo-25': string | null;
+		'photo-26': string | null;
+		'photo-27': string | null;
+		'photo-28': string | null;
+		'photo-29': string | null;
+		'photo-30': string | null;
 	};
 }
 
