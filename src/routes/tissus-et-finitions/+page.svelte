@@ -31,7 +31,7 @@
 		overflow: hidden;
 	}
 
-	.picture-link::after {
+	/* .picture-link::after {
 		position: absolute;
 		content: attr(data-title);
 		text-align: center;
@@ -43,7 +43,7 @@
 		font-size: 2rem;
 		opacity: 0.5;
 		transition-duration: 400ms;
-	}
+	} */
 
 	:global(.picture-link img) {
 		transition-duration: 400ms;
