@@ -119,7 +119,7 @@ export interface PricingPage extends Page {
 
 export interface EshopPage extends Page {
 	_id: '/e-shop';
-	name: 'E-shop';
+	name: string;
 	text: {
 		'search-engine-description': string;
 	};

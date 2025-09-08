@@ -210,7 +210,7 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 	} as FabricsPage,
 	'/e-shop': {
 		_id: '/e-shop',
-		name: 'E-shop',
+		name: 'Ventes',
 		text: {
 			'search-engine-description':
 				'Liste des fauteuils, chaises, coussins... réalisés par Daphné et disponibles à la vente',
