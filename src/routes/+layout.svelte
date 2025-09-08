@@ -90,7 +90,7 @@
 		<a
 			href="/e-shop"
 			class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
-			class="hidden md:inline py-4 grow hover:text-sunray">E-shop</a
+			class="hidden md:inline py-4 grow hover:text-sunray">Ventes</a
 		>
 		<a
 			href="/tissus-et-finitions"
@@ -151,7 +151,7 @@
 			<a
 				href="/e-shop"
 				class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
-				class="my-2 hover:text-sunray">E-shop</a
+				class="my-2 hover:text-sunray">Ventes</a
 			>
 			<a
 				href="/tissus-et-finitions"
@@ -259,7 +259,7 @@
 				<a
 					href="/e-shop"
 					class:text-sunray={path === '/e-shop' || path.startsWith('/e-shop/')}
-					class="hover:text-sunray">E-shop</a
+					class="hover:text-sunray">Ventes</a
 				>
 				|
 				<a

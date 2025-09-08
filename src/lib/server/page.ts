@@ -23,7 +23,7 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
 
 Nous vous proposons un service en ligne afin de concevoir à distance des coussins, et de vous les livrer n'importe où en France. 
 
-Nous proposons à la vente également des assises déjà refectionnées dans la partie E-shop. 
+Nous proposons à la vente également des assises déjà refectionnées dans la partie Ventes. 
 
 Des tissus rigoureusement sélectionnés vous seront proposés pour habiller vos sièges/coussins. Mais vous êtes libre de commander du tissus pour vos projets personnels également. n'hésitez pas à regarder notre onglet tissus. 
 
@@ -86,7 +86,7 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
 À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins.`,
 			'texte-2': `Nous vous proposons un service en ligne afin de concevoir à distance des coussins, et de vous les livrer n'importe où en France. 
 
-Nous proposons à la vente également des assises déjà refectionnées dans la partie E-shop.`,
+Nous proposons à la vente également des assises déjà refectionnées dans la partie Ventes.`,
 			'search-engine-description':
 				"À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins.",
 		},
