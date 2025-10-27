@@ -77,6 +77,11 @@ export interface ContactPage extends Page {
 	text: {
 		description: string;
 		'search-engine-description': string;
+		'horaires-lundi': string;
+		'horaires-mardi': string;
+		'horaires-mercredi': string;
+		'horaires-jeudi': string;
+		'horaires-vendredi': string;
 	};
 	pictures: {
 		'photo-garde': string | null;

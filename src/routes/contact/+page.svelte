@@ -46,8 +46,17 @@
 					>
 				</li>
 				<li class="flex mt-2">
-					<IconClock class="inline-block mr-2" />
-					Le lundi mardi jeudi vendredi de 9h à 17h30 et le mercredi de 9h à 12h
+					<IconClock class="inline-block mr-2 mt-1" />
+					<div class="flex flex-col space-y-1">
+						<div class="text-sm font-medium">Horaires d'ouverture :</div>
+						<ul class="text-sm space-y-1 list-none">
+							<li>Lundi : {pageData.text['horaires-lundi']}</li>
+							<li>Mardi : {pageData.text['horaires-mardi']}</li>
+							<li>Mercredi : {pageData.text['horaires-mercredi']}</li>
+							<li>Jeudi : {pageData.text['horaires-jeudi']}</li>
+							<li>Vendredi : {pageData.text['horaires-vendredi']}</li>
+						</ul>
+					</div>
 				</li>
 			</ul>
 		</div>

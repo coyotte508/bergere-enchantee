@@ -68,6 +68,11 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
 			'search-engine-description':
 				'Je me déplace à votre domicile dans le Finistère sur rendez-vous.',
 			description: 'Je me déplace à votre domicile dans le Finistère sur rendez-vous.',
+			'horaires-lundi': '10h-12h • 14h-17h',
+			'horaires-mardi': '10h-12h • 14h-16h30',
+			'horaires-mercredi': '10h-12h',
+			'horaires-jeudi': '10h-12h • 14h-17h',
+			'horaires-vendredi': '10h-12h • 14h-17h',
 		},
 		pictures: {
 			'photo-garde': null,
