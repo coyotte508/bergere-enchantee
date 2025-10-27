@@ -1,4 +1,4 @@
-import { IndexDescription } from 'mongodb';
+import type { IndexDescription } from 'mongodb';
 import type { Timestamps } from './Timestamps';
 
 export interface Picture extends Timestamps {
