@@ -37,7 +37,7 @@
 
 		<h2>Textes</h2>
 
-		{#each typedKeys(page.text).filter((k) => !k.endsWith('-prix') && !k.endsWith('-titre')) as key}
+		{#each typedKeys(page.text).filter((k) => !k.endsWith('-prix') && !k.endsWith('-titre') && !k.startsWith('horaires-')) as key}
 			<label class="form-label">
 				{key}
 				<textarea
@@ -45,21 +45,21 @@
 					cols="30"
 					rows="3"
 					class="form-input"
-					value={page.text[key]}
+					value={page.text[key as keyof typeof page.text]}
 					on:blur={(event) => updateText(page, key, event.currentTarget.value)}
-				/>
+				></textarea>
 			</label>
 		{/each}
 
 		<div class="grid grid-cols-2 gap-4">
-			{#each typedKeys(page.text).filter((k) => k.endsWith('-prix') || k.endsWith('-titre')) as key}
+			{#each typedKeys(page.text).filter((k) => k.endsWith('-prix') || k.endsWith('-titre') || k.startsWith('horaires-')) as key}
 				<label class="form-label">
 					{key}
 					<input
 						type="text"
 						name="{page._id}_text_{key}"
 						class="form-input"
-						value={page.text[key]}
+						value={page.text[key as keyof typeof page.text]}
 						on:blur={(event) => updateText(page, key, event.currentTarget.value)}
 					/>
 				</label>
@@ -73,7 +73,7 @@
 				{key}
 				<select
 					name="{page._id}_picture_{key}"
-					value={page.pictures[key]}
+					value={page.pictures[key as keyof typeof page.pictures]}
 					class="form-input"
 					on:change={(event) => updatePicture(page, key, event.currentTarget.value)}
 				>
