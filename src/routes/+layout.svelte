@@ -13,6 +13,7 @@
 	import IconInstagram from '~icons/ant-design/instagram-outlined';
 	import IconEmail from '~icons/ant-design/mail-outlined';
 	import IconMenu from '~icons/ant-design/holder-outlined';
+	import { PUBLIC_PLAUSIBLE_HOST } from '$env/static/public';
 
 	$: path = $page.route?.id ?? '';
 
@@ -62,6 +63,13 @@
 	{#if $page.data.price}
 		<meta property="product:price:amount" content={$page.data.price} />
 		<meta property="product:price:currency" content="EUR" />
+	{/if}
+	{#if PUBLIC_PLAUSIBLE_HOST}
+		<script
+			defer
+			data-domain={$page.url.hostname}
+			src="{PUBLIC_PLAUSIBLE_HOST}/js/script.js"
+		></script>
 	{/if}
 </svelte:head>
 
