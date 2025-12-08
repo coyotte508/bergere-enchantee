@@ -5,6 +5,8 @@
 	export let data;
 
 	$: items = data.items || [];
+	$: subtotal = data.subtotal || 0;
+	$: shipping = data.shipping || 0;
 	$: total = data.total || 0;
 </script>
 
@@ -46,7 +48,26 @@
 				{/each}
 			</div>
 
-			<div class="mt-6 pt-4 border-t border-gray-300">
+			<div class="mt-6 pt-4 border-t border-gray-300 space-y-2">
+				<div class="flex justify-between items-center">
+					<span class="text-lg">Sous-total:</span>
+					<span class="text-lg text-oxford">
+						{subtotal.toLocaleString('fr', {
+							currency: 'EUR',
+							style: 'currency',
+						})}
+					</span>
+				</div>
+				<div class="flex justify-between items-center">
+					<span class="text-lg">Frais de livraison (hors Finistère):</span>
+					<span class="text-lg text-oxford">
+						{shipping.toLocaleString('fr', {
+							currency: 'EUR',
+							style: 'currency',
+						})}
+					</span>
+				</div>
+				<hr class="border-gray-300" />
 				<div class="flex justify-between items-center">
 					<span class="text-xl font-semibold">Total:</span>
 					<span class="text-2xl font-bold text-oxford">

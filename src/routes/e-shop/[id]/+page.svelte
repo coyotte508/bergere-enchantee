@@ -41,13 +41,26 @@
 		<div class="grow lg:basis-0 lg:px-8 mt-6 lg:mt-0">
 			<h1>{product.name}</h1>
 
-			<div class="mt-4 flex items-center">
-				<span class="font-bold text-2xl mr-2" class:line-through={product.stock === 0}
-					>{product.price} €</span
-				>
-				{#if product.stock}(+ frais de livraison hors Finistère){:else}<span class="text-red-500"
-						>Produit épuisé!</span
-					>{/if}
+			<div class="mt-4 flex flex-col gap-2">
+				<div class="flex items-center">
+					<span class="font-bold text-2xl mr-2" class:line-through={product.stock === 0}
+						>{product.price} €</span
+					>
+					{#if !product.stock}<span class="text-red-500">Produit épuisé!</span>{/if}
+				</div>
+				{#if product.stock && (product.shippingPrice || 0) > 0}
+					<div class="text-sm text-gray-600">
+						+ {(product.shippingPrice || 0).toLocaleString('fr', {
+							currency: 'EUR',
+							style: 'currency',
+						})} de frais de livraison (hors Finistère)
+						{#if product.canGroupShipping}
+							<span class="text-xs">(peut être groupé avec d'autres articles)</span>
+						{/if}
+					</div>
+				{:else if product.stock}
+					<div class="text-sm text-green-600">Livraison gratuite</div>
+				{/if}
 			</div>
 			<div class="marked leading-6">
 				<!-- eslint-disable svelte/no-at-html-tags -->

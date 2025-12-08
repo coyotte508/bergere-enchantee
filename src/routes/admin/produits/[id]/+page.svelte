@@ -46,6 +46,27 @@
 		>
 	</label>
 
+	<label class="form-label">
+		Prix de livraison (€)
+		<input
+			type="number"
+			name="shippingPrice"
+			class="form-input"
+			step="0.01"
+			value={data.product.shippingPrice || 0}
+		/>
+	</label>
+
+	<label class="form-label flex items-center gap-2">
+		<input
+			type="checkbox"
+			name="canGroupShipping"
+			class="form-checkbox"
+			checked={data.product.canGroupShipping || false}
+		/>
+		Peut être groupé avec d'autres articles (seuls les frais de port les plus élevés seront facturés)
+	</label>
+
 	<div class="flex justify-between">
 		<button type="submit" class="btn">Valider</button>
 		<button type="submit" class="btn-red" formaction="?/delete">Supprimer</button>

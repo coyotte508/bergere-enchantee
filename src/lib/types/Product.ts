@@ -11,6 +11,10 @@ export interface Product extends Timestamps {
 	stock: number;
 
 	photos: Picture[];
+
+	// Shipping configuration
+	shippingPrice: number;
+	canGroupShipping: boolean;
 }
 
 export const PRODUCT_KINDS = ['armchair', 'cushion', 'chair', 'couch', 'tufting'] as const;

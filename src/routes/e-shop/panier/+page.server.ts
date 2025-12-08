@@ -1,5 +1,6 @@
 import { collections } from '$lib/server/database.js';
 import { picturesForProducts } from '$lib/server/photo.js';
+import { calculateTotalWithShipping } from '$lib/utils/shipping.js';
 
 export async function load(event) {
 	const cart = await collections.carts.findOne({
@@ -29,18 +30,26 @@ export async function load(event) {
 		pictures.map((picture) => [picture.productId, picture])
 	);
 
+	const items = cart.items.map((item) => ({
+		...item,
+		picture: pictureByProductId[item.productId],
+		product: {
+			name: productById[item.productId].name,
+			price: productById[item.productId].price,
+			stock: productById[item.productId].stock,
+			description: productById[item.productId].description,
+			shippingPrice: productById[item.productId].shippingPrice || 0,
+			canGroupShipping: productById[item.productId].canGroupShipping || false,
+		},
+	})) || [];
+
+	const { subtotal, shipping, total } = calculateTotalWithShipping(items);
+
 	return {
 		title: "Panier d'achat",
-		items:
-			cart.items.map((item) => ({
-				...item,
-				picture: pictureByProductId[item.productId],
-				product: {
-					name: productById[item.productId].name,
-					price: productById[item.productId].price,
-					stock: productById[item.productId].stock,
-					description: productById[item.productId].description,
-				},
-			})) || [],
+		items,
+		subtotal,
+		shipping,
+		total,
 	};
 }

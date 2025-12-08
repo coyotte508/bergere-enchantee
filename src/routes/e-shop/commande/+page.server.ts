@@ -1,6 +1,7 @@
 import { collections } from '$lib/server/database.js';
 import { picturesForProducts } from '$lib/server/photo.js';
 import { redirect } from '@sveltejs/kit';
+import { calculateTotalWithShipping } from '$lib/utils/shipping.js';
 
 export async function load(event) {
 	const cart = await collections.carts.findOne({
@@ -39,15 +40,18 @@ export async function load(event) {
 				price: productById[item.productId].price,
 				stock: productById[item.productId].stock,
 				description: productById[item.productId].description,
+				shippingPrice: productById[item.productId].shippingPrice || 0,
+				canGroupShipping: productById[item.productId].canGroupShipping || false,
 			},
 		})) || [];
 
-	// Calculate total
-	const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+	const { subtotal, shipping, total } = calculateTotalWithShipping(items);
 
 	return {
 		title: 'Finaliser la commande',
 		items,
+		subtotal,
+		shipping,
 		total,
 	};
 }

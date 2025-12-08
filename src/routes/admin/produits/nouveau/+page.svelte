@@ -110,5 +110,22 @@
 		</select>
 	</label>
 
+	<label class="form-label">
+		Prix de livraison (€)
+		<input
+			class="form-input"
+			type="number"
+			name="shippingPrice"
+			step="0.01"
+			placeholder="0.00"
+			required
+		/>
+	</label>
+
+	<label class="form-label flex items-center gap-2">
+		<input type="checkbox" name="canGroupShipping" class="form-checkbox" />
+		Peut être groupé avec d'autres articles (seuls les frais de port les plus élevés seront facturés)
+	</label>
+
 	<input type="submit" class="btn self-start mt-2" disabled={loading} />
 </form>

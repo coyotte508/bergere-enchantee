@@ -9,7 +9,9 @@
 	let actionCount = 0;
 
 	$: items = data.items || [];
-	// $: totalPrice = sum(items.map((item) => item.product.price.amount * item.quantity));
+	$: subtotal = data.subtotal || 0;
+	$: shipping = data.shipping || 0;
+	$: total = data.total || 0;
 </script>
 
 <Container class="my-6 flex flex-col gap-6">
@@ -105,16 +107,35 @@
 		</div>
 		<!-- Total and Checkout Button -->
 		<div class="mt-6 p-6 bg-gray-50 rounded-lg">
-			<div class="flex justify-between items-center mb-4">
-				<span class="text-xl font-semibold">Total:</span>
-				<span class="text-2xl font-bold text-oxford">
-					{items
-						.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
-						.toLocaleString('fr', {
+			<div class="space-y-2 mb-4">
+				<div class="flex justify-between items-center">
+					<span class="text-lg">Sous-total:</span>
+					<span class="text-lg text-oxford">
+						{subtotal.toLocaleString('fr', {
 							currency: 'EUR',
 							style: 'currency',
 						})}
-				</span>
+					</span>
+				</div>
+				<div class="flex justify-between items-center">
+					<span class="text-lg">Frais de livraison (hors Finistère):</span>
+					<span class="text-lg text-oxford">
+						{shipping.toLocaleString('fr', {
+							currency: 'EUR',
+							style: 'currency',
+						})}
+					</span>
+				</div>
+				<hr class="border-gray-300" />
+				<div class="flex justify-between items-center">
+					<span class="text-xl font-semibold">Total:</span>
+					<span class="text-2xl font-bold text-oxford">
+						{total.toLocaleString('fr', {
+							currency: 'EUR',
+							style: 'currency',
+						})}
+					</span>
+				</div>
 			</div>
 
 			<a

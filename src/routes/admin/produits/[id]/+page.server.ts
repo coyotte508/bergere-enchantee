@@ -36,6 +36,10 @@ export const actions: Actions = {
 			}),
 			...(formData.get('price') && { price: Number(formData.get('price')) }),
 			...(formData.get('stock') && { stock: Number(formData.get('stock')) }),
+			...(formData.get('shippingPrice') !== null && {
+				shippingPrice: Number(formData.get('shippingPrice')),
+			}),
+			canGroupShipping: formData.get('canGroupShipping') === 'on',
 			updatedAt: new Date(),
 		};
 
@@ -45,7 +49,7 @@ export const actions: Actions = {
 			{ returnDocument: 'after' }
 		);
 
-		if (!product.value) {
+		if (!product) {
 			throw error(404, 'Produit non trouvé');
 		}
 
@@ -56,7 +60,7 @@ export const actions: Actions = {
 		await withTransaction(async (session) => {
 			const product = await collections.products.findOneAndDelete({ _id: params.id });
 
-			if (!product.value) {
+			if (!product) {
 				throw error(404);
 			}
 
