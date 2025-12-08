@@ -16,7 +16,15 @@ export const load: PageServerLoad = async () => {
 		byId[picture.productId].photos = [...(byId[picture.productId].photos || []), picture];
 	}
 
+	// Categorize products
+	const draftProducts = products.filter(p => p.state === 'draft');
+	const activeProducts = products.filter(p => p.state === 'published' && p.stock > 0);
+	const soldOutProducts = products.filter(p => p.state === 'published' && p.stock === 0);
+
 	return {
 		products,
+		draftProducts,
+		activeProducts,
+		soldOutProducts,
 	};
 };
