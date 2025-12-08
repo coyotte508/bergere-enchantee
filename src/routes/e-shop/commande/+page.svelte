@@ -1,8 +1,11 @@
-<script>
+<script lang="ts">
 	import Container from '$lib/components/Container.svelte';
 	import Picture from '$lib/components/Picture.svelte';
+	import { enhance } from '$app/forms';
+	import type { ActionData } from './$types';
 
 	export let data;
+	export let form: ActionData;
 
 	$: items = data.items || [];
 	$: subtotal = data.subtotal || 0;
@@ -84,87 +87,101 @@
 		<div class="bg-white border border-gray-200 p-6 rounded-lg">
 			<h2 class="text-xl font-semibold mb-4">Informations de contact</h2>
 
-			<form class="space-y-4">
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+			{#if form?.success}
+				<div class="info-bubble">
+					Votre commande a bien été envoyée ! <br /><br />
+					Daphné vous contactera rapidement pour finaliser votre commande et organiser la livraison.
+				</div>
+			{:else}
+				{#if form?.error}
+					<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+						{form.error}
+					</div>
+				{/if}
+
+				<form method="post" use:enhance class="space-y-4">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div>
+							<label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">
+								Prénom *
+							</label>
+							<input
+								type="text"
+								id="firstName"
+								name="firstName"
+								required
+								class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
+							/>
+						</div>
+
+						<div>
+							<label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">
+								Nom *
+							</label>
+							<input
+								type="text"
+								id="lastName"
+								name="lastName"
+								required
+								class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
+							/>
+						</div>
+					</div>
+
 					<div>
-						<label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">
-							Prénom *
+						<label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+							Email *
 						</label>
 						<input
-							type="text"
-							id="firstName"
-							name="firstName"
+							type="email"
+							id="email"
+							name="email"
 							required
 							class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
 						/>
 					</div>
 
 					<div>
-						<label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">
-							Nom *
+						<label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+							Téléphone
 						</label>
 						<input
-							type="text"
-							id="lastName"
-							name="lastName"
-							required
+							type="tel"
+							id="phone"
+							name="phone"
 							class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
 						/>
 					</div>
-				</div>
 
-				<div>
-					<label for="email" class="block text-sm font-medium text-gray-700 mb-1"> Email * </label>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						required
-						class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
-					/>
-				</div>
+					<div>
+						<label for="message" class="block text-sm font-medium text-gray-700 mb-1">
+							Message (optionnel)
+						</label>
+						<textarea
+							id="message"
+							name="message"
+							rows="3"
+							class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
+							placeholder="Informations supplémentaires, préférences de livraison, etc."
+						></textarea>
+					</div>
 
-				<div>
-					<label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
-						Téléphone
-					</label>
-					<input
-						type="tel"
-						id="phone"
-						name="phone"
-						class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
-					/>
-				</div>
-
-				<div>
-					<label for="message" class="block text-sm font-medium text-gray-700 mb-1">
-						Message (optionnel)
-					</label>
-					<textarea
-						id="message"
-						name="message"
-						rows="3"
-						class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-oxford focus:border-transparent"
-						placeholder="Informations supplémentaires, préférences de livraison, etc."
-					></textarea>
-				</div>
-			</form>
-		</div>
-
-		<!-- Navigation buttons -->
-		<div class="flex justify-between items-center">
-			<a
-				href="/e-shop/panier"
-				class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
-			>
-				← Retour au panier
-			</a>
+					<div class="flex justify-between items-center pt-4">
+						<a
+							href="/e-shop/panier"
+							class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+						>
+							← Retour au panier
+						</a>
+						<button
+							type="submit"
+							class="px-8 py-3 bg-oxford text-white rounded-md hover:bg-oxford/90 transition-colors font-medium"
+						>
+							Envoyer la commande
+						</button>
+					</div>
+				</form>
+			{/if}
 		</div>
 	{/if}
-
-	<!-- Not finished warning -->
-	<div class="info-bubble">
-		Le processus de vente à travers le site n'est pas achevé. Contactez Daphné directement pour
-		passer commande.
-	</div>
 </Container>
