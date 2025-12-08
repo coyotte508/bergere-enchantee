@@ -5,6 +5,10 @@ import { calculateTotalWithShipping } from '$lib/utils/shipping.js';
 import { mg } from '$lib/server/mail';
 import { z } from 'zod';
 import type { Actions } from './$types.js';
+import { generateId } from '$lib/utils/generateId.js';
+import type { Order, OrderItem } from '$lib/types/Order.js';
+import { getNextOrderNumber } from '$lib/server/orderCounter.js';
+import { generateAccessKey } from '$lib/utils/generateAccessKey.js';
 
 export async function load(event) {
 	const cart = await collections.carts.findOne({
@@ -110,12 +114,51 @@ export const actions: Actions = {
 			product: {
 				name: productById[item.productId].name,
 				price: productById[item.productId].price,
+				stock: productById[item.productId].stock,
+				description: productById[item.productId].description,
 				shippingPrice: productById[item.productId].shippingPrice || 0,
 				canGroupShipping: productById[item.productId].canGroupShipping || false,
 			},
 		}));
 
 		const { subtotal, shipping, total } = calculateTotalWithShipping(items);
+
+		// Create order items with full product snapshots
+		const orderItems: OrderItem[] = items.map((item) => ({
+			productId: item.productId,
+			quantity: item.quantity,
+			productSnapshot: productById[item.productId], // Store the full product
+			itemSubtotal: item.product.price * item.quantity,
+			itemShipping: item.product.canGroupShipping ? 0 : item.product.shippingPrice || 0, // Individual shipping cost
+		}));
+
+		// Get next order number and create the order
+		const orderNumber = await getNextOrderNumber();
+		const accessKey = generateAccessKey();
+		const orderId = generateId(`order-${orderNumber}`);
+		const order: Order = {
+			_id: orderId,
+			orderNumber,
+			accessKey,
+			customer: {
+				firstName,
+				lastName,
+				email,
+				phone,
+			},
+			items: orderItems,
+			subtotal,
+			totalShipping: shipping,
+			total,
+			status: 'pending',
+			customerMessage: message,
+			sessionId: event.locals.sessionId,
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+
+		// Save order to database
+		await collections.orders.insertOne(order);
 
 		// Create order summary for email
 		const orderDetails = items
@@ -148,6 +191,9 @@ TOTAUX:
 
 ${message ? `MESSAGE DU CLIENT:\n${message}` : ''}
 
+SUIVI DE COMMANDE:
+Le client peut suivre sa commande à l'adresse: ${event.url.origin}/commande/${orderNumber}/${accessKey}
+
 ---
 Cette commande a été passée via le site web.
 		`.trim();
@@ -156,12 +202,15 @@ Cette commande a été passée via le site web.
 		await mg.messages.create('mails.bergereenchantee.fr', {
 			from: 'Commande e-shop <contact@mails.bergereenchantee.fr>',
 			to: ['contact@bergereenchantee.fr'],
-			subject: `Nouvelle commande de ${firstName} ${lastName} - ${total.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}`,
+			subject: `Nouvelle commande #${orderNumber} - ${firstName} ${lastName} - ${total.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}`,
 			'h:Reply-To': email,
-			text: emailBody,
+			text: `Commande #${orderNumber}\n\n${emailBody}`,
 			'o:tag': 'order',
 		});
 
-		return { success: true };
+		// Clear the cart after successful order
+		await collections.carts.deleteOne({ sessionId: event.locals.sessionId });
+
+		return { success: true, orderId, orderNumber, accessKey };
 	},
 };

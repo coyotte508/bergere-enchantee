@@ -6,6 +6,8 @@ import type { Product } from '$lib/types/Product';
 import { pictureIndexes, type Picture } from '$lib/types/Picture';
 import type { Cart } from '$lib/types/Cart';
 import type { PendingUpload } from '$lib/types/PendingUpload';
+import type { Order } from '$lib/types/Order';
+import type { RuntimeConfig } from '$lib/types/RuntimeConfig';
 
 const client = new MongoClient(MONGODB_URL, {
 	directConnection: true,
@@ -21,10 +23,17 @@ const products = db.collection<Product>('products');
 const pictures = db.collection<Picture>('pictures');
 const pendingUploads = db.collection<PendingUpload>('pendingUploads');
 const carts = db.collection<Cart>('carts');
+const orders = db.collection<Order>('orders');
+const runtimeConfig = db.collection<RuntimeConfig>('runtimeConfig');
 const errors = db.collection<unknown & { _id: ObjectId; url: string; method: string }>('errors');
 
 client.on('open', () => {
 	carts.createIndex({ sessionId: 1 }, { unique: true }).catch(console.error);
+	orders.createIndex({ 'customer.email': 1 }).catch(console.error);
+	orders.createIndex({ status: 1 }).catch(console.error);
+	orders.createIndex({ createdAt: -1 }).catch(console.error);
+	orders.createIndex({ orderNumber: 1 }, { unique: true }).catch(console.error);
+	orders.createIndex({ accessKey: 1 }, { unique: true }).catch(console.error);
 	users
 		.createIndex(
 			{ email: 1 },
@@ -38,7 +47,17 @@ client.on('open', () => {
 });
 
 export { client, db };
-export const collections = { products, pictures, pages, users, carts, errors, pendingUploads };
+export const collections = {
+	products,
+	pictures,
+	pages,
+	users,
+	carts,
+	orders,
+	runtimeConfig,
+	errors,
+	pendingUploads,
+};
 
 export async function withTransaction(cb: WithSessionCallback) {
 	await client.withSession((session) => session.withTransaction(cb));

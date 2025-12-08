@@ -89,8 +89,16 @@
 
 			{#if form?.success}
 				<div class="info-bubble">
-					Votre commande a bien été envoyée ! <br /><br />
+					Votre commande #{form.orderNumber} a bien été envoyée ! <br /><br />
 					Daphné vous contactera rapidement pour finaliser votre commande et organiser la livraison.
+					<br /><br />
+					<strong>Suivez votre commande :</strong><br />
+					<a
+						href="/commande/{form.orderNumber}/{form.accessKey}"
+						class="text-oxford hover:text-oxford/80 underline"
+					>
+						Voir le statut de votre commande
+					</a>
 				</div>
 			{:else}
 				{#if form?.error}

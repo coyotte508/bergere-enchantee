@@ -19,6 +19,11 @@
 		class="p-2 link"
 		class:text-sunray={$page.url.pathname.startsWith('/admin/produits')}>Produits</a
 	>
+	<a
+		href="/admin/commandes"
+		class="p-2 link"
+		class:text-sunray={$page.url.pathname.startsWith('/admin/commandes')}>Commandes</a
+	>
 </div>
 
 <Container class="flex flex-col gap-4">
