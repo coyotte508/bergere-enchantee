@@ -103,12 +103,28 @@
 				</form>
 			{/each}
 		</div>
+		<!-- Total and Checkout Button -->
+		<div class="mt-6 p-6 bg-gray-50 rounded-lg">
+			<div class="flex justify-between items-center mb-4">
+				<span class="text-xl font-semibold">Total:</span>
+				<span class="text-2xl font-bold text-oxford">
+					{items
+						.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+						.toLocaleString('fr', {
+							currency: 'EUR',
+							style: 'currency',
+						})}
+				</span>
+			</div>
+
+			<a
+				href="/e-shop/commande"
+				class="w-full bg-oxford text-white py-3 px-6 rounded-md hover:bg-oxford/90 transition-colors text-center block font-medium"
+			>
+				Finaliser la commande
+			</a>
+		</div>
 	{:else}
 		<p>Votre panier est vide</p>
 	{/if}
-
-	<div class="info-bubble">
-		Le processus de vente à travers le site n'est pas achevé. Contactez Daphné directement pour
-		passer commande.
-	</div>
 </Container>
