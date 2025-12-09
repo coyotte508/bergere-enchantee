@@ -1,12 +1,12 @@
 import { collections } from '$lib/server/database.js';
 import { picturesForProducts } from '$lib/server/photo.js';
 import { redirect } from '@sveltejs/kit';
-import { calculateTotalWithShipping } from '$lib/utils/shipping.js';
+import { calculateTotalWithShipping, validateShippingAddress } from '$lib/utils/shipping.js';
 import { mg } from '$lib/server/mail';
 import { z } from 'zod';
 import type { Actions } from './$types.js';
 import { generateId } from '$lib/utils/generateId.js';
-import type { Order, OrderItem } from '$lib/types/Order.js';
+import type { Order, OrderItem, Address } from '$lib/types/Order.js';
 import { getNextOrderNumber } from '$lib/server/orderCounter.js';
 import { generateAccessKey } from '$lib/utils/generateAccessKey.js';
 
@@ -75,26 +75,89 @@ export const actions: Actions = {
 		}
 
 		// Validate form data
+		const formData = await event.request.formData();
+		const sameAsBilling = formData.get('sameAsBilling') === 'on';
+
 		const parsed = z
 			.object({
 				email: z.string().email(),
-				firstName: z.string().trim().min(2),
-				lastName: z.string().trim().min(2),
 				phone: z.string().optional(),
 				message: z.string().optional(),
+				// Billing address
+				billingName: z.string().trim().min(2),
+				billingStreet: z.string().trim().min(1),
+				billingAdditionalInfo: z.string().optional(),
+				billingCity: z.string().trim().min(1),
+				billingZipCode: z.string().regex(/^[0-9]{5}$/, 'Le code postal doit contenir 5 chiffres'),
+				billingCountry: z.string().trim().min(1),
+				// Shipping address (optional if same as billing)
+				shippingName: z.string().trim().min(2).optional(),
+				shippingStreet: z.string().trim().min(1).optional(),
+				shippingAdditionalInfo: z.string().optional(),
+				shippingCity: z.string().trim().min(1).optional(),
+				shippingZipCode: z
+					.string()
+					.regex(/^[0-9]{5}$/, 'Le code postal doit contenir 5 chiffres')
+					.optional(),
+				shippingCountry: z.string().trim().min(1).optional(),
 			})
-			.safeParse(Object.fromEntries(await event.request.formData()));
+			.safeParse(Object.fromEntries(formData));
 
 		if (!parsed.success) {
 			return {
-				error: 'Veuillez remplir tous les champs obligatoires',
+				error: 'Veuillez remplir tous les champs obligatoires correctement',
 			};
 		}
 
-		const { email, firstName, lastName, phone, message } = parsed.data;
+		const {
+			email,
+			phone,
+			message,
+			billingName,
+			billingStreet,
+			billingAdditionalInfo,
+			billingCity,
+			billingZipCode,
+			billingCountry,
+			shippingName,
+			shippingStreet,
+			shippingAdditionalInfo,
+			shippingCity,
+			shippingZipCode,
+			shippingCountry,
+		} = parsed.data;
+
+		// Create address objects
+		const billingAddress: Address = {
+			name: billingName,
+			street: billingStreet,
+			additionalInfo: billingAdditionalInfo,
+			city: billingCity,
+			zipCode: billingZipCode,
+			country: billingCountry,
+		};
+
+		const shippingAddress: Address = sameAsBilling
+			? billingAddress
+			: {
+					name: shippingName!,
+					street: shippingStreet!,
+					additionalInfo: shippingAdditionalInfo,
+					city: shippingCity!,
+					zipCode: shippingZipCode!,
+					country: shippingCountry!,
+				};
+
+		// Validate shipping address
+		const shippingValidation = validateShippingAddress(shippingAddress);
+		if (!shippingValidation.valid) {
+			return {
+				error: shippingValidation.error,
+			};
+		}
 
 		// Anti-spam check (same as contact form)
-		const split = `${firstName} ${lastName}`.trim().split(/\s+/);
+		const split = billingName.trim().split(/\s+/);
 		if (split.length > 2 && split[0] === split[1]) {
 			return { success: true };
 		}
@@ -121,7 +184,7 @@ export const actions: Actions = {
 			},
 		}));
 
-		const { subtotal, shipping, total } = calculateTotalWithShipping(items);
+		const { subtotal, shipping, total } = calculateTotalWithShipping(items, shippingAddress);
 
 		// Create order items with full product snapshots
 		const orderItems: OrderItem[] = items.map((item) => ({
@@ -141,10 +204,10 @@ export const actions: Actions = {
 			orderNumber,
 			accessKey,
 			customer: {
-				firstName,
-				lastName,
 				email,
 				phone,
+				billingAddress,
+				shippingAddress,
 			},
 			items: orderItems,
 			subtotal,
@@ -174,19 +237,33 @@ export const actions: Actions = {
 			.join('\n');
 
 		const emailBody = `
-Nouvelle commande de ${firstName} ${lastName}
+Nouvelle commande de ${billingAddress.name}
 
 INFORMATIONS CLIENT:
-- Nom: ${firstName} ${lastName}
 - Email: ${email}
 ${phone ? `- Téléphone: ${phone}` : ''}
+
+ADRESSE DE FACTURATION:
+${billingAddress.name}
+${billingAddress.street}
+${billingAddress.additionalInfo ? `${billingAddress.additionalInfo}` : ''}
+${billingAddress.zipCode} ${billingAddress.city}
+${billingAddress.country}
+
+ADRESSE DE LIVRAISON:
+${shippingAddress.name}
+${shippingAddress.street}
+${shippingAddress.additionalInfo ? `${shippingAddress.additionalInfo}` : ''}
+${shippingAddress.zipCode} ${shippingAddress.city}
+${shippingAddress.country}
+${shippingAddress.zipCode.startsWith('29') ? '(LIVRAISON GRATUITE - Finistère)' : ''}
 
 DÉTAILS DE LA COMMANDE:
 ${orderDetails}
 
 TOTAUX:
 - Sous-total: ${subtotal.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}
-- Frais de livraison (hors Finistère): ${shipping.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}
+- Frais de livraison: ${shipping.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}
 - TOTAL: ${total.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}
 
 ${message ? `MESSAGE DU CLIENT:\n${message}` : ''}
@@ -202,7 +279,7 @@ Cette commande a été passée via le site web.
 		await mg.messages.create('mails.bergereenchantee.fr', {
 			from: 'Commande e-shop <contact@mails.bergereenchantee.fr>',
 			to: ['contact@bergereenchantee.fr'],
-			subject: `Nouvelle commande #${orderNumber} - ${firstName} ${lastName} - ${total.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}`,
+			subject: `Nouvelle commande #${orderNumber} - ${billingAddress.name} - ${total.toLocaleString('fr', { currency: 'EUR', style: 'currency' })}`,
 			'h:Reply-To': email,
 			text: `Commande #${orderNumber}\n\n${emailBody}`,
 			'o:tag': 'order',

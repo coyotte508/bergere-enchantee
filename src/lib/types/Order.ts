@@ -11,11 +11,20 @@ export interface OrderItem {
 	itemShipping: number; // shipping cost for this item
 }
 
+export interface Address {
+	name: string;
+	street: string;
+	additionalInfo?: string;
+	city: string;
+	zipCode: string;
+	country: string;
+}
+
 export interface OrderCustomer {
-	firstName: string;
-	lastName: string;
 	email: string;
 	phone?: string;
+	billingAddress: Address;
+	shippingAddress: Address;
 }
 
 export interface Order extends Timestamps {
