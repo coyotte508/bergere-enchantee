@@ -25,12 +25,12 @@
 		<img
 			src="/flower_background.jpg"
 			alt="Flower background"
-			class="pointer-events-none select-none absolute top-0 bottom-0 rounded-l-3xl left-0 w-full sm:w-3/6 h-full object-fill"
+			class="pointer-events-none select-none absolute top-0 bottom-0 rounded-l-3xl left-0 hidden sm:block w-3/6 h-full object-fill"
 		/>
 		<Picture
 			picture={pictures.find((p) => p._id === pageData.pictures.discover)}
 			sizes="(max-width: 1200px) 50vw, 600px"
-			class="absolute top-0 bottom-0 rounded-r-3xl right-0 w-full sm:w-3/6 h-full object-cover"
+			class="absolute top-0 bottom-0 rounded-l-3xl sm:rounded-l-none rounded-r-3xl right-0 w-full sm:w-3/6 h-full object-cover"
 		/>
 		<h2
 			class="drop-white absolute text-oxford text-center sm:text-left text-7xl"
@@ -70,7 +70,7 @@
 			</h2>
 			<a
 				href="/contact"
-				class="text-white bg-oxford px-4 py-2 rounded-3xl font-bold absolute bottom-2 right-2"
+				class="text-white bg-oxford px-4 py-2 rounded-3xl font-bold absolute bottom-8 left-1/2 -translate-x-1/2"
 				>en savoir plus</a
 			>
 		</div>
