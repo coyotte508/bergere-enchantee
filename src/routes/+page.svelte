@@ -23,15 +23,14 @@
 <Container>
 	<section class="h-[36rem] relative mt-12">
 		<img
-			src="/triangles.svg"
-			alt="Triangles"
-			class="pointer-events-none select-none absolute h-5/6"
-			style="left: 38%; top: 50%; transform: translate(-50%, -50%)"
+			src="/flower_background.jpg"
+			alt="Flower background"
+			class="pointer-events-none select-none absolute top-0 bottom-0 rounded-l-3xl left-0 w-full sm:w-3/6 h-full object-fill"
 		/>
 		<Picture
 			picture={pictures.find((p) => p._id === pageData.pictures.discover)}
 			sizes="(max-width: 1200px) 50vw, 600px"
-			class="absolute top-0 bottom-0 rounded-3xl right-0 w-full sm:w-3/6 h-full object-cover"
+			class="absolute top-0 bottom-0 rounded-r-3xl right-0 w-full sm:w-3/6 h-full object-cover"
 		/>
 		<h2
 			class="drop-white absolute text-oxford text-center sm:text-left text-7xl"
@@ -53,7 +52,7 @@
 					<div
 						class="rounded-3xl w-full h-full bg-sunray absolute left-4 top-4"
 						style="z-index: -1"
-					/>
+					></div>
 					<Picture
 						picture={pictures.find((p) => p._id === pageData.pictures.move)}
 						sizes="(max-width: 1024px) 50vw, 512px"
@@ -62,13 +61,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="grow basis-0 flex flex-col relative">
-			<h2 class="text-oxford text-4xl mt-6">
+		<div
+			class="grow basis-0 flex flex-col relative justify-center items-center rounded-3xl"
+			style="background-image: url('/flower_background.jpg'); background-size: 100% 105%; background-position: center; background-repeat: no-repeat;"
+		>
+			<h2 class="text-oxford text-4xl text-center">
 				Je me déplace dans le <span class="text-sunray">Finistère</span> sur rendez-vous.
 			</h2>
 			<a
 				href="/contact"
-				class="text-white bg-oxford px-4 py-2 rounded-3xl font-bold absolute bottom-0 right-0"
+				class="text-white bg-oxford px-4 py-2 rounded-3xl font-bold absolute bottom-2 right-2"
 				>en savoir plus</a
 			>
 		</div>
