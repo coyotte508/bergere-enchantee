@@ -3,15 +3,39 @@
 	import Picture from '$lib/components/Picture.svelte';
 	import type { PricingPage } from '$lib/types/Page.js';
 
-	export let data;
+	let { data } = $props();
 
-	const pictures = data.pictures;
-	const pageData = data.pageData as PricingPage;
+	const pictures = $derived(data.pictures);
+	const pageData = $derived(data.pageData as PricingPage);
 
 	const array = Array(12)
 		.fill(0)
 		.map((_, i) => i + 1);
+
+	// Pricing disclaimer configuration
+	const pricingDisclaimer = $derived({
+		title: pageData.text['pricing-disclaimer-title'],
+		excludedItems: [
+			pageData.text['pricing-disclaimer-fabric'],
+			pageData.text['pricing-disclaimer-finishing'],
+			pageData.text['pricing-disclaimer-supplies'],
+		],
+		note: pageData.text['pricing-disclaimer-note'],
+	});
 </script>
+
+<!-- Pricing Disclaimer Component -->
+{#snippet pricingDisclaimerComponent()}
+	<div
+		class="bg-black/20 backdrop-blur-sm rounded border border-white/20 px-3 py-2 mx-auto max-w-sm text-center"
+	>
+		<p class="text-white text-sm font-medium mb-1">{pricingDisclaimer.title}</p>
+		<p class="text-gray-300 text-xs">
+			Non inclus : {pricingDisclaimer.excludedItems.join(', ')}
+		</p>
+		<p class="text-gray-400 text-xs mt-1 italic">{pricingDisclaimer.note}</p>
+	</div>
+{/snippet}
 
 <section class="relative py-12">
 	<Picture
@@ -27,10 +51,11 @@
 		>
 			Changement de tissu uniquement
 		</h2>
+		{@render pricingDisclaimerComponent()}
 		<div
 			class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2 justify-center"
 		>
-			{#each array as i}
+			{#each array as i (i)}
 				{#if pageData.text[`remplacement-tissu-${i}-titre`] && pageData.text[`remplacement-tissu-${i}-prix`]}
 					<article class="item">
 						<p class="text-white text-xl">{pageData.text[`remplacement-tissu-${i}-titre`]}</p>
@@ -56,8 +81,9 @@
 		>
 			Réfection complète
 		</h2>
+		{@render pricingDisclaimerComponent()}
 		<div class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2">
-			{#each array as i}
+			{#each array as i (i)}
 				{#if pageData.text[`refection-complete-${i}-titre`] && pageData.text[`refection-complete-${i}-prix`]}
 					<article class="item">
 						<p class="text-white text-xl">{pageData.text[`refection-complete-${i}-titre`]}</p>
@@ -83,8 +109,9 @@
 		>
 			Réfection partielle
 		</h2>
+		{@render pricingDisclaimerComponent()}
 		<div class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2">
-			{#each array as i}
+			{#each array as i (i)}
 				{#if pageData.text[`refection-partielle-${i}-titre`] && pageData.text[`refection-partielle-${i}-prix`]}
 					<article class="item">
 						<p class="text-white text-xl">{pageData.text[`refection-partielle-${i}-titre`]}</p>
@@ -110,8 +137,9 @@
 		>
 			Coussins
 		</h2>
+		{@render pricingDisclaimerComponent()}
 		<div class="grid gap-6 w-full grid-cols-1 sm:grid-cols-4 md:grid-cols-6 sm:[&>*]:col-span-2">
-			{#each array as i}
+			{#each array as i (i)}
 				{#if pageData.text[`coussin-${i}-titre`] && pageData.text[`coussin-${i}-prix`]}
 					<article class="item">
 						<p class="text-white text-xl">{pageData.text[`coussin-${i}-titre`]}</p>

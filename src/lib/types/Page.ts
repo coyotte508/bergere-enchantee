@@ -108,6 +108,11 @@ export interface PricingPage extends Page {
 	name: 'Tarifs';
 	text: {
 		'search-engine-description': string;
+		'pricing-disclaimer-title': string;
+		'pricing-disclaimer-fabric': string;
+		'pricing-disclaimer-finishing': string;
+		'pricing-disclaimer-supplies': string;
+		'pricing-disclaimer-note': string;
 	} & Partial<
 		Record<
 			`${'remplacement-tissu' | 'refection-complete' | 'coussin' | 'refection-partielle'}-${number}-${'prix' | 'titre'}`,

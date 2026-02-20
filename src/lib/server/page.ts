@@ -230,6 +230,11 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 		text: {
 			'search-engine-description':
 				"Consultez les tarifs de Daphné, tapissière d'ameublement de la Bergère Enchantée",
+			'pricing-disclaimer-title': "Prix affichés : main d'œuvre uniquement",
+			'pricing-disclaimer-fabric': 'Tissus',
+			'pricing-disclaimer-finishing': 'Finitions',
+			'pricing-disclaimer-supplies': 'Fournitures',
+			'pricing-disclaimer-note': 'Ces éléments sont facturés en sus selon vos choix et besoins.',
 			...Object.fromEntries(
 				new Array(20)
 					.fill(0)
