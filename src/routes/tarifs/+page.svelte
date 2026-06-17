@@ -24,6 +24,37 @@
 		note: text['pricing-disclaimer-note'],
 	});
 
+	type DetailLine =
+		| { type: 'pair'; label: string; value: string }
+		| { type: 'text'; value: string }
+		| { type: 'gap' };
+
+	// Splits the multiline details into label/value pairs, keeping blank lines as
+	// separators (e.g. between prices and fabric metrage).
+	function parseDetails(details: string | undefined): DetailLine[] {
+		const lines = (details ?? '').split('\n').map((line) => line.trim());
+		// Drop leading/trailing blanks and collapse consecutive blanks.
+		while (lines.length && lines[0] === '') lines.shift();
+		while (lines.length && lines[lines.length - 1] === '') lines.pop();
+
+		const result: DetailLine[] = [];
+		for (const line of lines) {
+			if (!line) {
+				if (result[result.length - 1]?.type !== 'gap') {
+					result.push({ type: 'gap' });
+				}
+				continue;
+			}
+			const idx = line.indexOf(':');
+			if (idx >= 0) {
+				result.push({ type: 'pair', label: line.slice(0, idx).trim(), value: line.slice(idx + 1).trim() });
+			} else {
+				result.push({ type: 'text', value: line });
+			}
+		}
+		return result;
+	}
+
 	// Each catalogue entry gathers its photo, title and detail lines from the
 	// `tarif-N` / `tarif-N-titre` / `tarif-N-details` keys.
 	const items = $derived.by(() => {
@@ -46,18 +77,11 @@
 				key,
 				picture: pictures.find((p) => p._id === pics[key]),
 				title: text[`${key}-titre`],
-				lines: (text[`${key}-details`] ?? '')
-					.split('\n')
-					.map((line) => line.trim())
-					.filter(Boolean)
-					.map((line) => {
-						const idx = line.indexOf(':');
-						return idx >= 0
-							? { label: line.slice(0, idx).trim(), value: line.slice(idx + 1).trim() }
-							: { label: '', value: line };
-					}),
+				lines: parseDetails(text[`${key}-details`]),
 			}))
-			.filter((item) => item.title || item.picture || item.lines.length > 0);
+			.filter(
+				(item) => item.title || item.picture || item.lines.some((line) => line.type !== 'gap')
+			);
 	});
 
 	function printPage() {
@@ -115,12 +139,16 @@
 							{item.title}
 						</h2>
 					{/if}
-					<dl class="flex flex-col gap-2">
+					<dl class="mx-auto grid w-fit grid-cols-[auto_auto] gap-x-3 gap-y-1.5 text-left">
 						{#each item.lines as line}
-							<div>
-								{#if line.label}<dt class="inline font-semibold">{line.label} :</dt>{/if}
-								<dd class="inline">{line.value}</dd>
-							</div>
+							{#if line.type === 'gap'}
+								<div class="col-span-2 h-3"></div>
+							{:else if line.type === 'pair'}
+								<dt class="text-right font-semibold">{line.label} :</dt>
+								<dd>{line.value}</dd>
+							{:else}
+								<dd class="col-span-2 text-center">{line.value}</dd>
+							{/if}
 						{/each}
 					</dl>
 				</div>
