@@ -429,7 +429,12 @@
 		onclick={() => openPicker(p, key)}
 	>
 		{#if current}
-			<Picture picture={current} class="h-32 w-full object-cover" />
+			<Picture
+				picture={current}
+				fill
+				sizes="(max-width: 640px) 90vw, 240px"
+				class="h-full w-full object-cover"
+			/>
 		{:else}
 			<span class="text-sm text-gray-400">Choisir une image…</span>
 		{/if}
@@ -657,7 +662,14 @@
 						class="flex flex-col overflow-hidden rounded-lg border border-gray-200 transition hover:border-sunray"
 						onclick={() => choosePicture(photo._id)}
 					>
-						<Picture picture={photo} class="h-24 w-full object-cover" />
+						<div class="h-24 w-full overflow-hidden">
+							<Picture
+								picture={photo}
+								fill
+								sizes="(max-width: 640px) 45vw, 180px"
+								class="h-full w-full object-cover"
+							/>
+						</div>
 						<span class="truncate p-1 text-xs text-gray-600">{photo.name}</span>
 					</button>
 				{/each}
