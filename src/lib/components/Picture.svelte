@@ -5,6 +5,12 @@
 	let className = '';
 	export { className as class };
 	export let style = '';
+	/**
+	 * When true, the image fills its container (use together with `object-cover` and CSS width/height
+	 * classes). No fixed pixel width/height is computed from the aspect ratio, so the layout classes
+	 * win. Provide a `sizes` attribute for correct srcset selection in this mode.
+	 */
+	export let fill = false;
 
 	let matchedWidth: number | null = null;
 	let maxWidth: boolean;
@@ -48,7 +54,9 @@
 	let maxComputedWidth: number | null = null;
 
 	$: {
-		if (matchedWidth !== null && !maxWidth) {
+		if (fill) {
+			computedWidth = null;
+		} else if (matchedWidth !== null && !maxWidth) {
 			computedWidth = null;
 		} else if (matchedHeight !== null && !maxHeight && picture) {
 			computedWidth = Math.round(
@@ -60,7 +68,9 @@
 	}
 
 	$: {
-		if (matchedHeight !== null && !maxHeight) {
+		if (fill) {
+			computedHeight = null;
+		} else if (matchedHeight !== null && !maxHeight) {
 			computedHeight = null;
 		} else if (matchedWidth !== null && !maxWidth && picture) {
 			computedHeight = Math.round(
@@ -73,7 +83,7 @@
 
 	// If max width or max hegiht is set, while width/height are not set. Use the more restrictive computed width.
 	$: {
-		if ((matchedWidth !== null && !maxWidth) || (matchedHeight !== null && !maxHeight)) {
+		if (fill || (matchedWidth !== null && !maxWidth) || (matchedHeight !== null && !maxHeight)) {
 			maxComputedWidth = null;
 		} else {
 			let max1: number | null = null;

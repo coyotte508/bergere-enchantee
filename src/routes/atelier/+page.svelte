@@ -46,9 +46,8 @@
 		</div>
 		<PictureComponent
 			picture={pictures.find((p) => p._id === pageData.pictures['photo-1'])}
-			sizes="(max-width: 1200px) 50vw, 600px"
-			grow
-			basis-0
+			sizes="(max-width: 1024px) 100vw, 600px"
+			fill
 			class="rounded-3xl w-full lg:w-3/6 h-72 lg:h-full object-cover mt-6 lg:mt-0"
 		/>
 	</section>
