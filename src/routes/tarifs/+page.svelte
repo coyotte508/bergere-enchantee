@@ -103,7 +103,7 @@
 							picture={item.picture}
 							fill
 							sizes="(max-width: 1024px) 100vw, 512px"
-							class="h-full w-full object-cover"
+							class="h-full w-full object-contain"
 						/>
 					</div>
 				{/if}
