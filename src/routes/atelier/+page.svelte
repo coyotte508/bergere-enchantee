@@ -7,16 +7,18 @@
 	import type { WorkshopPage } from '$lib/types/Page';
 	import IconShipping from '~icons/ant-design/inbox-outlined';
 	import IconLocation from '~icons/ant-design/environment-outlined';
+	import IconClock from '~icons/ant-design/clock-circle-outlined';
 
 	export let data: PageData;
 
 	const pageData = data.pageData as WorkshopPage;
 	const pictures: Picture[] = data.pictures;
+	const horaires = data.horaires;
 </script>
 
 <Container>
-	<section class="relative h-[36rem] mt-12 flex">
-		<div class="w-3/6 h-full flex flex-col justify-evenly">
+	<section class="relative mt-12 flex flex-col lg:h-[36rem] lg:flex-row">
+		<div class="w-full lg:w-3/6 h-full flex flex-col justify-evenly gap-6 lg:gap-0">
 			<h2 class="text-oxford text-7xl" style="mix-blend-mode: color-burn;">L'atelier</h2>
 			<ul class="text-oxford">
 				<li class="flex items-center">
@@ -27,6 +29,19 @@
 					<IconShipping class="inline-block mr-2" />
 					Atelier showroom
 				</li>
+				<li class="flex mt-2">
+					<IconClock class="inline-block mr-2 mt-1" />
+					<div class="flex flex-col space-y-1">
+						<div class="text-sm font-medium">Horaires d'ouverture :</div>
+						<ul class="text-sm space-y-1 list-none">
+							<li>Lundi : {horaires.lundi}</li>
+							<li>Mardi : {horaires.mardi}</li>
+							<li>Mercredi : {horaires.mercredi}</li>
+							<li>Jeudi : {horaires.jeudi}</li>
+							<li>Vendredi : {horaires.vendredi}</li>
+						</ul>
+					</div>
+				</li>
 			</ul>
 		</div>
 		<PictureComponent
@@ -34,7 +49,7 @@
 			sizes="(max-width: 1200px) 50vw, 600px"
 			grow
 			basis-0
-			class="rounded-3xl h-full object-cover w-3/6"
+			class="rounded-3xl w-full lg:w-3/6 h-72 lg:h-full object-cover mt-6 lg:mt-0"
 		/>
 	</section>
 
