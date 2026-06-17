@@ -456,13 +456,14 @@
 {#snippet itemRow(p: Page, section: Section, item: Item)}
 	{@const textFields = item.fields.filter((f) => f.kind === 'text')}
 	{@const pictureFields = item.fields.filter((f) => f.kind === 'picture')}
+	{@const allShort = textFields.every((f) => isShort(f.key))}
 	<div class="flex flex-col gap-4 rounded-xl border border-gray-100 bg-gray-50/50 p-3 sm:flex-row">
 		{@render moveControls(p, section, item)}
 		{#if item.number}
 			<div class="shrink-0 pt-1 font-bold text-sunray sm:w-6">#{item.number}</div>
 		{/if}
 		{#if textFields.length > 0}
-			<div class="grid flex-1 gap-3 {textFields.length > 1 ? 'sm:grid-cols-2' : ''}">
+			<div class="grid flex-1 gap-3 {textFields.length > 1 && allShort ? 'sm:grid-cols-2' : ''}">
 				{#each textFields as field (field.key)}
 					{@const id = fieldId(p._id, 'text', field.key)}
 					<label class="flex flex-col gap-1">
