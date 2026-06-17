@@ -16,6 +16,10 @@
 	type SaveState = 'saving' | 'saved' | 'error';
 	let saveStates = $state<Record<string, SaveState>>({});
 
+	// Local edits (keyed by page+kind+key) take precedence over the server value, so that
+	// blur-saves and item swaps are reflected immediately without a full reload.
+	let overrides = $state<Record<string, string>>({});
+
 	type Field = { kind: 'text' | 'picture'; key: string };
 	type Item = { key: string; number: string; fields: Field[] };
 	type Section = { key: string; repeated: boolean; hasText: boolean; items: Item[] };
@@ -37,16 +41,26 @@
 		return cmsPhotos.find((p) => p._id === id);
 	}
 
-	// The label of a field inside an item: the part of the key after the item key
-	// (e.g. "titre", "prix"), or a generic label when the field *is* the item.
+	function suffixOf(field: Field, itemKey: string) {
+		return field.key.startsWith(itemKey) ? field.key.slice(itemKey.length).replace(/^-/, '') : '';
+	}
+
+	// The label of a field inside an item: the part after the item key (e.g. "titre", "prix"),
+	// or a generic label when the field *is* the item.
 	function roleLabel(field: Field, itemKey: string) {
-		const rest = field.key.startsWith(itemKey)
-			? field.key.slice(itemKey.length).replace(/^-/, '')
-			: '';
+		const rest = suffixOf(field, itemKey);
 		if (rest) {
 			return humanize(rest);
 		}
 		return field.kind === 'picture' ? 'Image' : 'Texte';
+	}
+
+	function valueOf(p: Page, kind: Field['kind'], key: string) {
+		const override = overrides[fieldId(p._id, kind, key)];
+		if (override !== undefined) {
+			return override;
+		}
+		return kind === 'text' ? p.text[key] : p.pictures[key];
 	}
 
 	// Build a two-level grouping:
@@ -100,8 +114,14 @@
 
 	const sections = $derived(selectedPage ? buildSections(selectedPage) : []);
 
+	// The reorderable items of a section (those carrying a numeric index).
+	function numberedItems(section: Section) {
+		return section.items.filter((it) => it.number !== '');
+	}
+
 	async function save(pageId: string, kind: Field['kind'], key: string, value: string) {
 		const id = fieldId(pageId, kind, key);
+		overrides[id] = value;
 		saveStates[id] = 'saving';
 		try {
 			const res = await fetch('/admin/pages/' + encodeURIComponent(pageId), {
@@ -122,6 +142,29 @@
 			saveStates[id] = 'error';
 		}
 	}
+
+	// Swap every matching field (by role) between two items — i.e. move one up/down.
+	function swapItems(p: Page, a: Item, b: Item) {
+		const bByRole = new Map(b.fields.map((f) => [`${f.kind}:${suffixOf(f, b.key)}`, f]));
+		for (const fa of a.fields) {
+			const fb = bByRole.get(`${fa.kind}:${suffixOf(fa, a.key)}`);
+			if (!fb) {
+				continue;
+			}
+			const va = valueOf(p, fa.kind, fa.key) ?? '';
+			const vb = valueOf(p, fb.kind, fb.key) ?? '';
+			save(p._id, fa.kind, fa.key, vb);
+			save(p._id, fb.kind, fb.key, va);
+		}
+	}
+
+	function moveItem(p: Page, section: Section, item: Item, direction: -1 | 1) {
+		const list = numberedItems(section);
+		const target = list[list.indexOf(item) + direction];
+		if (target) {
+			swapItems(p, item, target);
+		}
+	}
 </script>
 
 {#snippet saveBadge(id: string)}
@@ -134,13 +177,42 @@
 	{/if}
 {/snippet}
 
+{#snippet moveControls(p: Page, section: Section, item: Item)}
+	{@const list = numberedItems(section)}
+	{@const idx = list.indexOf(item)}
+	{#if item.number && list.length > 1}
+		<div class="flex shrink-0 gap-1 sm:flex-col">
+			<button
+				type="button"
+				class="rounded border border-gray-300 px-2 leading-none text-gray-600 transition hover:bg-gray-100 disabled:opacity-25"
+				disabled={idx <= 0}
+				title="Monter"
+				aria-label="Monter"
+				onclick={() => moveItem(p, section, item, -1)}
+			>
+				↑
+			</button>
+			<button
+				type="button"
+				class="rounded border border-gray-300 px-2 leading-none text-gray-600 transition hover:bg-gray-100 disabled:opacity-25"
+				disabled={idx >= list.length - 1}
+				title="Descendre"
+				aria-label="Descendre"
+				onclick={() => moveItem(p, section, item, 1)}
+			>
+				↓
+			</button>
+		</div>
+	{/if}
+{/snippet}
+
 {#snippet textControl(p: Page, key: string, long: boolean)}
 	{#if long}
 		<textarea
 			name="{p._id}_text_{key}"
 			rows="3"
 			class="form-input py-2"
-			value={p.text[key]}
+			value={valueOf(p, 'text', key)}
 			onblur={(event) => save(p._id, 'text', key, event.currentTarget.value)}
 		></textarea>
 	{:else}
@@ -148,14 +220,14 @@
 			type="text"
 			name="{p._id}_text_{key}"
 			class="form-input py-1"
-			value={p.text[key]}
+			value={valueOf(p, 'text', key)}
 			onblur={(event) => save(p._id, 'text', key, event.currentTarget.value)}
 		/>
 	{/if}
 {/snippet}
 
 {#snippet pictureControl(p: Page, key: string)}
-	{@const current = pictureFor(p.pictures[key])}
+	{@const current = pictureFor(valueOf(p, 'picture', key))}
 	<div class="flex h-32 items-center justify-center overflow-hidden rounded-lg bg-gray-100">
 		{#if current}
 			<Picture picture={current} class="h-32 w-full object-cover" />
@@ -165,7 +237,7 @@
 	</div>
 	<select
 		name="{p._id}_picture_{key}"
-		value={p.pictures[key]}
+		value={valueOf(p, 'picture', key)}
 		class="form-input py-1"
 		onchange={(event) => save(p._id, 'picture', key, event.currentTarget.value)}
 	>
@@ -176,12 +248,13 @@
 	</select>
 {/snippet}
 
-{#snippet itemRow(p: Page, item: Item)}
+{#snippet itemRow(p: Page, section: Section, item: Item)}
 	{@const textFields = item.fields.filter((f) => f.kind === 'text')}
 	{@const pictureFields = item.fields.filter((f) => f.kind === 'picture')}
 	<div class="flex flex-col gap-4 rounded-xl border border-gray-100 bg-gray-50/50 p-3 sm:flex-row">
+		{@render moveControls(p, section, item)}
 		{#if item.number}
-			<div class="shrink-0 pt-1 font-bold text-sunray sm:w-8">#{item.number}</div>
+			<div class="shrink-0 pt-1 font-bold text-sunray sm:w-6">#{item.number}</div>
 		{/if}
 		{#if textFields.length > 0}
 			<div class="grid flex-1 gap-3 {textFields.length > 1 ? 'sm:grid-cols-2' : ''}">
@@ -283,13 +356,16 @@
 							{#each section.items as item (item.key)}
 								{#each item.fields as field (field.key)}
 									{@const id = fieldId(p._id, 'picture', field.key)}
-									<label class="flex flex-col gap-1 rounded-xl border border-gray-100 p-3">
-										<span class="form-label flex items-center gap-2 text-base">
-											{item.number ? `#${item.number}` : humanize(field.key)}
-											{@render saveBadge(id)}
-										</span>
+									<div class="flex flex-col gap-1 rounded-xl border border-gray-100 p-3">
+										<div class="flex items-center justify-between gap-2">
+											<span class="form-label flex items-center gap-2 text-base">
+												{item.number ? `#${item.number}` : humanize(field.key)}
+												{@render saveBadge(id)}
+											</span>
+											{@render moveControls(p, section, item)}
+										</div>
 										{@render pictureControl(p, field.key)}
-									</label>
+									</div>
 								{/each}
 							{/each}
 						</div>
@@ -302,7 +378,7 @@
 						</h3>
 						<div class="flex flex-col gap-3">
 							{#each section.items as item (item.key)}
-								{@render itemRow(p, item)}
+								{@render itemRow(p, section, item)}
 							{/each}
 						</div>
 					</div>
