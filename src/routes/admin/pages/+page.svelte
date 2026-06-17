@@ -294,9 +294,31 @@
 		input.value = '';
 	}
 
+	// Paste an image (Ctrl/Cmd+V) while the picker is open to upload it.
+	function onPaste(event: ClipboardEvent) {
+		if (!picker) {
+			return;
+		}
+		for (const item of event.clipboardData?.items ?? []) {
+			if (item.type.startsWith('image/')) {
+				const file = item.getAsFile();
+				if (file) {
+					event.preventDefault();
+					importPicture(file);
+					return;
+				}
+			}
+		}
+	}
+
 	// Presign → upload to S3 → generate the Picture → select it.
 	async function importPicture(file: File) {
 		if (!picker) {
+			return;
+		}
+		const suggestion = file.name?.replace(/\.[^.]+$/, '').trim() ?? '';
+		const name = prompt("Nom de l'image :", suggestion)?.trim();
+		if (!name) {
 			return;
 		}
 		const id = fieldId(picker.pageId, 'picture', picker.key);
@@ -305,7 +327,7 @@
 			const presign = await fetch('/admin/fichiers', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({ name: file.name, mimeType: file.type, size: file.size }),
+				body: JSON.stringify({ name, mimeType: file.type, size: file.size }),
 			});
 			if (!presign.ok) {
 				throw new Error(await presign.text());
@@ -495,6 +517,8 @@
 	</div>
 {/snippet}
 
+<svelte:window onpaste={onPaste} />
+
 <div class="flex flex-col gap-6">
 	<div>
 		<h1 class="mb-1 text-2xl font-bold text-sunray">Pages du site</h1>
@@ -637,7 +661,7 @@
 				{#if uploading[uploadingId]}
 					Import en cours…
 				{:else}
-					+ Importer une nouvelle image
+					+ Importer une image (ou collez avec Ctrl+V)
 				{/if}
 				<input
 					type="file"
