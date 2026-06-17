@@ -89,33 +89,37 @@
 	</header>
 
 	<!-- Catalogue entries -->
-	<div class="flex flex-col">
+	<div class="flex flex-col gap-12">
 		{#each items as item, i (item.key)}
 			<article
-				class="catalogue-item flex flex-col items-center gap-6 border-t border-gray-200 py-8 first:border-t-0 md:flex-row md:gap-10"
+				class="catalogue-item flex flex-wrap overflow-hidden rounded-3xl text-lg text-white md:h-[30rem] md:flex-nowrap {i %
+				2
+					? 'bg-oxford'
+					: 'bg-sunray'}"
 			>
 				{#if item.picture}
-					<div class="w-full max-w-xs shrink-0 md:w-72 {i % 2 === 1 ? 'md:order-last' : ''}">
+					<div class="h-72 w-full grow basis-auto md:h-full md:w-3/6 md:basis-0">
 						<Picture
 							picture={item.picture}
-							sizes="(max-width: 768px) 90vw, 18rem"
-							class="aspect-square w-full rounded-2xl object-cover shadow-sm"
+							fill
+							sizes="(max-width: 1024px) 100vw, 512px"
+							class="h-full w-full object-cover"
 						/>
 					</div>
 				{/if}
-				<div class="flex flex-1 flex-col items-center gap-3 text-center md:items-start md:text-left">
+				<div class="flex grow basis-0 flex-col items-center justify-center gap-4 px-6 py-8 text-center">
 					{#if item.title}
-						<h2 class="font-aileron text-2xl font-semibold text-oxford underline decoration-sunray decoration-2 underline-offset-4">
+						<h2
+							class="font-aileron text-2xl font-semibold underline decoration-2 underline-offset-4"
+						>
 							{item.title}
 						</h2>
 					{/if}
-					<dl class="flex flex-col gap-1.5 text-lg text-gray-700">
+					<dl class="flex flex-col gap-2">
 						{#each item.lines as line}
-							<div class="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
-								{#if line.label}
-									<dt class="font-semibold text-brunswick">{line.label} :</dt>
-								{/if}
-								<dd>{line.value}</dd>
+							<div>
+								{#if line.label}<dt class="inline font-semibold">{line.label} :</dt>{/if}
+								<dd class="inline">{line.value}</dd>
 							</div>
 						{/each}
 					</dl>
