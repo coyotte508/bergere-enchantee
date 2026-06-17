@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { pushState, replaceState } from '$app/navigation';
 	import Picture from '$lib/components/Picture.svelte';
 	import type { Page } from '$lib/types/Page';
 	import type { Picture as PictureDoc } from '$lib/types/Picture';
@@ -264,25 +265,39 @@
 	}
 
 	// ---- Image picker / upload ----------------------------------------------
-	let picker = $state<{ pageId: string; key: string } | null>(null);
+	// The open picker is reflected in the URL (?picker=<field key>) so it survives
+	// reloads, is shareable, and the browser Back button closes it.
 	let pickerSearch = $state('');
 	let uploading = $state<Record<string, boolean>>({});
+
+	const picker = $derived.by(() => {
+		const key = page.url.searchParams.get('picker');
+		return key && selectedId ? { pageId: selectedId, key } : null;
+	});
 
 	const filteredPhotos = $derived.by(() => {
 		const term = pickerSearch.trim().toLowerCase();
 		return term ? cmsPhotos.filter((p) => p.name.toLowerCase().includes(term)) : cmsPhotos;
 	});
 
-	function openPicker(p: Page, key: string) {
-		picker = { pageId: p._id, key };
+	function openPicker(key: string) {
 		pickerSearch = '';
+		const url = new URL(page.url);
+		url.searchParams.set('picker', key);
+		pushState(url, page.state);
+	}
+
+	function closePicker() {
+		const url = new URL(page.url);
+		url.searchParams.delete('picker');
+		replaceState(url, page.state);
 	}
 
 	function choosePicture(photoId: string) {
 		if (picker) {
 			save(picker.pageId, 'picture', picker.key, photoId);
 		}
-		picker = null;
+		closePicker();
 	}
 
 	function onFileChange(event: Event) {
@@ -448,14 +463,14 @@
 		type="button"
 		class="group relative flex h-32 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-100"
 		title="Choisir une image"
-		onclick={() => openPicker(p, key)}
+		onclick={() => openPicker(key)}
 	>
 		{#if current}
 			<Picture
 				picture={current}
 				fill
 				sizes="(max-width: 640px) 90vw, 240px"
-				class="h-full w-full object-cover"
+				class="h-full w-full object-contain"
 			/>
 		{:else}
 			<span class="text-sm text-gray-400">Choisir une image…</span>
@@ -467,7 +482,7 @@
 		</span>
 	</button>
 	<div class="flex gap-3 text-sm">
-		<button type="button" class="link" onclick={() => openPicker(p, key)}>Choisir / importer</button>
+		<button type="button" class="link" onclick={() => openPicker(key)}>Choisir / importer</button>
 		{#if current}
 			<button
 				type="button"
@@ -632,8 +647,7 @@
 {#if picker}
 	{@const uploadingId = fieldId(picker.pageId, 'picture', picker.key)}
 	<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
-		<button class="absolute inset-0 bg-black/50" aria-label="Fermer" onclick={() => (picker = null)}
-		></button>
+		<button class="absolute inset-0 bg-black/50" aria-label="Fermer" onclick={closePicker}></button>
 		<div
 			class="relative flex max-h-[85vh] w-full max-w-3xl flex-col gap-4 overflow-hidden rounded-2xl bg-white p-5 shadow-xl"
 		>
@@ -649,7 +663,7 @@
 					type="button"
 					class="ml-auto text-3xl leading-none text-gray-400 hover:text-gray-600"
 					aria-label="Fermer"
-					onclick={() => (picker = null)}
+					onclick={closePicker}
 				>
 					×
 				</button>
@@ -690,7 +704,7 @@
 							picture={photo}
 							fill
 							sizes="(max-width: 640px) 45vw, 180px"
-							class="block h-24 w-full rounded-t-lg object-cover"
+							class="block h-24 w-full rounded-t-lg object-contain"
 						/>
 						<span class="block truncate p-1 text-xs text-gray-600">{photo.name}</span>
 					</button>
