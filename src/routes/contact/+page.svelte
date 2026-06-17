@@ -19,12 +19,6 @@
 
 <Container class="mb-6">
 	<section class="relative lg:h-[36rem] mt-12 flex">
-		<img
-			src="/triangles.svg"
-			alt="Triangles"
-			class="pointer-events-none select-none absolute hidden lg:block h-5/6"
-			style="left: 50%; top: 50%; transform: translate(-50%, -50%) scaleX(-1); z-index: -1"
-		/>
 		<Picture
 			picture={pictures.find((p) => p._id === pageData.pictures['photo-garde'])}
 			sizes="(max-width: 1200px) 50vw, 600px"

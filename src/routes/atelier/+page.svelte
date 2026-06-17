@@ -16,12 +16,6 @@
 
 <Container>
 	<section class="relative h-[36rem] mt-12 flex">
-		<img
-			src="/triangles.svg"
-			alt="Triangles"
-			class="pointer-events-none select-none absolute h-5/6"
-			style="left: 38%; top: 50%; transform: translate(-50%, -50%); z-index: -1"
-		/>
 		<div class="w-3/6 h-full flex flex-col justify-evenly">
 			<h2 class="text-oxford text-7xl" style="mix-blend-mode: color-burn;">L'atelier</h2>
 			<ul class="text-oxford">
