@@ -2,13 +2,14 @@
 	import { page } from '$app/state';
 	import Picture from '$lib/components/Picture.svelte';
 	import type { Page } from '$lib/types/Page';
+	import type { Picture as PictureDoc } from '$lib/types/Picture';
 	import { typedKeys } from '$lib/utils/typedKeys';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
 	const cmsPages = data.pages as Page[];
-	const cmsPhotos = data.photos;
+	let cmsPhotos = $state<PictureDoc[]>(data.photos);
 
 	const selectedId = $derived(page.url.searchParams.get('pageId'));
 	const selectedPage = $derived(cmsPages.find((p) => p._id === selectedId));
@@ -261,6 +262,79 @@
 			swapItems(p, item, target);
 		}
 	}
+
+	// ---- Image picker / upload ----------------------------------------------
+	let picker = $state<{ pageId: string; key: string } | null>(null);
+	let pickerSearch = $state('');
+	let uploading = $state<Record<string, boolean>>({});
+
+	const filteredPhotos = $derived.by(() => {
+		const term = pickerSearch.trim().toLowerCase();
+		return term ? cmsPhotos.filter((p) => p.name.toLowerCase().includes(term)) : cmsPhotos;
+	});
+
+	function openPicker(p: Page, key: string) {
+		picker = { pageId: p._id, key };
+		pickerSearch = '';
+	}
+
+	function choosePicture(photoId: string) {
+		if (picker) {
+			save(picker.pageId, 'picture', picker.key, photoId);
+		}
+		picker = null;
+	}
+
+	function onFileChange(event: Event) {
+		const input = event.currentTarget as HTMLInputElement;
+		const file = input.files?.[0];
+		if (file) {
+			importPicture(file);
+		}
+		input.value = '';
+	}
+
+	// Presign → upload to S3 → generate the Picture → select it.
+	async function importPicture(file: File) {
+		if (!picker) {
+			return;
+		}
+		const id = fieldId(picker.pageId, 'picture', picker.key);
+		uploading[id] = true;
+		try {
+			const presign = await fetch('/admin/fichiers', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ name: file.name, mimeType: file.type, size: file.size }),
+			});
+			if (!presign.ok) {
+				throw new Error(await presign.text());
+			}
+			const { _id, url } = await presign.json();
+
+			const put = await fetch(url, { method: 'PUT', body: file });
+			if (!put.ok) {
+				throw new Error(await put.text());
+			}
+
+			const generated = await fetch('/admin/pages/photo', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ photoId: _id }),
+			});
+			if (!generated.ok) {
+				throw new Error(await generated.text());
+			}
+			const picture: PictureDoc = await generated.json();
+
+			cmsPhotos = [picture, ...cmsPhotos];
+			choosePicture(picture._id);
+		} catch (err) {
+			alert("Erreur lors de l'import : " + (err instanceof Error ? err.message : String(err)));
+		} finally {
+			uploading[id] = false;
+		}
+	}
 </script>
 
 {#snippet saveBadge(id: string)}
@@ -348,24 +422,35 @@
 
 {#snippet pictureControl(p: Page, key: string)}
 	{@const current = pictureFor(valueOf(p, 'picture', key))}
-	<div class="flex h-32 items-center justify-center overflow-hidden rounded-lg bg-gray-100">
+	<button
+		type="button"
+		class="group relative flex h-32 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-100"
+		title="Choisir une image"
+		onclick={() => openPicker(p, key)}
+	>
 		{#if current}
 			<Picture picture={current} class="h-32 w-full object-cover" />
 		{:else}
-			<span class="text-sm text-gray-400">Aucune image</span>
+			<span class="text-sm text-gray-400">Choisir une image…</span>
+		{/if}
+		<span
+			class="absolute inset-0 hidden items-center justify-center bg-black/40 text-sm font-semibold text-white group-hover:flex"
+		>
+			Changer
+		</span>
+	</button>
+	<div class="flex gap-3 text-sm">
+		<button type="button" class="link" onclick={() => openPicker(p, key)}>Choisir / importer</button>
+		{#if current}
+			<button
+				type="button"
+				class="text-red-500 hover:underline"
+				onclick={() => save(p._id, 'picture', key, '')}
+			>
+				Retirer
+			</button>
 		{/if}
 	</div>
-	<select
-		name="{p._id}_picture_{key}"
-		value={valueOf(p, 'picture', key)}
-		class="form-input py-1"
-		onchange={(event) => save(p._id, 'picture', key, event.currentTarget.value)}
-	>
-		<option value="">— Aucune —</option>
-		{#each cmsPhotos as photo (photo._id)}
-			<option value={photo._id}>{photo.name}</option>
-		{/each}
-	</select>
 {/snippet}
 
 {#snippet itemRow(p: Page, section: Section, item: Item)}
@@ -513,3 +598,69 @@
 		</section>
 	{/if}
 </div>
+
+{#if picker}
+	{@const uploadingId = fieldId(picker.pageId, 'picture', picker.key)}
+	<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+		<button class="absolute inset-0 bg-black/50" aria-label="Fermer" onclick={() => (picker = null)}
+		></button>
+		<div
+			class="relative flex max-h-[85vh] w-full max-w-3xl flex-col gap-4 overflow-hidden rounded-2xl bg-white p-5 shadow-xl"
+		>
+			<div class="flex items-center gap-3">
+				<h3 class="shrink-0 text-lg font-bold text-oxford">Choisir une image</h3>
+				<input
+					type="text"
+					placeholder="Rechercher…"
+					class="form-input py-1"
+					bind:value={pickerSearch}
+				/>
+				<button
+					type="button"
+					class="ml-auto text-3xl leading-none text-gray-400 hover:text-gray-600"
+					aria-label="Fermer"
+					onclick={() => (picker = null)}
+				>
+					×
+				</button>
+			</div>
+
+			<label
+				class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 px-4 py-3 text-sm font-semibold text-gray-500 transition hover:border-sunray hover:text-sunray"
+			>
+				{#if uploading[uploadingId]}
+					Import en cours…
+				{:else}
+					+ Importer une nouvelle image
+				{/if}
+				<input
+					type="file"
+					accept="image/*"
+					class="hidden"
+					disabled={uploading[uploadingId]}
+					onchange={onFileChange}
+				/>
+			</label>
+
+			<div class="grid grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4">
+				<button
+					type="button"
+					class="flex h-24 items-center justify-center rounded-lg border border-gray-200 text-sm text-gray-400 transition hover:border-sunray"
+					onclick={() => choosePicture('')}
+				>
+					Aucune
+				</button>
+				{#each filteredPhotos as photo (photo._id)}
+					<button
+						type="button"
+						class="flex flex-col overflow-hidden rounded-lg border border-gray-200 transition hover:border-sunray"
+						onclick={() => choosePicture(photo._id)}
+					>
+						<Picture picture={photo} class="h-24 w-full object-cover" />
+						<span class="truncate p-1 text-xs text-gray-600">{photo.name}</span>
+					</button>
+				{/each}
+			</div>
+		</div>
+	</div>
+{/if}
