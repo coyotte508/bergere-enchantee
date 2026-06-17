@@ -104,7 +104,7 @@
 		{/if}
 
 		<div class="no-print mt-2 flex flex-wrap justify-center gap-3">
-			<a href="/catalogue.pdf" download class="btn-sunray">Télécharger le catalogue (PDF)</a>
+			<a href="/catalogue.pdf" download class="btn">Télécharger le catalogue (PDF)</a>
 		</div>
 	</header>
 

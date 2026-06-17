@@ -106,6 +106,11 @@
 			class="hidden py-4 md:inline grow hover:text-sunray">Tissus / Finitions</a
 		>
 		<a
+			href="/tarifs"
+			class:text-sunray={path === '/tarifs'}
+			class="hidden md:inline py-4 grow hover:text-sunray">Tarifs</a
+		>
+		<a
 			href="/contact"
 			class:text-sunray={path === '/contact'}
 			class="hidden md:inline py-4 grow hover:text-sunray">Contact</a
@@ -158,9 +163,12 @@
 			>
 			<a
 				href="/tissus-et-finitions"
-				class:text-sunray={path === '/tissus'}
+				class:text-sunray={path === '/tissus-et-finitions'}
 				class="my-2 hover:text-sunray">Tissus / Finitions</a
 			>
+			<a href="/tarifs" class:text-sunray={path === '/tarifs'} class="my-2 hover:text-sunray">
+				Tarifs
+			</a>
 			<a href="/contact" class:text-sunray={path === '/contact'} class="my-2 hover:text-sunray"
 				>Contact</a
 			>
