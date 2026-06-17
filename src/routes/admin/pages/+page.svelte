@@ -683,18 +683,16 @@
 				{#each filteredPhotos as photo (photo._id)}
 					<button
 						type="button"
-						class="flex flex-col overflow-hidden rounded-lg border border-gray-200 transition hover:border-sunray"
+						class="overflow-hidden rounded-lg border border-gray-200 transition hover:border-sunray"
 						onclick={() => choosePicture(photo._id)}
 					>
-						<div class="h-24 w-full shrink-0 overflow-hidden">
-							<Picture
-								picture={photo}
-								fill
-								sizes="(max-width: 640px) 45vw, 180px"
-								class="h-full w-full object-cover"
-							/>
-						</div>
-						<span class="truncate p-1 text-xs text-gray-600">{photo.name}</span>
+						<Picture
+							picture={photo}
+							fill
+							sizes="(max-width: 640px) 45vw, 180px"
+							class="block h-24 w-full object-cover"
+						/>
+						<span class="block truncate p-1 text-xs text-gray-600">{photo.name}</span>
 					</button>
 				{/each}
 			</div>
