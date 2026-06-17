@@ -683,14 +683,14 @@
 				{#each filteredPhotos as photo (photo._id)}
 					<button
 						type="button"
-						class="overflow-hidden rounded-lg border border-gray-200 transition hover:border-sunray"
+						class="rounded-lg border border-gray-200 transition hover:border-sunray"
 						onclick={() => choosePicture(photo._id)}
 					>
 						<Picture
 							picture={photo}
 							fill
 							sizes="(max-width: 640px) 45vw, 180px"
-							class="block h-24 w-full object-cover"
+							class="block h-24 w-full rounded-t-lg object-cover"
 						/>
 						<span class="block truncate p-1 text-xs text-gray-600">{photo.name}</span>
 					</button>
