@@ -84,9 +84,6 @@
 			);
 	});
 
-	function printPage() {
-		window.print();
-	}
 </script>
 
 <Container class="flex flex-col gap-12 py-10">
@@ -108,7 +105,6 @@
 
 		<div class="no-print mt-2 flex flex-wrap justify-center gap-3">
 			<a href="/catalogue.pdf" download class="btn-sunray">Télécharger le catalogue (PDF)</a>
-			<button type="button" class="btn" onclick={printPage}>Imprimer cette page</button>
 		</div>
 	</header>
 
