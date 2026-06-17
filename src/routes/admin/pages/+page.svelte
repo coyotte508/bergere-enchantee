@@ -179,7 +179,7 @@
 									class="flex h-32 items-center justify-center overflow-hidden rounded-lg bg-gray-100"
 								>
 									{#if current}
-										<Picture picture={current} class="h-32 w-full object-cover" />
+										<Picture picture={current} fill sizes="300px" class="h-32 w-full object-cover" />
 									{:else}
 										<span class="text-sm text-gray-400">Aucune image</span>
 									{/if}
