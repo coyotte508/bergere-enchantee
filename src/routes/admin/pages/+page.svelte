@@ -662,7 +662,7 @@
 						class="flex flex-col overflow-hidden rounded-lg border border-gray-200 transition hover:border-sunray"
 						onclick={() => choosePicture(photo._id)}
 					>
-						<div class="h-24 w-full overflow-hidden">
+						<div class="h-24 w-full shrink-0 overflow-hidden">
 							<Picture
 								picture={photo}
 								fill
