@@ -73,7 +73,7 @@
 	{/if}
 </svelte:head>
 
-<header class="bg-oxford py-2 flex items-center font-aileron">
+<header class="site-header bg-oxford py-2 flex items-center font-aileron">
 	<nav
 		class="bg-oxford text-xl font-bold flex grow px-2 md:px-0 md:text-center items-center text-white"
 	>
@@ -200,7 +200,7 @@
 
 {#if !path.startsWith('/admin/')}
 	<footer
-		class="bg-oxford w-full h-[24rem] relative overflow-x-hidden flex items-center justify-center"
+		class="site-footer bg-oxford w-full h-[24rem] relative overflow-x-hidden flex items-center justify-center"
 	>
 		<img
 			src="/logo-no-chair.svg"

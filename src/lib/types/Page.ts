@@ -113,18 +113,8 @@ export interface PricingPage extends Page {
 		'pricing-disclaimer-finishing': string;
 		'pricing-disclaimer-supplies': string;
 		'pricing-disclaimer-note': string;
-	} & Partial<
-		Record<
-			`${'remplacement-tissu' | 'refection-complete' | 'coussin' | 'refection-partielle'}-${number}-${'prix' | 'titre'}`,
-			string
-		>
-	>;
-	pictures: {
-		'remplacement-tissu': string | null;
-		'refection-complete': string | null;
-		'refection-partielle': string | null;
-		coussin: string | null;
-	};
+	} & Partial<Record<`tarif-${number}-${'titre' | 'details'}`, string>>;
+	pictures: Partial<Record<`tarif-${number}`, string | null>>;
 }
 
 export interface EshopPage extends Page {

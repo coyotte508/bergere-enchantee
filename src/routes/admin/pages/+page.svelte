@@ -74,7 +74,7 @@
 
 		const itemsMap = new Map<string, Item>();
 		for (const field of fields) {
-			const itemKey = field.key.replace(/-(titre|prix)$/, '');
+			const itemKey = field.key.replace(/-(titre|prix|details)$/, '');
 			let item = itemsMap.get(itemKey);
 			if (!item) {
 				item = { key: itemKey, number: '', fields: [] };
@@ -112,11 +112,107 @@
 		return sections;
 	}
 
-	const sections = $derived(selectedPage ? buildSections(selectedPage) : []);
+	const baseSections = $derived(selectedPage ? buildSections(selectedPage) : []);
+
+	// Locally-revealed extra rows (so "+ add" works even past the prepared range).
+	let drafts = $state<Record<string, true>>({});
+
+	function draftId(pageId: string, itemKey: string) {
+		return `${pageId}::${itemKey}`;
+	}
+
+	function itemFilled(p: Page, item: Item) {
+		return item.fields.some((f) => {
+			const value = valueOf(p, f.kind, f.key);
+			return value !== undefined && value !== null && value !== '';
+		});
+	}
+
+	// Build a fresh item (not present in the data yet) from a section's template item.
+	function makeItem(sectionKey: string, num: string, template: Item): Item {
+		return {
+			key: `${sectionKey}-${num}`,
+			number: num,
+			fields: template.fields.map((f) => {
+				const suffix = suffixOf(f, template.key);
+				return {
+					kind: f.kind,
+					key: suffix ? `${sectionKey}-${num}-${suffix}` : `${sectionKey}-${num}`,
+				};
+			}),
+		};
+	}
+
+	// Only show items that have content (or were just added), plus any draft rows.
+	const sections = $derived.by((): Section[] => {
+		const p = selectedPage;
+		if (!p) {
+			return [];
+		}
+		return baseSections.map((section) => {
+			if (!section.repeated) {
+				return section;
+			}
+			const bare = section.items.filter((it) => it.number === '');
+			const dataNumbered = section.items.filter((it) => it.number !== '');
+			const template = dataNumbered[0] ?? section.items[0];
+
+			const shown = dataNumbered.filter(
+				(it) => itemFilled(p, it) || drafts[draftId(p._id, it.key)]
+			);
+			const shownNumbers = new Set(shown.map((it) => parseInt(it.number, 10)));
+
+			const extras: Item[] = [];
+			const prefix = `${p._id}::`;
+			for (const id of Object.keys(drafts)) {
+				if (!id.startsWith(prefix)) {
+					continue;
+				}
+				const itemKey = id.slice(prefix.length);
+				if (itemKey.replace(/-\d+$/, '') !== section.key) {
+					continue;
+				}
+				const num = itemKey.slice(section.key.length).replace(/^-/, '');
+				if (!num || shownNumbers.has(parseInt(num, 10))) {
+					continue;
+				}
+				extras.push(makeItem(section.key, num, template));
+			}
+
+			const numbered = [...shown, ...extras].sort(
+				(a, b) => parseInt(a.number, 10) - parseInt(b.number, 10)
+			);
+			return { ...section, items: [...bare, ...numbered] };
+		});
+	});
 
 	// The reorderable items of a section (those carrying a numeric index).
 	function numberedItems(section: Section) {
 		return section.items.filter((it) => it.number !== '');
+	}
+
+	// Reveal the lowest free index in a section as a new editable row.
+	function addItem(p: Page, section: Section) {
+		const used = new Set(numberedItems(section).map((it) => parseInt(it.number, 10)));
+		let num = 1;
+		while (used.has(num)) {
+			num++;
+		}
+		drafts[draftId(p._id, `${section.key}-${num}`)] = true;
+	}
+
+	// Clear an item's content (so it disappears) and drop any draft entry.
+	function removeItem(p: Page, item: Item) {
+		if (!confirm('Supprimer cet élément ? Son contenu sera effacé.')) {
+			return;
+		}
+		for (const f of item.fields) {
+			const value = valueOf(p, f.kind, f.key);
+			if (value !== undefined && value !== null && value !== '') {
+				save(p._id, f.kind, f.key, '');
+			}
+		}
+		delete drafts[draftId(p._id, item.key)];
 	}
 
 	async function save(pageId: string, kind: Field['kind'], key: string, value: string) {
@@ -206,6 +302,30 @@
 	{/if}
 {/snippet}
 
+{#snippet removeButton(p: Page, item: Item)}
+	{#if item.number}
+		<button
+			type="button"
+			class="self-start rounded border border-red-200 px-2 leading-none text-red-500 transition hover:bg-red-50"
+			title="Supprimer"
+			aria-label="Supprimer"
+			onclick={() => removeItem(p, item)}
+		>
+			✕
+		</button>
+	{/if}
+{/snippet}
+
+{#snippet addButton(p: Page, section: Section)}
+	<button
+		type="button"
+		class="self-start rounded-lg border-2 border-dashed border-gray-300 px-4 py-2 text-sm font-semibold text-gray-500 transition hover:border-sunray hover:text-sunray"
+		onclick={() => addItem(p, section)}
+	>
+		+ Ajouter
+	</button>
+{/snippet}
+
 {#snippet textControl(p: Page, key: string, long: boolean)}
 	{#if long}
 		<textarea
@@ -280,6 +400,7 @@
 				{@render pictureControl(p, field.key)}
 			</label>
 		{/each}
+		{@render removeButton(p, item)}
 	</div>
 {/snippet}
 
@@ -362,13 +483,17 @@
 												{item.number ? `#${item.number}` : humanize(field.key)}
 												{@render saveBadge(id)}
 											</span>
-											{@render moveControls(p, section, item)}
+											<div class="flex items-center gap-1">
+												{@render moveControls(p, section, item)}
+												{@render removeButton(p, item)}
+											</div>
 										</div>
 										{@render pictureControl(p, field.key)}
 									</div>
 								{/each}
 							{/each}
 						</div>
+						{@render addButton(p, section)}
 					</div>
 				{:else}
 					<!-- Repeated items with text: one row per item -->
@@ -381,6 +506,7 @@
 								{@render itemRow(p, section, item)}
 							{/each}
 						</div>
+						{@render addButton(p, section)}
 					</div>
 				{/if}
 			{/each}

@@ -17,15 +17,15 @@ export const defaultPages = {
 		text: {
 			presentation: `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
 
-Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs. 
+Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs.
 
 À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins.
 
-Nous vous proposons un service en ligne afin de concevoir à distance des coussins, et de vous les livrer n'importe où en France. 
+Nous vous proposons un service en ligne afin de concevoir à distance des coussins, et de vous les livrer n'importe où en France.
 
-Nous proposons à la vente également des assises déjà refectionnées dans la partie Ventes. 
+Nous proposons à la vente également des assises déjà refectionnées dans la partie Ventes.
 
-Des tissus rigoureusement sélectionnés vous seront proposés pour habiller vos sièges/coussins. Mais vous êtes libre de commander du tissus pour vos projets personnels également. n'hésitez pas à regarder notre onglet tissus. 
+Des tissus rigoureusement sélectionnés vous seront proposés pour habiller vos sièges/coussins. Mais vous êtes libre de commander du tissus pour vos projets personnels également. n'hésitez pas à regarder notre onglet tissus.
 
 Daphné ne travaille que sur rendez vous, alors n'hésitez pas à la contacter, par téléphone ou par mail pour toute demande.`,
 			'eshop-description': "description de l'eshop",
@@ -86,10 +86,10 @@ Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins,
 		text: {
 			'texte-1': `C'est dans son univers enchanteur que Daphné le Couls, tapissière d'ameublement qualifiée depuis 2019, vous propose la réfection de vos assises dans son atelier situé en Finistère, à logonna Daoulas (entre l'axe Brest Quimper).
 
-Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs. 
+Daphné se déplace à votre domicile afin de déterminer avec vous vos besoins, qu'il s'agisse d'une réfection de siège complète, ou bien de la création de coussins décoratifs.
 
 À l'atelier, nous vous proposons la réfection traditionnelle ou moderne de vos assises (crin ou mousse) selon vos besoins.`,
-			'texte-2': `Nous vous proposons un service en ligne afin de concevoir à distance des coussins, et de vous les livrer n'importe où en France. 
+			'texte-2': `Nous vous proposons un service en ligne afin de concevoir à distance des coussins, et de vous les livrer n'importe où en France.
 
 Nous proposons à la vente également des assises déjà refectionnées dans la partie Ventes.`,
 			'search-engine-description':
@@ -230,53 +230,20 @@ Nous proposons à la vente également des assises déjà refectionnées dans la 
 		text: {
 			'search-engine-description':
 				"Consultez les tarifs de Daphné, tapissière d'ameublement de la Bergère Enchantée",
-			'pricing-disclaimer-title': "Prix affichés : main d'œuvre uniquement",
+			'pricing-disclaimer-title': "Prix indiqués : main d'œuvre + matériaux",
 			'pricing-disclaimer-fabric': 'Tissus',
 			'pricing-disclaimer-finishing': 'Finitions',
-			'pricing-disclaimer-supplies': 'Fournitures',
-			'pricing-disclaimer-note': 'Ces éléments sont facturés en sus selon vos choix et besoins.',
+			'pricing-disclaimer-supplies': '',
+			'pricing-disclaimer-note': 'Tarifs indicatifs — devis personnalisé sur demande.',
 			...Object.fromEntries(
-				new Array(20)
-					.fill(0)
-					.flatMap((_, i) =>
-						[`remplacement-tissu-${i + 1}-titre`, `remplacement-tissu-${i + 1}-prix`].map((key) => [
-							key,
-							'',
-						])
-					)
-			),
-			...Object.fromEntries(
-				new Array(20)
-					.fill(0)
-					.flatMap((_, i) =>
-						[`refection-complete-${i + 1}-titre`, `refection-complete-${i + 1}-prix`].map((key) => [
-							key,
-							'',
-						])
-					)
-			),
-			...Object.fromEntries(
-				new Array(20)
-					.fill(0)
-					.flatMap((_, i) =>
-						[`refection-partielle-${i + 1}-titre`, `refection-partielle-${i + 1}-prix`].map(
-							(key) => [key, '']
-						)
-					)
-			),
-			...Object.fromEntries(
-				new Array(20)
-					.fill(0)
-					.flatMap((_, i) =>
-						[`coussin-${i + 1}-titre`, `coussin-${i + 1}-prix`].map((key) => [key, ''])
-					)
+				new Array(30).fill(0).flatMap((_, i) => [
+					[`tarif-${i + 1}-titre`, ''],
+					[`tarif-${i + 1}-details`, ''],
+				])
 			),
 		},
 		pictures: {
-			'remplacement-tissu': null,
-			'refection-complete': null,
-			'refection-partielle': null,
-			coussin: null,
+			...Object.fromEntries(new Array(30).fill(0).map((_, i) => [`tarif-${i + 1}`, null])),
 		},
 		createdAt: new Date(),
 		updatedAt: new Date(),
