@@ -3,6 +3,7 @@
 	import PictureComponent from '$lib/components/Picture.svelte';
 	import type { CreationsPage } from '$lib/types/Page';
 	import { typedKeys } from '$lib/utils/typedKeys';
+	import { byKeyIndex } from '$lib/utils/keyIndex';
 	import { marked } from 'marked';
 	import type { PageData } from './$types';
 	import { pictureLink } from '$lib/picture';
@@ -14,9 +15,9 @@
 
 	type PictureKey = keyof typeof pageData.pictures;
 
-	const picKeys = typedKeys(pageData.pictures).filter(
-		(key) => key.startsWith('realisation-') && pageData.pictures[key as PictureKey]
-	);
+	const picKeys = typedKeys(pageData.pictures)
+		.filter((key) => key.startsWith('realisation-') && pageData.pictures[key as PictureKey])
+		.sort(byKeyIndex);
 </script>
 
 <Container>

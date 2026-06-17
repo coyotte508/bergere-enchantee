@@ -4,6 +4,7 @@
 	import Picture from '$lib/components/Picture.svelte';
 	import type { HomePage } from '$lib/types/Page';
 	import { typedKeys } from '$lib/utils/typedKeys';
+	import { byKeyIndex } from '$lib/utils/keyIndex';
 	import { marked } from 'marked';
 	import type { PageData } from './$types';
 
@@ -16,6 +17,7 @@
 
 	const showcasePics = typedKeys(pageData.pictures)
 		.filter((key) => key.startsWith('realisation-') && pageData.pictures[key as PictureKey])
+		.sort(byKeyIndex)
 		.map((key) => pictures.find((pic) => pic._id === pageData.pictures[key as PictureKey]))
 		.filter(Boolean);
 </script>
