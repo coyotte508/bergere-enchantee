@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { pushState, replaceState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import Picture from '$lib/components/Picture.svelte';
 	import type { Page } from '$lib/types/Page';
 	import type { Picture as PictureDoc } from '$lib/types/Picture';
@@ -284,13 +284,13 @@
 		pickerSearch = '';
 		const url = new URL(page.url);
 		url.searchParams.set('picker', key);
-		pushState(url, page.state);
+		goto(url, { keepFocus: true, noScroll: true });
 	}
 
 	function closePicker() {
 		const url = new URL(page.url);
 		url.searchParams.delete('picker');
-		replaceState(url, page.state);
+		goto(url, { keepFocus: true, noScroll: true, replaceState: true });
 	}
 
 	function choosePicture(photoId: string) {
