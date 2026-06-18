@@ -103,9 +103,11 @@
 			<p class="text-sm italic text-gray-400">{disclaimer.note}</p>
 		{/if}
 
+		<!-- TODO: réactiver quand le catalogue PDF est prêt
 		<div class="no-print mt-2 flex flex-wrap justify-center gap-3">
 			<a href="/catalogue.pdf" download class="btn">Télécharger le catalogue (PDF)</a>
 		</div>
+		-->
 	</header>
 
 	<!-- Catalogue entries -->
