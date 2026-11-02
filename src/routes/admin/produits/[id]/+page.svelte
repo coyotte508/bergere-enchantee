@@ -78,7 +78,7 @@
 <a href="/admin/photos/nouveau?productId={data.product._id}" class="link">Nouvelle photo</a>
 
 <div class="flex flex-row flex-wrap gap-6 mt-6">
-	{#each data.product.photos as photo}
+	{#each data.product.photos as photo (photo._id)}
 		<div class="flex flex-col text-center">
 			<a href="/admin/photos/{photo._id}" class="flex flex-col items-center">
 				<PictureComponent picture={photo} class="h-36 block" style="object-fit: scale-down;" />

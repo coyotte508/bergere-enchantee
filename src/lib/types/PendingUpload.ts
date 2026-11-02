@@ -1,4 +1,4 @@
-import { Timestamps } from './Timestamps';
+import type { Timestamps } from './Timestamps';
 
 export interface PendingUpload extends Timestamps {
 	_id: string;

@@ -90,7 +90,7 @@
 		>voir plus</a
 	>
 	<Carousel class="w-full mt-12 h-[36rem] sm:h-2xl">
-		{#each showcasePics as pic}
+		{#each showcasePics as pic, i (i)}
 			<div class="w-full h-full flex items-center justify-around">
 				<Picture
 					picture={pic}

@@ -74,6 +74,8 @@
 			...typedKeys(p.pictures).map((key) => ({ kind: 'picture' as const, key: key as string })),
 		];
 
+		// Local grouping accumulator, not persistent reactive state.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const itemsMap = new Map<string, Item>();
 		for (const field of fields) {
 			const itemKey = field.key.replace(/-(titre|prix|details)$/, '');
@@ -85,6 +87,8 @@
 			item.fields.push(field);
 		}
 
+		// Local grouping accumulator, not persistent reactive state.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const sectionsMap = new Map<string, Section>();
 		for (const item of itemsMap.values()) {
 			const sectionKey = item.key.replace(/-\d+$/, '');

@@ -58,6 +58,8 @@
 	// Each catalogue entry gathers its photo, title and detail lines from the
 	// `tarif-N` / `tarif-N-titre` / `tarif-N-details` keys.
 	const items = $derived.by(() => {
+		// Local grouping accumulator, not persistent reactive state.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const keys = new Set<string>();
 		for (const key of typedKeys(pageData.text)) {
 			const match = key.match(/^(tarif-\d+)-(?:titre|details)$/);
@@ -138,7 +140,7 @@
 						</h2>
 					{/if}
 					<dl class="mx-auto grid w-fit grid-cols-[auto_auto] gap-x-3 gap-y-1.5 text-left">
-						{#each item.lines as line}
+						{#each item.lines as line, lineIndex (lineIndex)}
 							{#if line.type === 'gap'}
 								<div class="col-span-2 h-3"></div>
 							{:else if line.type === 'pair'}

@@ -112,7 +112,7 @@
 					class="form-input"
 					placeholder="Votre message"
 					required
-				/>
+				></textarea>
 			</div>
 
 			<div class="w-full flex mt-4">

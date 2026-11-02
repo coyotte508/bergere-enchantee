@@ -19,7 +19,7 @@
 
 	{#if items.length}
 		<div class="grid gap-x-4 gap-y-6" style="grid-template-columns: auto 1fr auto auto">
-			{#each items as item}
+			{#each items as item (item.productId)}
 				<form
 					class="contents"
 					method="post"

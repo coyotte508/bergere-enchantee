@@ -95,7 +95,7 @@
 		<div class="bg-white rounded-lg shadow p-6">
 			<h2 class="text-xl font-semibold mb-4">Articles commandés</h2>
 			<div class="space-y-4">
-				{#each data.order.items as item}
+				{#each data.order.items as item (item.productId)}
 					<div class="border border-gray-200 rounded-lg p-4">
 						<div class="flex justify-between items-start">
 							<div class="flex-1">
@@ -199,7 +199,7 @@
 			<h2 class="text-xl font-semibold mb-4">Changer le statut</h2>
 			<form method="post" action="?/updateStatus" use:enhance>
 				<select name="status" value={data.order.status} class="form-input w-full mb-3">
-					{#each ORDER_STATUSES as status}
+					{#each ORDER_STATUSES as status (status)}
 						<option value={status} selected={data.order.status === status}>
 							{getOrderStatusDisplay(status)}
 						</option>

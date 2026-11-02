@@ -67,7 +67,7 @@
 			<div class="bg-white rounded-lg shadow p-6">
 				<h2 class="text-xl font-semibold mb-4">Articles commandés</h2>
 				<div class="space-y-4">
-					{#each data.order.items as item}
+					{#each data.order.items as item (item.productId)}
 						<div class="border border-gray-200 rounded-lg p-4">
 							<div class="flex justify-between items-start">
 								<div class="flex-1">

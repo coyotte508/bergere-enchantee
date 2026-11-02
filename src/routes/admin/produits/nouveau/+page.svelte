@@ -1,38 +1,41 @@
 <script lang="ts">
 	import { tick } from 'svelte';
+	import { readPhotoUpload } from '$lib/utils/photoUpload';
 
 	let formInput: HTMLFormElement | null = null;
-	let fileInput: HTMLInputElement | null = null;
 	let photoIdInput: HTMLInputElement | null = null;
 
 	let loading = false;
-	let name = '';
+	let errorMessage = '';
 
 	async function submit(event: Event) {
 		event.preventDefault();
 
+		if (loading || !formInput) return;
+		errorMessage = '';
+		if (!formInput.reportValidity()) return;
+
+		const upload = readPhotoUpload(new FormData(formInput));
+		if (upload.error !== undefined) {
+			errorMessage = upload.error;
+			return;
+		}
+		const { name, file } = upload;
+
 		loading = true;
 		try {
-			const file = fileInput?.files?.[0];
-
-			if (!file) {
-				alert('Veuillez sélectionner un fichier');
-				return;
-			}
-
 			const response = await fetch('/admin/fichiers', {
 				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					name,
 					mimeType: file.type,
-					file: fileInput?.files?.[0],
 					size: file.size,
 				}),
 			});
 
 			if (!response.ok) {
-				alert("Erreur lors de l'envoi du fichier" + (await response.text()));
-				loading = false;
+				errorMessage = 'Impossible de préparer l’envoi de la photo. Veuillez réessayer.';
 				return;
 			}
 
@@ -44,8 +47,7 @@
 			});
 
 			if (!response2.ok) {
-				alert("Erreur lors de l'envoi du fichier" + (await response2.text()));
-				loading = false;
+				errorMessage = 'L’envoi de la photo a échoué. Veuillez réessayer.';
 				return;
 			}
 
@@ -56,6 +58,8 @@
 			await tick();
 
 			formInput?.submit();
+		} catch {
+			errorMessage = 'L’envoi de la photo a échoué. Vérifiez votre connexion et réessayez.';
 		} finally {
 			loading = false;
 		}
@@ -76,7 +80,7 @@
 			class="form-input"
 			type="text"
 			name="name"
-			bind:value={name}
+			maxlength="255"
 			placeholder="Nom définitif"
 			required
 		/>
@@ -84,17 +88,25 @@
 
 	<label class="form-label">
 		Prix
-		<input class="form-input" type="number" name="price" placeholder="Prix (€)" required />
+		<input
+			class="form-input"
+			type="number"
+			name="price"
+			min="1"
+			step="1"
+			placeholder="Prix (€)"
+			required
+		/>
 	</label>
 
 	<label class="form-label">
 		Description
-		<textarea name="description" cols="30" rows="10" class="form-input" />
+		<textarea name="description" cols="30" rows="10" class="form-input"></textarea>
 	</label>
 
 	<label class="form-label">
 		Photo de garde
-		<input type="file" accept="image/jpeg" class="form-input" bind:this={fileInput} required />
+		<input type="file" accept="image/jpeg" class="form-input" name="photo" required />
 	</label>
 
 	<input type="hidden" name="photoId" bind:this={photoIdInput} />
@@ -116,6 +128,7 @@
 			class="form-input"
 			type="number"
 			name="shippingPrice"
+			min="0"
 			step="0.01"
 			placeholder="0.00"
 			required
@@ -126,6 +139,10 @@
 		<input type="checkbox" name="canGroupShipping" class="form-checkbox" />
 		Peut être groupé avec d'autres articles (seuls les frais de port les plus élevés seront facturés)
 	</label>
+
+	{#if errorMessage}
+		<p role="alert" class="text-red-700">{errorMessage}</p>
+	{/if}
 
 	<input type="submit" class="btn self-start mt-2" disabled={loading} />
 </form>

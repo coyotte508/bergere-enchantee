@@ -23,7 +23,7 @@
 		"@types/lodash": "^4.14.188",
 		"@types/marked": "^4.0.7",
 		"@types/mime-types": "^2.1.1",
-		"@types/sharp": "^0.31.0",
+		"@types/node": "^20",
 		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"@typescript-eslint/parser": "^6.21.0",
 		"@unocss/preset-icons": "^0.46.3",
@@ -58,7 +58,7 @@
 		"mime-types": "^2.1.35",
 		"mongodb": "^6.20.0",
 		"nanoid": "^4.0.0",
-		"sharp": "^0.33.2",
+		"sharp": "^0.35.5",
 		"zod": "^3.21.4"
 	}
 }

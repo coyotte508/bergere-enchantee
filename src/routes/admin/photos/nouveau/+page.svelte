@@ -1,42 +1,45 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
+	import { readPhotoUpload } from '$lib/utils/photoUpload';
 
 	const productId = $page.url.searchParams.get('productId');
 
 	let photoIdInput: HTMLInputElement | null = null;
-	let fileInput: HTMLInputElement | null = null;
 	let formInput: HTMLFormElement | null = null;
 
-	let name: string = '';
+	let errorMessage = '';
 
 	let loading = false;
 
 	async function submit(event: Event) {
 		event.preventDefault();
 
+		if (loading || !formInput) return;
+		errorMessage = '';
+		if (!formInput.reportValidity()) return;
+
+		const upload = readPhotoUpload(new FormData(formInput));
+		if (upload.error !== undefined) {
+			errorMessage = upload.error;
+			return;
+		}
+		const { name, file } = upload;
+
 		loading = true;
 		try {
-			const file = fileInput?.files?.[0];
-
-			if (!file) {
-				alert('Veuillez sélectionner un fichier');
-				return;
-			}
-
 			const response = await fetch('/admin/fichiers', {
 				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					name,
 					mimeType: file.type,
-					file: fileInput?.files?.[0],
 					size: file.size,
 				}),
 			});
 
 			if (!response.ok) {
-				alert("Erreur lors de l'envoi du fichier" + (await response.text()));
-				loading = false;
+				errorMessage = 'Impossible de préparer l’envoi de la photo. Veuillez réessayer.';
 				return;
 			}
 
@@ -48,8 +51,7 @@
 			});
 
 			if (!response2.ok) {
-				alert("Erreur lors de l'envoi du fichier" + (await response2.text()));
-				loading = false;
+				errorMessage = 'L’envoi de la photo a échoué. Veuillez réessayer.';
 				return;
 			}
 
@@ -60,6 +62,8 @@
 			await tick();
 
 			formInput?.submit();
+		} catch {
+			errorMessage = 'L’envoi de la photo a échoué. Vérifiez votre connexion et réessayez.';
 		} finally {
 			loading = false;
 		}
@@ -81,14 +85,14 @@
 			type="text"
 			name="name"
 			placeholder="Nom définitif"
-			bind:value={name}
+			maxlength="255"
 			required
 		/>
 	</label>
 
 	<label class="form-label">
 		Fichier JPEG
-		<input type="file" bind:this={fileInput} accept="image/jpeg" class="form-input" required />
+		<input type="file" name="photo" accept="image/jpeg" class="form-input" required />
 	</label>
 
 	{#if productId}
@@ -97,6 +101,10 @@
 
 	<input type="hidden" name="productId" value={productId || ''} />
 	<input type="hidden" name="photoId" bind:this={photoIdInput} />
+
+	{#if errorMessage}
+		<p role="alert" class="text-red-700">{errorMessage}</p>
+	{/if}
 
 	<input type="submit" class="btn self-start" disabled={loading} />
 </form>

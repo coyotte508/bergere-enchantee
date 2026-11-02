@@ -59,7 +59,7 @@
 					<div
 						class="rounded-3xl w-full h-full bg-sunray absolute left-4 top-4"
 						style="z-index: -1"
-					/>
+					></div>
 					<PictureComponent
 						picture={pictures.find((p) => p._id === pageData.pictures['photo-2'])}
 						sizes="(max-width: 1024px) 50vw, 512px"

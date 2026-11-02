@@ -13,7 +13,7 @@
 <Container class="my-4">
 	<h1 class="mb-3">Tissus et finitions</h1>
 	<Masonry>
-		{#each pictures as picture}
+		{#each pictures as picture (picture._id)}
 			<a href={pictureLink(picture)} class="relative picture-link" data-title={picture.name}>
 				<Picture
 					sizes="(min-width: 1024px) 33vw, (min-width: 675px) 50vw, 100vw"

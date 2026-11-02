@@ -25,7 +25,7 @@
 			</a>
 			{#if product.photos.length > 1}
 				<div style="gap: 0.5rem" class="flex justify-start w-full ml-8 mt-2">
-					{#each product.photos as photo, i}
+					{#each product.photos as photo, i (photo._id)}
 						<Picture
 							picture={photo}
 							style="border-color: #865716"
@@ -98,7 +98,7 @@
 					>
 						Acheter
 					</button>
-					<div class="flex-grow" />
+					<div class="flex-grow"></div>
 				</form>
 			{/if}
 		</div>

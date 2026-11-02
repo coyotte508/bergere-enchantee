@@ -10,7 +10,7 @@
 <a href="/admin/photos/nouveau" class="my-4 block link">Nouvelle photo</a>
 
 <div class="flex flex-row flex-wrap gap-6 mt-6">
-	{#each data.photos as photo}
+	{#each data.photos as photo (photo._id)}
 		<div class="flex flex-col text-center">
 			<a href="/admin/photos/{photo._id}" class="flex flex-col items-center">
 				<Picture picture={photo} class="h-36 block" />

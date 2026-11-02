@@ -20,7 +20,7 @@
 		style="z-index: -1"
 	/>
 	<Container noPadding class="h-full flex flex-col items-stretch md:items-start">
-		<div class="grow basis-0" />
+		<div class="grow basis-0"></div>
 		<div style="flex-grow: 2" class="basis-0 text-center md:px-8 xl:px-0">
 			<h1 class="text-7xl text-white text-center md:text-left">Découvrez <br />nos ventes</h1>
 			<a href="#produits" class="btn mt-10 inline-block">cliquez ici</a>
@@ -32,7 +32,7 @@
 	<h2 class="text-4xl text-oxford my-4" id="produits">Produits à la vente</h2>
 
 	<Masonry>
-		{#each published as product}
+		{#each published as product (product._id)}
 			<a href="/e-shop/{product._id}" class="product">
 				<div class="overflow-hidden rounded relative">
 					{#if product.stock > 1}
@@ -55,7 +55,7 @@
 			</a>
 		{/each}
 		<!-- In case there is only one product. We don't want a product to take full row in desktop mode -->
-		<div />
+		<div></div>
 	</Masonry>
 </Container>
 
@@ -63,7 +63,7 @@
 	<h2 class="text-4xl text-oxford my-4" id="produits">Produits épuisés</h2>
 
 	<Masonry>
-		{#each retired as product}
+		{#each retired as product (product._id)}
 			<a href="/e-shop/{product._id}" class="product">
 				<div class="overflow-hidden rounded relative">
 					<Picture
@@ -79,7 +79,7 @@
 			</a>
 		{/each}
 		<!-- In case there is only one product. We don't want a product to take full row in desktop mode -->
-		<div />
+		<div></div>
 	</Masonry>
 </Container>
 

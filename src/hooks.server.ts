@@ -4,6 +4,10 @@ import type { Handle, HandleServerError } from '@sveltejs/kit';
 import { addYears } from 'date-fns';
 import { ObjectId } from 'mongodb';
 import { ZodError } from 'zod';
+import { validateMailConfiguration } from '$lib/server/mail';
+
+// Fail during server initialisation, not on the first order or contact submission.
+validateMailConfiguration();
 
 export const handleError = (({ error, event }) => {
 	console.error('handleError', error);

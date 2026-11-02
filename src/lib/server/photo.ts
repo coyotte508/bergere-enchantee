@@ -182,18 +182,18 @@ export async function generatePicture(
 export async function deletePicture(pictureId: Picture['_id']) {
 	const res = await collections.pictures.findOneAndDelete({ _id: pictureId });
 
-	if (!res.value) {
+	if (!res) {
 		return;
 	}
 
-	for (const format of res.value.storage.formats) {
+	for (const format of res.storage.formats) {
 		await s3client
 			.send(new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: format.key }))
 			.catch(console.error);
 	}
 
 	await s3client
-		.send(new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: res.value.storage.original.key }))
+		.send(new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: res.storage.original.key }))
 		.catch(console.error);
 }
 

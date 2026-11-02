@@ -23,7 +23,7 @@
 <Container>
 	<h1 class="mt-4">Nos réalisations</h1>
 
-	{#each picKeys as picKey, i}
+	{#each picKeys as picKey, i (picKey)}
 		{@const picture = pictures.find((p) => p._id === pageData.pictures[picKey])}
 
 		{#if picture}

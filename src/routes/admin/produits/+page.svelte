@@ -20,7 +20,7 @@
 			Produits actifs ({data.activeProducts.length})
 		</h2>
 		<div class="flex flex-row flex-wrap gap-6">
-			{#each data.activeProducts as product}
+			{#each data.activeProducts as product (product._id)}
 				<div class="flex flex-col text-center">
 					<a href="/admin/produits/{product._id}" class="flex flex-col items-center">
 						<div class="relative overflow-hidden rounded-lg">
@@ -51,7 +51,7 @@
 			Brouillons ({data.draftProducts.length})
 		</h2>
 		<div class="flex flex-row flex-wrap gap-6">
-			{#each data.draftProducts as product}
+			{#each data.draftProducts as product (product._id)}
 				<div class="flex flex-col text-center">
 					<a href="/admin/produits/{product._id}" class="flex flex-col items-center">
 						<div class="relative overflow-hidden rounded-lg">
@@ -76,7 +76,7 @@
 			Épuisés ({data.soldOutProducts.length})
 		</h2>
 		<div class="flex flex-row flex-wrap gap-6">
-			{#each data.soldOutProducts as product}
+			{#each data.soldOutProducts as product (product._id)}
 				<div class="flex flex-col text-center">
 					<a href="/admin/produits/{product._id}" class="flex flex-col items-center">
 						<div class="relative overflow-hidden rounded-lg">

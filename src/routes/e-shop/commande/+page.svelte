@@ -22,7 +22,7 @@
 			<h2 class="text-xl font-semibold mb-4">Récapitulatif de la commande</h2>
 
 			<div class="space-y-4">
-				{#each items as item}
+				{#each items as item (item.productId)}
 					<div class="flex items-center gap-4 py-2 border-b border-gray-200 last:border-b-0">
 						<div class="w-16 h-16 min-w-16 min-h-16 overflow-hidden rounded flex items-center">
 							{#if item.picture}

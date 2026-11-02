@@ -1,5 +1,3 @@
-import type { Product } from '$lib/types/Product';
-
 export interface CartItemWithProduct {
 	productId: string;
 	quantity: number;

@@ -85,13 +85,15 @@
 		class="flex justify-center carousel-dots"
 		bind:this={carouselDots}
 	>
-		{#each Array(dots) as dot, i}
+		{#each Array(dots) as dot, i (i)}
 			<button
 				data-dot={dot}
+				aria-label={`Afficher la photo ${i + 1}`}
+				type="button"
 				style="width: 1rem; height: 1rem"
 				class="rounded-full mx-1 bg-sunray"
 				on:click={() => (currentIndex = i)}
-			/>
+			></button>
 		{/each}
 	</div>
 </div>

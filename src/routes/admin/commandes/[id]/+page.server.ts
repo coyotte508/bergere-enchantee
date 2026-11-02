@@ -2,7 +2,7 @@ import type { PageServerLoad, Actions } from './$types';
 import { collections } from '$lib/server/database';
 import { error } from '@sveltejs/kit';
 import { z } from 'zod';
-import { ORDER_STATUSES, type OrderStatus } from '$lib/types/Order';
+import { ORDER_STATUSES } from '$lib/types/Order';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const order = await collections.orders.findOne({ _id: params.id });
