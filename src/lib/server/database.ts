@@ -19,9 +19,7 @@ export function getClient(): MongoClient {
 			throw new Error('MONGODB_URL is not set');
 		}
 
-		_client = new MongoClient(url, {
-			directConnection: true,
-		});
+		_client = new MongoClient(url, url.includes('replicaSet=') ? {} : { directConnection: true });
 
 		const database = _client.db('bergere');
 
