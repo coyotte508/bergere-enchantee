@@ -4,7 +4,8 @@ import Mailgun from 'mailgun.js';
 import formData from 'form-data';
 
 export function validateMailConfiguration() {
-	if (!dev && !building && !env.MAILGUN_API_KEY?.trim()) {
+	const key = env.MAILGUN_API_KEY?.trim() || process.env.MAILGUN_API_KEY?.trim();
+	if (!dev && !building && !key) {
 		throw new Error(
 			'[configuration] Démarrage refusé : MAILGUN_API_KEY est absente en production.'
 		);

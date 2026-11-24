@@ -14,7 +14,7 @@ let _connectPromise: Promise<MongoClient | void> | undefined;
 
 export function getClient(): MongoClient {
 	if (!_client) {
-		const url = env.MONGODB_URL;
+		const url = env.MONGODB_URL || process.env.MONGODB_URL;
 		if (!url) {
 			throw new Error('MONGODB_URL is not set');
 		}
