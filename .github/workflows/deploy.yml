@@ -14,29 +14,26 @@ jobs:
         with:
           # to download fonts
           lfs: true
-      - run: corepack enable
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-      - run: |
-          pnpm install --frozen-lockfile
-          cat << EOF > .env.local
-          ${{ secrets.DOT_ENV }}
-          EOF
-          # echo $DOT_ENV > .env.local
-          # show file size of .env.local
-          ls -lsah | grep .env.local
-          pnpm build
-        # env:
-        #   DOT_ENV: ${{ vars.DOT_ENV }}
+
+      - name: Build and push image to Scaleway Container Registry
+        env:
+          SCW_REGISTRY_TOKEN: ${{ secrets.SCW_REGISTRY_TOKEN }}
+        run: |
+          SHORT_SHA=$(git rev-parse --short=7 HEAD)
+          IMAGE="rg.fr-par.scw.cloud/bergere/web:$SHORT_SHA"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+          printf '%s\n' "$SCW_REGISTRY_TOKEN" | docker login rg.fr-par.scw.cloud -u nologin --password-stdin
+          docker build -t "$IMAGE" .
+          docker push "$IMAGE"
+          docker logout rg.fr-par.scw.cloud
+
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-      - name: Deploy
+
+      - name: Roll out to Kosmos Kubernetes
         run: |
-          zip -r build.zip build
-          scp build.zip ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:bergere-enchantee/build.zip
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostnamectl && cd bergere-enchantee && git fetch && git checkout $GITHUB_SHA && pnpm install && unzip -o build.zip && pm2 reload bergere"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "kubectl -n bergere set image deployment/bergere web='${{ env.IMAGE }}' && kubectl -n bergere rollout status deployment/bergere --timeout=180s"
