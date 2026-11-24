@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { json } from '@sveltejs/kit';
 import { generateId } from '$lib/utils/generateId';
-import { s3client, secureDownloadLink } from '$lib/server/s3.js';
+import { getS3Client, secureDownloadLink } from '$lib/server/s3.js';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { S3_BUCKET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { collections } from '$lib/server/database.js';
 
@@ -20,11 +20,16 @@ export const POST = async (event) => {
 
 	const path = `fichiers-temporaires/${_id}`;
 
+	const bucket = env.S3_BUCKET;
+	if (!bucket) {
+		throw new Error('S3_BUCKET is not set');
+	}
+
 	const url = secureDownloadLink(
 		await getSignedUrl(
-			s3client,
+			getS3Client(),
 			new PutObjectCommand({
-				Bucket: S3_BUCKET,
+				Bucket: bucket,
 				Key: path,
 				ContentLength: size,
 				ContentType: mimeType,
@@ -39,7 +44,7 @@ export const POST = async (event) => {
 		name,
 		updatedAt: new Date(),
 		storage: {
-			bucket: S3_BUCKET,
+			bucket,
 			key: path,
 			size,
 		},

@@ -1,10 +1,10 @@
-import { MAILGUN_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { building, dev } from '$app/environment';
 import Mailgun from 'mailgun.js';
 import formData from 'form-data';
 
 export function validateMailConfiguration() {
-	if (!dev && !building && !MAILGUN_API_KEY?.trim()) {
+	if (!dev && !building && !env.MAILGUN_API_KEY?.trim()) {
 		throw new Error(
 			'[configuration] Démarrage refusé : MAILGUN_API_KEY est absente en production.'
 		);
@@ -20,7 +20,7 @@ let client: MailgunClient | undefined;
 export const mg = {
 	messages: {
 		async create(...args: Parameters<MailgunClient['messages']['create']>) {
-			const key = MAILGUN_API_KEY?.trim();
+			const key = env.MAILGUN_API_KEY?.trim();
 			if (!key) {
 				if (dev) {
 					// Do not log recipients or message contents (personal data).

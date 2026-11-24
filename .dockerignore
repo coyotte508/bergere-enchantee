@@ -1,0 +1,28 @@
+# Fail-closed: ignore everything by default
+*
+
+# Allowlist only build inputs
+!package.json
+!pnpm-lock.yaml
+!.npmrc
+!svelte.config.js
+!vite.config.ts
+!tsconfig.json
+!tailwind.config.mjs
+!postcss.config.js
+!src
+!src/**
+!static
+!static/**
+
+# Explicitly exclude secrets, VCS, dependencies, and build artifacts
+.env
+.env.*
+**/.env
+**/.env.*
+node_modules
+**/node_modules
+.git
+.svelte-kit
+build
+.pnpm-store

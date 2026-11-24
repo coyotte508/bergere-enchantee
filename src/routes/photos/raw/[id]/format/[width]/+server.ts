@@ -2,9 +2,9 @@ import { error } from '@sveltejs/kit';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import type { RequestHandler } from './$types';
 import { collections } from '$lib/server/database';
-import { s3client, secureDownloadLink } from '$lib/server/s3';
+import { getS3Client, secureDownloadLink } from '$lib/server/s3';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
-import { S3_BUCKET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const picture = await collections.pictures.findOne({
@@ -22,10 +22,15 @@ export const GET: RequestHandler = async ({ params }) => {
 		throw error(500, "Impossible de trouver le format d'image demandé");
 	}
 
+	const bucket = env.S3_BUCKET;
+	if (!bucket) {
+		throw new Error('S3_BUCKET is not set');
+	}
+
 	const s3Url = await getSignedUrl(
-		s3client,
+		getS3Client(),
 		new GetObjectCommand({
-			Bucket: S3_BUCKET,
+			Bucket: bucket,
 			Key: format.key,
 			ResponseCacheControl: 'public, max-age=31536000, immutable',
 		})

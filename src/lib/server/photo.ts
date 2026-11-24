@@ -2,9 +2,9 @@ import sharp from 'sharp';
 import { collections, withTransaction } from '$lib/server/database';
 import type { ClientSession } from 'mongodb';
 import { error } from '@sveltejs/kit';
-import { s3client } from './s3';
+import { getS3Client } from './s3';
 import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
-import { S3_BUCKET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import * as mimeTypes from 'mime-types';
 import type { ImageData, Picture } from '$lib/types/Picture';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -23,6 +23,12 @@ export async function generatePicture(
 
 	if (!pendingUpload) {
 		throw error(404, 'Fichier non trouvé');
+	}
+
+	const s3client = getS3Client();
+	const bucket = env.S3_BUCKET;
+	if (!bucket) {
+		throw new Error('S3_BUCKET is not set');
 	}
 
 	const url = await getSignedUrl(
@@ -75,7 +81,7 @@ export async function generatePicture(
 
 	await s3client.send(
 		new PutObjectCommand({
-			Bucket: S3_BUCKET,
+			Bucket: bucket,
 			Key: path,
 			Body: buffer,
 			ContentType: mime,
@@ -98,7 +104,7 @@ export async function generatePicture(
 			const buffer = await image.toFormat('webp').toBuffer();
 			await s3client.send(
 				new PutObjectCommand({
-					Bucket: S3_BUCKET,
+					Bucket: bucket,
 					Key: key,
 					Body: buffer,
 					ContentType: 'image/webp',
@@ -132,7 +138,7 @@ export async function generatePicture(
 				const key = `${pathPrefix}${photoId}-${newWidth}x${newHeight}.webp`;
 				await s3client.send(
 					new PutObjectCommand({
-						Bucket: S3_BUCKET,
+						Bucket: bucket,
 						Key: key,
 						Body: buffer,
 						ContentType: 'image/webp',
@@ -173,7 +179,7 @@ export async function generatePicture(
 	} catch (err) {
 		// Remove uploaded files
 		for (const key of uploadedKeys) {
-			s3client.send(new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: key })).catch();
+			s3client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key })).catch();
 		}
 		throw err;
 	}
@@ -186,14 +192,20 @@ export async function deletePicture(pictureId: Picture['_id']) {
 		return;
 	}
 
+	const s3client = getS3Client();
+	const bucket = env.S3_BUCKET;
+	if (!bucket) {
+		throw new Error('S3_BUCKET is not set');
+	}
+
 	for (const format of res.storage.formats) {
 		await s3client
-			.send(new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: format.key }))
+			.send(new DeleteObjectCommand({ Bucket: bucket, Key: format.key }))
 			.catch(console.error);
 	}
 
 	await s3client
-		.send(new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: res.storage.original.key }))
+		.send(new DeleteObjectCommand({ Bucket: bucket, Key: res.storage.original.key }))
 		.catch(console.error);
 }
 

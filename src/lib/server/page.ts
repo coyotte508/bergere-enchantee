@@ -7,6 +7,7 @@ import type {
 	PricingPage,
 	WorkshopPage,
 } from '$lib/types/Page';
+import { building } from '$app/environment';
 import _ from 'lodash';
 import { collections } from './database';
 
@@ -257,8 +258,10 @@ async function refreshPages() {
 	pages = _.merge({}, defaultPages, dbPages);
 }
 
-export const initPagesPromise = refreshPages().catch(console.error);
+export const initPagesPromise = building ? Promise.resolve() : refreshPages().catch(console.error);
 
-collections.pages.watch().on('change', () => {
-	refreshPages().catch(console.error);
-});
+if (!building) {
+	collections.pages.watch().on('change', () => {
+		refreshPages().catch(console.error);
+	});
+}

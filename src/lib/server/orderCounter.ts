@@ -1,14 +1,16 @@
-import { db } from './database.js';
+import { getDb } from './database.js';
 import type { OrderCounterConfig } from '$lib/types/RuntimeConfig.js';
 
-const counters = db.collection<OrderCounterConfig>('runtimeConfig');
+function getCounters() {
+	return getDb().collection<OrderCounterConfig>('runtimeConfig');
+}
 
 /**
  * Gets the next order number and increments the counter atomically
  * @returns Promise<number> The next order number
  */
 export async function getNextOrderNumber(): Promise<number> {
-	const result = await counters.findOneAndUpdate(
+	const result = await getCounters().findOneAndUpdate(
 		{ _id: 'orderCounter' },
 		{
 			$inc: { value: 1 },
@@ -39,7 +41,7 @@ export async function getNextOrderNumber(): Promise<number> {
  * @param startingNumber The number to start counting from (default: 1000)
  */
 export async function initializeOrderCounter(startingNumber: number = 1000): Promise<void> {
-	await counters.updateOne(
+	await getCounters().updateOne(
 		{ _id: 'orderCounter' },
 		{
 			$setOnInsert: {
@@ -59,6 +61,6 @@ export async function initializeOrderCounter(startingNumber: number = 1000): Pro
  * @returns Promise<number> The current counter value
  */
 export async function getCurrentOrderNumber(): Promise<number> {
-	const config = await counters.findOne({ _id: 'orderCounter' });
+	const config = await getCounters().findOne({ _id: 'orderCounter' });
 	return config?.value ?? 0;
 }
