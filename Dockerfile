@@ -11,7 +11,7 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-ARG PUBLIC_PLAUSIBLE_HOST=plausible.bergereenchantee.fr
+ARG PUBLIC_PLAUSIBLE_HOST=https://plausible.bergereenchantee.fr
 ENV PUBLIC_PLAUSIBLE_HOST=${PUBLIC_PLAUSIBLE_HOST}
 
 RUN pnpm build && pnpm prune --prod
